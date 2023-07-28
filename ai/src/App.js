@@ -23,7 +23,7 @@ const App = () => {
     const messages = [
       {
         role: "system",
-        content: "너는 한국에서 리그오브레전드를 제일 잘하는 감독이야",
+        content: "너는 한국에서 리그오브레전드 분쟁의 판결을 가장 잘 내려주는 사람이야! 그리고 입장 중 하나를 무조건 선택 해줘야 돼",
       },
       {
         role: "user",
@@ -117,7 +117,7 @@ const Input = styled.textarea`
   min-height: 100px;
   max-height: 100%;
   padding: 10px;
-  font-size: 16px;
+  font-size: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin: auto;
