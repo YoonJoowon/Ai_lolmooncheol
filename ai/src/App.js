@@ -19,7 +19,6 @@ const App = () => {
 
   const handleSubmit = () => {
     setIsLoading(true);
-
     const messages = [
       {
         role: "system",
