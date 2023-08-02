@@ -8,6 +8,7 @@ import ChatInput from "../component/ChatInput";
 import ChatUser from "../component/ChatUser";
 
 const Chatting = () => {
+  
   return (
     <Background>
       <Header />
