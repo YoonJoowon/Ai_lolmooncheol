@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
 
-const GptApi = () => {
+const Chatting = () => {
   const [keywords1, setKeywords1] = useState("");
   const [keywords2, setKeywords2] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
+  const api_key = process.env.REACT_APP_API_KEY;
 
   const handleChange1 = (event) => {
     setKeywords1(event.target.value);
@@ -38,8 +39,6 @@ const GptApi = () => {
       messages: messages,
     };
 
-    const api_key = "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"; // ChatGPT API 키
-
     axios
       .post("https://api.openai.com/v1/chat/completions", data, {
         headers: {
@@ -59,8 +58,9 @@ const GptApi = () => {
 
   return (
     <Background>
+      <Title>롤 판결 AI</Title>
       <Wrapper>
-        <Title>롤 판결 AI</Title>
+        <></>
         <div>1번 주장</div>
         <Input
           type="text"
@@ -100,13 +100,13 @@ const GptApi = () => {
   );
 };
 
-export default GptApi;
+export default Chatting;
 
 const Background = styled.div`
   background-color: black;
   width: 100%;
   height: 100vh;
-`
+`;
 
 const Wrapper = styled.div`
   max-width: 400px;
