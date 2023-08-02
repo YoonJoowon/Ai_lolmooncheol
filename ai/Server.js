@@ -3,7 +3,7 @@ const cors = require("cors");
 const axios = require("axios");
 
 const app = express();
-const api_key = "RGAPI-38cbe536-9f40-459a-afe8-4b084abae9c3";
+const api_key = process.env.REACT_APP_LOL_API_KEY;
 const url = "https://kr.api.riotgames.com";
 
 app.use(cors());

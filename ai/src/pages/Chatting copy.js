@@ -9,7 +9,7 @@ const Chatting = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
-  const api_key = process.env.REACT_APP_API_KEY;
+  const api_key = process.env.REACT_APP_CHATGPT_API_KEY;
 
   const handleChange1 = (event) => {
     setKeywords1(event.target.value);
