@@ -5,9 +5,9 @@ import { styled } from "styled-components";
 const Chatting = () => {
   const [keywords1, setKeywords1] = useState("");
   const [keywords2, setKeywords2] = useState("");
-  const [responseMessage, setResponseMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [responseMessage, setResponseMessage] = useState("");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
   const api_key = process.env.REACT_APP_CHATGPT_API_KEY;
 

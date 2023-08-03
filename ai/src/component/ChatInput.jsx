@@ -21,7 +21,6 @@ const ChatInput = () => {
 
   return (
     <ChatInputStyle
-      type="search"
       placeholder="여기에 답변을 해주세요!"
       id="searchInput"
       value={input}
@@ -33,16 +32,19 @@ const ChatInput = () => {
 
 export default ChatInput;
 
-export const ChatInputStyle = styled.input`
-  width: 658px;
-  min-height: 100px;
-  max-height: 100px;
+export const ChatInputStyle = styled.textarea`
+  color: white;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 618px;
+  min-width: 618px;
+  min-height: 60px;
+  max-height: 60px;
   border-radius: 20px;
   outline: none;
-  padding: 0 20px;
-  background-color: #1E1E1E;
+  padding: 20px 20px;
+  background-color: #1e1e1e;
   border: 2.5px solid #60394f;
   position: absolute;
   bottom: 40px;
-  color: white;
 `;

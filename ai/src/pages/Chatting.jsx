@@ -1,25 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
-import Logo from "../component/Logo";
 import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
 import ChatInput from "../component/ChatInput";
 import ChatUser from "../component/ChatUser";
 
 const Chatting = () => {
-  
   return (
     <Background>
       <Header />
       <ChattingInfo>
         <ConfrontationPicture></ConfrontationPicture>
-
         <ChatTemplete></ChatTemplete>
-
         <ChatAi></ChatAi>
         <ChatUser></ChatUser>
-
         <ChatInput></ChatInput>
       </ChattingInfo>
     </Background>
