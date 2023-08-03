@@ -1,7 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/storage";
+
+const api_key = process.env.REACT_APP_FIREBASE_API_KEY;
+
+const firebaseConfig = {
+  apiKey: api_key,
+  authDomain: "dor-project-12340.firebaseapp.com",
+  projectId: "dor-project-12340",
+  storageBucket: "dor-project-12340.appspot.com",
+  messagingSenderId: "426903209241",
+  appId: "1:426903209241:web:2626860b249ae1f5213188",
+  measurementId: "G-8MGR4M93CP",
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const firestore = firebase.firestore();
 
 function Modal(props) {
+  const bucket = firestore.collection("bucket");
+
   const [searchInput, setSearchInput] = useState("");
   const [input, setInput] = useState("");
 
@@ -24,6 +46,16 @@ function Modal(props) {
     props.setModalOpen(false);
   };
 
+  // 이메일 값을 Firebase에 저장하는 함수
+  const saveEmailToFirebase = () => {
+    if (input) {
+      bucket.add({ email: input }).then((docRef) => {
+        // 새로운 document의 id
+        console.log("Document ID:", docRef.id);
+      });
+    }
+  };
+
   return (
     <ModalStyle>
       <ModalGuideTitle>2심 신청</ModalGuideTitle>
@@ -40,7 +72,9 @@ function Modal(props) {
           onKeyDown={handleKeyPress}
         ></ModalInputEmail>
 
-        <ModalInputEmailSendBtn>전송</ModalInputEmailSendBtn>
+        <ModalInputEmailSendBtn onClick={saveEmailToFirebase}>
+          전송
+        </ModalInputEmailSendBtn>
       </ModalInputEmailbox>
       <ModalClose onClick={closeModal}>X</ModalClose>
     </ModalStyle>
