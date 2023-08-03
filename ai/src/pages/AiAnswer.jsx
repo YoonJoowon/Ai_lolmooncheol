@@ -17,6 +17,7 @@ function AiAnswer(props) {
       <Header />
       <ChattingInfo>
         <AiFeedbackAnswerTitle>안녕하세요 Ai판사 입니다.</AiFeedbackAnswerTitle>
+        {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
         <AiFeedbackAnswer>
           자르반의 의견은 상대 라인을 밀어서 상대 원딜러가 CS를 놓치게 하고 상대
           정글러의 위치를 알아내는 것이 중요하다는 것입니다. 이렇게 하면 우리
@@ -28,12 +29,11 @@ function AiAnswer(props) {
           전략과 상황에 따라 다를 수 있으며, 팀원들과 함께 의논하여 최선의
           선택을 하게 될 것입니다.
         </AiFeedbackAnswer>
-        <SecondBtn onClick={showModal}></SecondBtn>
-        {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
+        <SecondBtnStyle onClick={showModal}>2심 신청하기</SecondBtnStyle>
       </ChattingInfo>
     </Background>
   );
-};
+}
 
 export default AiAnswer;
 
@@ -42,6 +42,7 @@ const Background = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  font-family: Arial, sans-serif;
 `;
 
 const ChattingInfo = styled.div`
@@ -67,4 +68,16 @@ const AiFeedbackAnswer = styled.p`
   font-size: 20px;
   padding: 20px;
   line-height: 1.6;
+`;
+
+const SecondBtnStyle = styled.button`
+  color: #acacac;
+  width: 658px;
+  height: 60px;
+  border-radius: 20px;
+  padding: 20px 20px;
+  background-color: #1e1e1e;
+  border: 2.5px solid #60394f;
+  position: absolute;
+  bottom: 40px;
 `;
