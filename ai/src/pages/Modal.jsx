@@ -23,17 +23,11 @@ const firestore = firebase.firestore();
 
 function Modal(props) {
   const bucket = firestore.collection("bucket");
-
-  const [searchInput, setSearchInput] = useState("");
   const [input, setInput] = useState("");
-
-  const handleSearch = () => {
-    setSearchInput(input);
-  };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleSearch();
+      saveEmailToFirebase();
     }
   };
 
@@ -44,14 +38,15 @@ function Modal(props) {
   // 모달창 끄기
   const closeModal = () => {
     props.setModalOpen(false);
+    alert("인증처리 신청이 완료되었습니다. 감사합니다.");
   };
 
-  // 이메일 값을 Firebase에 저장하는 함수
+  // 이메일 값을 Firebase에 저장하고 모달창 닫기
   const saveEmailToFirebase = () => {
     if (input) {
       bucket.add({ email: input }).then((docRef) => {
-        // 새로운 document의 id
         console.log("Document ID:", docRef.id);
+        closeModal();
       });
     }
   };
@@ -70,8 +65,7 @@ function Modal(props) {
           value={input}
           onChange={getValue}
           onKeyDown={handleKeyPress}
-        ></ModalInputEmail>
-
+        />
         <ModalInputEmailSendBtn onClick={saveEmailToFirebase}>
           전송
         </ModalInputEmailSendBtn>
