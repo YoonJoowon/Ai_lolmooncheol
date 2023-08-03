@@ -1,10 +1,37 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import Header from "../component/Header";
-import SecondBtn from "../component/SecondBtn";
 import Modal from "./Modal";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/storage";
+
+const api_key = process.env.REACT_APP_FIREBASE_API_KEY;
+
+const firebaseConfig = {
+  apiKey: api_key,
+  authDomain: "dor-project-12340.firebaseapp.com",
+  projectId: "dor-project-12340",
+  storageBucket: "dor-project-12340.appspot.com",
+  messagingSenderId: "426903209241",
+  appId: "1:426903209241:web:2626860b249ae1f5213188",
+  measurementId: "G-8MGR4M93CP",
+};
+
+firebase.initializeApp(firebaseConfig);
 
 function AiAnswer(props) {
+  const db = firebase.firestore();
+  
+  db.collection("email")
+    .get()
+    .then((snapshot) => {
+      snapshot.forEach((snap) => {
+        console.log(snap.data());
+      });
+    });
+
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
   // 모달창 노출

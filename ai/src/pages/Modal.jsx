@@ -28,18 +28,20 @@ function Modal(props) {
     <ModalStyle>
       <ModalGuideTitle>2심 신청</ModalGuideTitle>
       <ModalGuide>
-        인증된 유저만 2심신청이 가능합니다. 이메일을 입력 해주시면 인증처리
-        진행하겠습니다.
+        인증된 유저만 2심신청이 가능합니다. 이메일을 입력 해주세요.
       </ModalGuide>
-      <ModalInputEmail
-        placeholder="여기에 답변을 해주세요!"
-        type="email"
-        id="searchInput"
-        value={input}
-        onChange={getValue}
-        onKeyDown={handleKeyPress}
-      ></ModalInputEmail>
+      <ModalInputEmailbox>
+        <ModalInputEmail
+          placeholder="여기에 답변을 해주세요!"
+          type="email"
+          id="searchInput"
+          value={input}
+          onChange={getValue}
+          onKeyDown={handleKeyPress}
+        ></ModalInputEmail>
 
+        <ModalInputEmailSendBtn>전송</ModalInputEmailSendBtn>
+      </ModalInputEmailbox>
       <ModalClose onClick={closeModal}>X</ModalClose>
     </ModalStyle>
   );
@@ -85,16 +87,45 @@ const ModalGuide = styled.div`
   position: absolute;
   margin: auto;
   text-align: center;
+  white-space: pre-line;
 `;
 
 const ModalInputEmail = styled.input`
   cursor: pointer;
   font-size: 16px;
-  width: 300px;
-  position: absolute;
+  width: 250px;
+  height: 20px;
+  border-radius: 20px;
+  padding: 10px;
   margin: auto;
   bottom: 10px;
-  left: 50%;
+  left: 15%;
+`;
+
+const ModalInputEmailbox = styled.div`
+  cursor: pointer;
+  display: flex;
+  font-size: 16px;
+  width: 400px;
+  height: 20px;
+  border-radius: 20px;
+  padding: 10px;
+  position: absolute;
+  margin: auto;
+  bottom: 30px;
+  left: 5%;
+`;
+
+const ModalInputEmailSendBtn = styled.button`
+  cursor: pointer;
+  width: 60px;
+  height: 40px;
+  font-size: 14px;
+  border-radius: 20px;
+  background-color: #1e1e1e;
+  color: white;
+  padding: 10px;
+  margin: auto;
 `;
 
 const ModalClose = styled.button`
