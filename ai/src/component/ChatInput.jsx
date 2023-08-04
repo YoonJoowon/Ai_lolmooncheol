@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
+import { inputValueState } from "./Recoil";
 import { styled } from "styled-components";
 
 const ChatInput = () => {
   const [searchInput, setSearchInput] = useState("");
-  const [input, setInput] = useState("");
+  const [input, setInput] = useRecoilState(inputValueState);
 
   const handleSearch = () => {
     setSearchInput(input);
