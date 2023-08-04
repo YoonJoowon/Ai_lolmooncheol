@@ -57,8 +57,12 @@ const ChatTemplete = styled.div`
   width: 570px;
   height: 55px;
   border-radius: 20px;
-  background-color: #3f3f3f;
+  background-color: #121212;
   color: white;
   padding: 20px;
   line-height: 1.8;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 `;

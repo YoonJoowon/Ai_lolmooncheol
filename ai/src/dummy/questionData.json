@@ -1,18 +1,27 @@
 [
-    {
-      "id": 1,
-      "question": "판결을 받고 싶은 게임에서 당신의 챔피언과 라인은 어디인가요?",
-      "category": "Geography"
-    },
-    {
-      "id": 2,
-      "question": "싸운 상대의 챔피언과 라인은 어디인가요?",
-      "category": "Science"
-    },
-    {
-      "id": 3,
-      "question": "당시 상황을 육하원칙에 맞게 자세히 설명해주세요",
-      "category": "Literature"
-    }
-  ]
-  
+  {
+    "id": 1,
+    "question": "판결을 받고 싶은 게임에서 당신의 챔피언과 라인은 어디인가요?",
+    "category": "Geography"
+  },
+  {
+    "id": 2,
+    "question": "싸운 상대의 챔피언과 라인은 어디인가요?",
+    "category": "Science"
+  },
+  {
+    "id": 3,
+    "question": "게임시작 몇 분쯤에 일어난 일인가요?",
+    "category": "Literature"
+  },
+  {
+    "id": 4,
+    "question": "어느 위치에서 일어난 상황인가요?",
+    "category": "Science"
+  },
+  {
+    "id": 5,
+    "question": "당시 상황을 싸우게 된 경위를 자세히 설명해주세요",
+    "category": "Literature"
+  }
+]

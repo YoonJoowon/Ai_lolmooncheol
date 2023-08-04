@@ -93,6 +93,7 @@ const ChatUserStyle = styled.div`
   min-height: 50px;
   border-radius: 20px;
   background-color: #60394f;
+  line-height: 1.6;
   color: white;
   display: flex;
   justify-content: center;
