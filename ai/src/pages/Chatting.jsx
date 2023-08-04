@@ -11,8 +11,7 @@ const Chatting = () => {
       <ChattingInfo>
         {/* <ConfrontationPicture></ConfrontationPicture> */}
         <ChatTemplete>
-          챔피언을 입력하고 상황설명을 육하원칙에 맞게 최대한 자세히 설명
-          해주시면 답변 정확도가 올라갑니다!
+          질문에 대하여 최대한 자세하게 설명 해주시면 판결 정확도가 올라갑니다!
         </ChatTemplete>
         <ChatAi></ChatAi>
         <ChatInput></ChatInput>

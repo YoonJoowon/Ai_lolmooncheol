@@ -1,31 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { inputValueState } from "./Recoil";
 import { styled } from "styled-components";
 
 const ChatInput = () => {
-  const [searchInput, setSearchInput] = useState("");
   const [input, setInput] = useRecoilState(inputValueState);
-
-  const handleSearch = () => {
-    setSearchInput(input);
-  };
+  const [inputBuffer, setInputBuffer] = useState("");
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      handleSearch();
+      setInput(inputBuffer.toLowerCase());
+      setInputBuffer("");
     }
   };
 
   const getValue = (e) => {
-    setInput(e.target.value.toLowerCase());
+    setInputBuffer(e.target.value);
   };
-
   return (
     <ChatInputStyle
       placeholder="여기에 답변을 해주세요!"
       id="searchInput"
-      value={input}
+      value={inputBuffer}
       onChange={getValue}
       onKeyDown={handleKeyPress}
     ></ChatInputStyle>

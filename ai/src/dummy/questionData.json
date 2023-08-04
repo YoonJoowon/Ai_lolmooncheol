@@ -1,17 +1,17 @@
 [
     {
       "id": 1,
-      "question": "싸운 판에서 당신의 챔피언과 라인은 어디인가요?",
+      "question": "판결을 받고 싶은 게임에서 당신의 챔피언과 라인은 어디인가요?",
       "category": "Geography"
     },
     {
       "id": 2,
-      "question": "싸운 상대 아군의 챔피언과 라인은 어디인가요?",
+      "question": "싸운 상대의 챔피언과 라인은 어디인가요?",
       "category": "Science"
     },
     {
       "id": 3,
-      "question": "육하원칙에 맞게 당시 상황설명을 해주세요",
+      "question": "당시 상황을 육하원칙에 맞게 자세히 설명해주세요",
       "category": "Literature"
     }
   ]
