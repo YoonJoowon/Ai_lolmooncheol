@@ -34,6 +34,10 @@ const ChatAi = () => {
     }
   }, [inputValues]);
 
+  useEffect(() => {
+    sessionStorage.setItem("inputValues", JSON.stringify(inputValues));
+  }, [inputValues]);
+
   return (
     <ChatWrapper>
       <ChatAiStyle>
