@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import { inputValueState } from "./Recoil";
 import { styled } from "styled-components";
 import questionsData from "../dummy/questionData.json";
+import AiAnswer from "../pages/AiAnswer";
 
 const ChatAi = () => {
   const [questionIndex, setQuestionIndex] = useState(1);
@@ -62,6 +63,11 @@ const ChatAi = () => {
           <p>{inputValues[conversation.length]}</p>
         </ChatUserStyle>
       )}
+
+      <CheckAnswer>
+        판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
+      </CheckAnswer>
+      <AiAnswer></AiAnswer>
     </ChatWrapper>
   );
 };
@@ -96,6 +102,22 @@ const ChatUserStyle = styled.div`
   line-height: 1.6;
   color: white;
   display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const CheckAnswer = styled.div`
+  border: solid 1px #424242;
+  margin: auto;
+  margin-top: 20px;
+  width: 570px;
+  height: 25px;
+  border-radius: 20px;
+  background-color: #121212;
+  color: white;
+  padding: 20px;
+  line-height: 1.8;
+  display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
 `;
