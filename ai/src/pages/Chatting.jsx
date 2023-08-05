@@ -26,8 +26,8 @@ const Background = styled.div`
   background-color: black;
   position: absolute;
   width: 100%;
-  min-height: 120%;
-  max-height: 150%;
+  min-height: 200%;
+  max-height: 250%;
   font-family: Arial, sans-serif;
   margin-bottom: 400px;
 `;

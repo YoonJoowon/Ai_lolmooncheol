@@ -59,15 +59,16 @@ const ChatAi = () => {
       ))}
 
       {inputValues[conversation.length] && (
-        <ChatUserStyle>
-          <p>{inputValues[conversation.length]}</p>
-        </ChatUserStyle>
+        <>
+          <ChatUserStyle>
+            <p>{inputValues[conversation.length]}</p>
+          </ChatUserStyle>
+          <CheckAnswer>
+            판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
+          </CheckAnswer>
+          <AiAnswer></AiAnswer>
+        </>
       )}
-
-      <CheckAnswer>
-        판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
-      </CheckAnswer>
-      <AiAnswer></AiAnswer>
     </ChatWrapper>
   );
 };

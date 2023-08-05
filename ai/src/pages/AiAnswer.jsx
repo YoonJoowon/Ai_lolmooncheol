@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import Header from "../component/Header";
 import Modal from "./Modal";
 
 function AiAnswer(props) {
@@ -10,6 +9,8 @@ function AiAnswer(props) {
   const showModal = () => {
     setModalOpen(true);
   };
+
+  //chatGPT
 
   return (
     <ChattingInfo>
