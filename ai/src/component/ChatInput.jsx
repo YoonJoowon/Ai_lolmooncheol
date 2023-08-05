@@ -44,5 +44,6 @@ export const ChatInputStyle = styled.textarea`
   background-color: #1e1e1e;
   border: 2.5px solid #60394f;
   position: absolute;
-  bottom: 40px;
+  bottom: 10px;
+  position: fixed;
 `;
