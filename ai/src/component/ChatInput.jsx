@@ -32,6 +32,7 @@ export default ChatInput;
 
 export const ChatInputStyle = styled.textarea`
   color: white;
+  display: block;
   white-space: pre-wrap;
   word-wrap: break-word;
   max-width: 618px;
@@ -43,7 +44,6 @@ export const ChatInputStyle = styled.textarea`
   padding: 20px 20px;
   background-color: #1e1e1e;
   border: 2.5px solid #60394f;
-  position: absolute;
-  bottom: 10px;
-  position: fixed;
+  margin: auto;
+  margin-top: 30px;
 `;

@@ -10,3 +10,13 @@ export const searchInputSelector = selector({
   get: ({ get }) => get(inputValueState),
   set: ({ set }, newValue) => set(inputValueState, newValue),
 });
+
+export const checkAiAnswer = atom({
+  key: "checkAiAnswer",
+  default: "",
+});
+
+export const checkAiAnswerSelector = selector({
+  key: "checkAiAnswerSelector",
+  get: ({ get }) => get(checkAiAnswer),
+});

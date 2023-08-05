@@ -14,8 +14,8 @@ const Chatting = () => {
           질문에 대하여 최대한 자세하게 설명 해주시면 판결 정확도가 올라갑니다!
         </ChatTemplete>
         <ChatAi></ChatAi>
-        <ChatInput></ChatInput>
       </ChattingInfo>
+      <ChatInput></ChatInput>
     </Background>
   );
 };
@@ -26,17 +26,18 @@ const Background = styled.div`
   background-color: black;
   position: absolute;
   width: 100%;
-  min-height: 200%;
+  min-height: 100%;
   max-height: 250%;
   font-family: Arial, sans-serif;
   margin-bottom: 400px;
+  /* display: flex; */
 `;
 
 const ChattingInfo = styled.div`
   background-color: #1e1e1e;
   border: solid 1px #424242;
   width: 658px;
-  min-height: 1200px;
+  min-height: 700px;
   margin: auto;
   margin-top: 80px;
   border-radius: 20px;

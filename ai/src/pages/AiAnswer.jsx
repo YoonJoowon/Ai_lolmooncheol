@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import Modal from "./Modal";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { checkAiAnswer } from "../component/Recoil";
+import Header from "../component/Header";
 
 function AiAnswer(props) {
   // 모달창 노출 여부 state
@@ -11,28 +15,87 @@ function AiAnswer(props) {
   };
 
   //chatGPT
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [responseMessage, setResponseMessage] = useState("");
+  const storedKeywords = sessionStorage.getItem("keywords1");
+  const formattedMessage = responseMessage.replace(/\\n/g, "\n");
+  const inputValue = useRecoilValue(checkAiAnswer);
+  const api_key = process.env.REACT_APP_CHATGPT_API_KEY;
+
+  const handleSubmit = () => {
+    setIsLoading(true);
+    const messages = [
+      {
+        role: "system",
+        content:
+          "리그 오브 레전드 게임을 기반으로 밸런스 게임을 하려고 합니다. 나는 당신에게 질문을 할 것이고 당신은 대답해야 합니다. 두 가지 선택지가 주어지면 서문이 없고 모호하거나 중립적인 문구없이 응답해 주십시오. 또한 답을 선택한 이유와 함께 비유를 사용하여 설명하십시오.",
+      },
+      {
+        role: "user",
+        content: storedKeywords + "둘 중 어느것이 맞습니까?",
+      },
+    ];
+
+    const data = {
+      model: "gpt-3.5-turbo",
+      temperature: 0.5,
+      n: 1,
+      messages: messages,
+    };
+
+    axios
+      .post("https://api.openai.com/v1/chat/completions", data, {
+        headers: {
+          Authorization: "Bearer " + api_key,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setIsLoading(false);
+        setResponseMessage(response.data.choices[0].message.content);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError("하루 이용량이 초과 됐습니다.");
+      });
+  };
 
   return (
-    <ChattingInfo>
-      <AiFeedbackAnswerTitle>Ai문철 입니다.</AiFeedbackAnswerTitle>
-      {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
-      <AiFeedbackAnswer>
-        자르반의 의견은 상대 라인을 밀어서 상대 원딜러가 CS를 놓치게 하고 상대
-        정글러의 위치를 알아내는 것이 중요하다는 것입니다. 이렇게 하면 우리 팀이
-        유리한 상황을 만들 수 있을 것입니다.반면 베인의 의견은 상대 정글러의
-        위치를 알 수 없기 때문에 역갱을 당할 수 있으며, 이로 인해 더 큰 손해를
-        볼 수 있다는 것입니다. 그리고 현재 베인의 체력이 매우 낮기 때문에 집에
-        가야 한다는 것입니다.이러한 상황에서 저는 각 플레이어의 의견을 듣고
-        상황을 판단하여 최선의 결정을 내릴 것입니다. 이는 팀 전략과 상황에 따라
-        다를 수 있으며, 팀원들과 함께 의논하여 최선의 선택을 하게 될 것입니다.
-      </AiFeedbackAnswer>
-      <SecondBtnStyle onClick={showModal}>2심 신청하기</SecondBtnStyle>
-    </ChattingInfo>
+    <Background>
+      <Header />
+      <ChattingInfo>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+        {isLoading && (
+          <Loading>
+            <img
+              src="https://studentrights.sen.go.kr/images/common/loading.gif"
+              alt="로딩"
+            />
+          </Loading>
+        )}
+        {responseMessage && !isLoading && (
+          <>
+            <AiFeedbackAnswerTitle>Ai문철 입니다.</AiFeedbackAnswerTitle>
+            {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
+            <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
+            <SecondBtnStyle onClick={showModal}>2심 신청하기</SecondBtnStyle>
+          </>
+        )}
+      </ChattingInfo>
+    </Background>
   );
 }
 
 export default AiAnswer;
 
+const Background = styled.div`
+  background-color: black;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+`;
 const ChattingInfo = styled.div`
   border: solid 1px #424242;
   margin: auto;
@@ -74,4 +137,15 @@ const SecondBtnStyle = styled.button`
   border-radius: 20px;
   background-color: #1e1e1e;
   border: 2.5px solid #60394f;
+`;
+
+const ErrorMessage = styled.p`
+  color: #ff0000;
+  margin-bottom: 10px;
+`;
+
+const Loading = styled.p`
+  color: #007bff;
+  font-size: 18px;
+  margin-top: 10px;
 `;
