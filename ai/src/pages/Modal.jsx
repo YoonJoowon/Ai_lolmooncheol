@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
-const api_key = process.env.REACT_APP_FIREBASE_API_KEY;
-
 const firebaseConfig = {
-  apiKey: api_key,
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "dor-project-12340.firebaseapp.com",
   projectId: "dor-project-12340",
   storageBucket: "dor-project-12340.appspot.com",
@@ -78,13 +76,13 @@ function Modal(props) {
 export default Modal;
 
 const ModalStyle = styled.div`
-  /* border: 2.5px solid #60394f; */
+  border: 2.5px solid #60394f;
   width: 450px;
   height: 200px;
   color: black;
   font-weight: 500;
   position: absolute;
-  top: 40%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
