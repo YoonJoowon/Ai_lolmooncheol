@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { inputValueState, showCheckAnswerState } from "./Recoil";
 import { styled } from "styled-components";
@@ -12,6 +12,19 @@ const ChatAi = () => {
   const [inputValues, setInputValues] = useState([]);
   const [showCheckAnswer, setShowCheckAnswer] =
     useRecoilState(showCheckAnswerState);
+
+  //scroll
+  // const scrollContainerRef = useRef(null);
+  // const scrollToBottom = () => {
+  //   if (scrollContainerRef.current) {
+  //     const scrollContainer = scrollContainerRef.current;
+  //     scrollContainer.scrollTop = scrollContainer.scrollHeight;
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [conversation]);
 
   // 버튼을 누를 때 이벤트 핸들러
   const handleButtonClick = () => {
@@ -33,7 +46,11 @@ const ChatAi = () => {
 
   useEffect(() => {
     if (inputValue) {
-      setInputValues((prevInputValues) => [...prevInputValues, inputValue]);
+      const cleanedInputValue = inputValue.replace(/\n/g, "");
+      setInputValues((prevInputValues) => [
+        ...prevInputValues,
+        cleanedInputValue,
+      ]);
     }
   }, [inputValue]);
 
@@ -68,9 +85,7 @@ const ChatAi = () => {
 
       {inputValues[conversation.length] && (
         <>
-          <ChatUserStyle>
-            <p>{inputValues[conversation.length]}</p>
-          </ChatUserStyle>
+          <ChatUserStyle>{inputValues[conversation.length]}</ChatUserStyle>
           <ChatChecking onClick={handleButtonClick}>결과 확인하기</ChatChecking>
         </>
       )}
@@ -100,7 +115,9 @@ const ChatAiStyle = styled.div`
   margin-left: 23px;
   margin-top: 20px;
   width: 300px;
+  max-width: 500px;
   min-height: 30px;
+  max-height: 100%;
   border-radius: 20px;
   line-height: 1.6;
   background-color: #3f3f3f;
@@ -108,20 +125,20 @@ const ChatAiStyle = styled.div`
 
 const ChatUserStyle = styled.div`
   border: solid 1px #424242;
-  margin-left: 333px;
+  padding: 20px;
+  color: white;
+  margin-left: 300px;
   margin-top: 20px;
   width: 300px;
   max-width: 500px;
-  min-height: 50px;
+  min-height: 30px;
   max-height: 100%;
   border-radius: 20px;
-  background-color: #60394f;
   line-height: 1.6;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #60394f;
+  white-space: pre-line;
 `;
+
 const CheckAnswer = styled.div`
   border: solid 1px #424242;
   margin: auto;

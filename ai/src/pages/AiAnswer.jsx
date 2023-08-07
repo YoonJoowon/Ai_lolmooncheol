@@ -5,7 +5,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 import { showCheckAnswerState } from "../component/Recoil";
 
-
 function AiAnswer(props) {
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
@@ -27,11 +26,11 @@ function AiAnswer(props) {
 
   useEffect(() => {
     if (triggerAiAnswer) {
-      handleSubmit();
+      // handleSubmit();
       console.log("완료됐음");
-      setTriggerAiAnswer(false);
+      setTriggerAiAnswer(true);
     }
-  }, []);
+  }, [triggerAiAnswer]);
 
   const handleSubmit = () => {
     setIsLoading(true);
@@ -75,7 +74,6 @@ function AiAnswer(props) {
     <ChattingInfo>
       <AiFeedbackAnswerTitle>Ai문철 입니다.</AiFeedbackAnswerTitle>
 
-      {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
       {error && <ErrorMessage>{error}</ErrorMessage>}
 
       {isLoading && (
@@ -90,6 +88,7 @@ function AiAnswer(props) {
         <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
       )}
       <SecondBtnStyle onClick={showModal}>2심 신청하기</SecondBtnStyle>
+      {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
     </ChattingInfo>
   );
 }
@@ -117,6 +116,7 @@ const AiFeedbackAnswerTitle = styled.p`
   font-size: 20px;
   line-height: 1.6;
   margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const AiFeedbackAnswer = styled.p`
@@ -136,6 +136,7 @@ const SecondBtnStyle = styled.button`
   width: 300px;
   height: 50px;
   border-radius: 20px;
+  cursor: pointer;
   background-color: #1e1e1e;
   border: 2.5px solid #60394f;
 `;
