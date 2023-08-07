@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Chatting from "./pages/Chatting";
 import AiAnswer from "./pages/AiAnswer";
 import UserSearch from "./pages/UserSearch";
+import Chatting_copy from "./pages/Chatting_copy";
 
 function App() {
   return (
@@ -10,8 +11,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Chatting />} />
-          {/* <Route path="/AiAnswer" element={<AiAnswer />} />
-          <Route path="/UserSearch" element={<UserSearch />} /> */}
+          {/* <Route path="/Chattingcopy" element={<Chatting_copy />} /> */}
+          {/* <Route path="/UserSearch" element={<UserSearch />} /> */}
         </Routes>
       </BrowserRouter>
     </div>
