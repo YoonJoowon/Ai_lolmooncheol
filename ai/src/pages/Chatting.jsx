@@ -42,16 +42,6 @@ const ChattingInfo = styled.div`
   border-radius: 20px;
 `;
 
-const ConfrontationPicture = styled.div`
-  border: solid 1px #424242;
-  margin: auto;
-  margin-top: 20px;
-  width: 610px;
-  height: 105px;
-  border-radius: 20px;
-  background-color: #3f3f3f;
-`;
-
 const ChatTemplete = styled.div`
   border: solid 1px #424242;
   margin: auto;

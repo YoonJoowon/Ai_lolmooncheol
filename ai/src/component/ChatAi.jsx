@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { inputValueState } from "./Recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { inputValueState, showCheckAnswerState } from "./Recoil";
 import { styled } from "styled-components";
 import questionsData from "../dummy/questionData.json";
 import AiAnswer from "../pages/AiAnswer";
@@ -10,6 +10,14 @@ const ChatAi = () => {
   const [currentQuestion, setCurrentQuestion] = useState(questionsData[1]);
   const [conversation, setConversation] = useState([]);
   const [inputValues, setInputValues] = useState([]);
+  const [showCheckAnswer, setShowCheckAnswer] =
+    useRecoilState(showCheckAnswerState);
+
+  // 버튼을 누를 때 이벤트 핸들러
+  const handleButtonClick = () => {
+    setShowCheckAnswer(true);
+    // setTriggerAiAnswer(true);
+  };
 
   const inputValue = useRecoilValue(inputValueState);
 
@@ -63,6 +71,12 @@ const ChatAi = () => {
           <ChatUserStyle>
             <p>{inputValues[conversation.length]}</p>
           </ChatUserStyle>
+          <ChatChecking onClick={handleButtonClick}>결과 확인하기</ChatChecking>
+        </>
+      )}
+
+      {showCheckAnswer && (
+        <>
           <CheckAnswer>
             판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
           </CheckAnswer>
@@ -97,7 +111,9 @@ const ChatUserStyle = styled.div`
   margin-left: 333px;
   margin-top: 20px;
   width: 300px;
+  max-width: 500px;
   min-height: 50px;
+  max-height: 100%;
   border-radius: 20px;
   background-color: #60394f;
   line-height: 1.6;
@@ -121,6 +137,23 @@ const CheckAnswer = styled.div`
   text-align: center;
   justify-content: center;
   align-items: center;
+`;
+
+const ChatChecking = styled.button`
+  color: #b56a94;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 600px;
+  height: 25px;
+  margin: auto;
+  border-radius: 20px;
+  padding: 20px 20px;
+  background-color: #1e1e1e;
+  border: 2.5px solid #60394f;
+  margin-top: 20px;
+  cursor: pointer;
 `;
 
 export default ChatAi;
