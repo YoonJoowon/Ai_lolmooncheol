@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { inputValueState, showCheckAnswerState } from "./Recoil";
 import { styled } from "styled-components";
