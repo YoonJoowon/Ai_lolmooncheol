@@ -36,12 +36,12 @@ const ChattingInfo = styled.div`
   background-color: #1e1e1e;
   border: solid 1px #424242;
   width: 658px;
-  min-height: 1000px;
+  min-height: 700px;
   max-height: 100%;
   margin: auto;
   margin-top: 80px;
   border-radius: 20px;
-  padding-bottom: 150px;
+  padding-bottom: 200px;
 `;
 
 const ChatTemplete = styled.div`
