@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { inputValueState, showCheckAnswerState } from "./Recoil";
+import {
+  conversationState,
+  inputValueState,
+  showCheckAnswerState,
+} from "./Recoil";
 import { styled } from "styled-components";
 import questionsData from "../dummy/questionData.json";
 import AiAnswer from "../pages/AiAnswer";
@@ -12,19 +16,6 @@ const ChatAi = () => {
   const [inputValues, setInputValues] = useState([]);
   const [showCheckAnswer, setShowCheckAnswer] =
     useRecoilState(showCheckAnswerState);
-
-  //scroll
-  // const scrollContainerRef = useRef(null);
-  // const scrollToBottom = () => {
-  //   if (scrollContainerRef.current) {
-  //     const scrollContainer = scrollContainerRef.current;
-  //     scrollContainer.scrollTop = scrollContainer.scrollHeight;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [conversation]);
 
   // 버튼을 누를 때 이벤트 핸들러
   const handleButtonClick = () => {
@@ -40,7 +31,8 @@ const ChatAi = () => {
       setQuestionIndex(newIndex);
       const newQuestion = questionsData[newIndex];
       setCurrentQuestion(newQuestion);
-      setConversation([...conversation, currentQuestion]);
+      const updatedConversation = [...conversation, currentQuestion];
+      setConversation(updatedConversation);
     }
   };
 
@@ -77,6 +69,7 @@ const ChatAi = () => {
               <p>{inputValues[index]}</p>
             </ChatUserStyle>
           )}
+
           <ChatAiStyle>
             <p>{item.question}</p>
           </ChatAiStyle>

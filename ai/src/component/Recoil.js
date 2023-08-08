@@ -15,3 +15,8 @@ export const showCheckAnswerState = atom({
   key: "showCheckAnswerState",
   default: false,
 });
+
+export const conversationState = atom({
+  key: "conversationState",
+  default: "",
+});

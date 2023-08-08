@@ -43,7 +43,6 @@ function Modal(props) {
   const saveEmailToFirebase = () => {
     if (input) {
       bucket.add({ email: input }).then((docRef) => {
-        console.log("Document ID:", docRef.id);
         closeModal();
       });
     }
@@ -51,9 +50,10 @@ function Modal(props) {
 
   return (
     <ModalStyle>
-      <ModalGuideTitle>2심 신청</ModalGuideTitle>
+      <ModalGuideTitle>인증 신청</ModalGuideTitle>
       <ModalGuide>
-        인증된 유저만 2심신청이 가능합니다. 이메일을 입력 해주세요.
+        {/* 인증된 유저만 2심신청이 가능합니다. 이메일을 입력 해주세요. */}
+        인증된 유저만 확인 가능합니다. 이메일을 입력 해주세요.
       </ModalGuide>
       <ModalInputEmailbox>
         <ModalInputEmail

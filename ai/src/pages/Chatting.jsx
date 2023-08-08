@@ -1,12 +1,30 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { styled } from "styled-components";
 import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
 import ChatInput from "../component/ChatInput";
+import { useRecoilValue } from "recoil";
+import { inputValueState } from "../component/Recoil";
 
 const Chatting = () => {
+  //scroll
+  const inputValue = useRecoilValue(inputValueState);
+  const scrollContainerRef = useRef(null);
+
+  const scrollToBottom = () => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+    console.log('scroll')
+  }, [inputValue]);
+
   return (
-    <Background>
+    <Background ref={scrollContainerRef}>
       <Header />
       <ChattingInfo>
         <ChatTemplete>
@@ -26,9 +44,9 @@ const Background = styled.div`
   position: absolute;
   width: 100%;
   min-height: 100%;
-  max-height: 250%;
+  /* max-height: 250%; */
   font-family: Arial, sans-serif;
-  margin-bottom: 400px;
+  /* margin-bottom: 400px; */
 `;
 
 const ChattingInfo = styled.div`

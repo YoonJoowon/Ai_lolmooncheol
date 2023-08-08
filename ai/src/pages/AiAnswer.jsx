@@ -25,10 +25,10 @@ function AiAnswer(props) {
   const setTriggerAiAnswer = useRecoilState(showCheckAnswerState)[1];
 
   useEffect(() => {
-    if (triggerAiAnswer) {
+    if (triggerAiAnswer === true) {
       // handleSubmit();
       console.log("완료됐음");
-      setTriggerAiAnswer(true);
+      setTriggerAiAnswer(false);
     }
   }, [triggerAiAnswer]);
 
@@ -72,7 +72,7 @@ function AiAnswer(props) {
 
   return (
     <ChattingInfo>
-      <AiFeedbackAnswerTitle>Ai문철 입니다.</AiFeedbackAnswerTitle>
+      <AiFeedbackAnswerTitle>인증되지 않은 유저입니다.</AiFeedbackAnswerTitle>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
 
@@ -87,7 +87,7 @@ function AiAnswer(props) {
       {responseMessage && !isLoading && (
         <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
       )}
-      <SecondBtnStyle onClick={showModal}>2심 신청하기</SecondBtnStyle>
+      <SecondBtnStyle onClick={showModal}>인증하기</SecondBtnStyle>
       {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
     </ChattingInfo>
   );
