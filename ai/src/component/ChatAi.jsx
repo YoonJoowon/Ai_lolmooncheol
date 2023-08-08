@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  conversationState,
-  inputValueState,
-  showCheckAnswerState,
-} from "./Recoil";
+import { inputValueState, showCheckAnswerState } from "./Recoil";
 import { styled } from "styled-components";
 import questionsData from "../dummy/questionData.json";
 import AiAnswer from "../pages/AiAnswer";
@@ -56,6 +52,21 @@ const ChatAi = () => {
     sessionStorage.setItem("inputValues", JSON.stringify(inputValues));
   }, [inputValues]);
 
+  // scroll
+  const scrollContainerRef = useRef(null);
+
+  const scrollToBottom = () => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+    console.log("scroll");
+  }, [inputValue]);
+
   return (
     <ChatWrapper>
       <ChatAiStyle>
@@ -91,6 +102,7 @@ const ChatAi = () => {
           <AiAnswer></AiAnswer>
         </>
       )}
+      <div ref={scrollContainerRef}></div>
     </ChatWrapper>
   );
 };

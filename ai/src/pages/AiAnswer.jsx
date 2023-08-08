@@ -17,18 +17,23 @@ function AiAnswer(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
-  const storedKeywords = sessionStorage.getItem("keywords1");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
   const api_key = process.env.REACT_APP_CHATGPT_API_KEY;
-
+  
   const triggerAiAnswer = useRecoilValue(showCheckAnswerState);
   const setTriggerAiAnswer = useRecoilState(showCheckAnswerState)[1];
+  
+  const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
+  const sessionInfo = {
+    strings: storedKeywords
+  };
+
 
   useEffect(() => {
-    if (triggerAiAnswer === true) {
+    if (triggerAiAnswer) {
       // handleSubmit();
       console.log("완료됐음");
-      setTriggerAiAnswer(false);
+      setTriggerAiAnswer(true);
     }
   }, [triggerAiAnswer]);
 
@@ -38,11 +43,11 @@ function AiAnswer(props) {
       {
         role: "system",
         content:
-          "롤 게임 관해서 질문 할거야. 넌 두 가지 선택지가 주어지면 중립적인 문구없이 응답해줘. 또한 답을 선택한 이유와 함께 비유를 사용하여 설명해줘.",
+          "롤 게임 관해서 질문 할것 입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 응답을 해주세요. 답을 선택한 이유를 말해주세요. 그리고 비유를 사용하여 설명해주세요.",
       },
       {
         role: "user",
-        content: storedKeywords + "둘 중 어느것이 맞습니까?",
+        content: sessionInfo + "둘 중 어느것이 맞습니까?",
       },
     ];
 

@@ -3,28 +3,12 @@ import { styled } from "styled-components";
 import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
 import ChatInput from "../component/ChatInput";
-import { useRecoilValue } from "recoil";
-import { inputValueState } from "../component/Recoil";
 
 const Chatting = () => {
-  //scroll
-  const inputValue = useRecoilValue(inputValueState);
-  const scrollContainerRef = useRef(null);
 
-  const scrollToBottom = () => {
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.scrollTop = scrollContainer.scrollHeight;
-    }
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-    console.log('scroll')
-  }, [inputValue]);
 
   return (
-    <Background ref={scrollContainerRef}>
+    <Background>
       <Header />
       <ChattingInfo>
         <ChatTemplete>
@@ -44,9 +28,8 @@ const Background = styled.div`
   position: absolute;
   width: 100%;
   min-height: 100%;
-  /* max-height: 250%; */
+  display: flex;
   font-family: Arial, sans-serif;
-  /* margin-bottom: 400px; */
 `;
 
 const ChattingInfo = styled.div`
@@ -54,7 +37,7 @@ const ChattingInfo = styled.div`
   border: solid 1px #424242;
   width: 658px;
   min-height: 1000px;
-  max-height: 5000px;
+  max-height: 100%;
   margin: auto;
   margin-top: 80px;
   border-radius: 20px;
