@@ -73,10 +73,15 @@ const ChatAi = () => {
   // scroll
   const scrollContainerRef = useRef(null);
 
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
-    scrollContainerRef.current.scrollIntoView({ behavior: 'smooth' });
-    console.log("scroll");
-  }, [inputValues]);
+    handleScroll();
+  }, [inputValues, showCheckAnswer]);
 
   return (
     <ChatWrapper>

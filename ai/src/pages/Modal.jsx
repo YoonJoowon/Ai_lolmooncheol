@@ -36,7 +36,7 @@ function Modal(props) {
   // 모달창 끄기
   const closeModal = () => {
     props.setModalOpen(false);
-    alert("인증처리 신청이 완료되었습니다. 감사합니다.");
+    alert("결과 신청이 완료되었습니다. 감사합니다.");
   };
 
   // 이메일 값을 Firebase에 저장하고 모달창 닫기
@@ -50,14 +50,14 @@ function Modal(props) {
 
   return (
     <ModalStyle>
-      <ModalGuideTitle>인증 신청</ModalGuideTitle>
+      <ModalGuideTitle>결과 신청</ModalGuideTitle>
       <ModalGuide>
-        {/* 인증된 유저만 2심신청이 가능합니다. 이메일을 입력 해주세요. */}
-        인증된 유저만 확인 가능합니다. 이메일을 입력 해주세요.
+        {/* 인증된 유저만 확인 가능합니다. 이메일을 입력 해주세요. */}
+        이메일을 입력 해주세요. 이용에 불편을 드려 대단히 죄송합니다.
       </ModalGuide>
       <ModalInputEmailbox>
         <ModalInputEmail
-          placeholder="여기에 답변을 해주세요!"
+          placeholder="이메일을 입력해주세요."
           type="email"
           id="searchInput"
           value={input}

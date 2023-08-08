@@ -19,15 +19,14 @@ function AiAnswer(props) {
   const [responseMessage, setResponseMessage] = useState("");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
   const api_key = process.env.REACT_APP_CHATGPT_API_KEY;
-  
+
   const triggerAiAnswer = useRecoilValue(showCheckAnswerState);
   const setTriggerAiAnswer = useRecoilState(showCheckAnswerState)[1];
-  
+
   const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
   const sessionInfo = {
-    strings: storedKeywords
+    strings: storedKeywords,
   };
-
 
   useEffect(() => {
     if (triggerAiAnswer) {
@@ -77,7 +76,12 @@ function AiAnswer(props) {
 
   return (
     <ChattingInfo>
-      <AiFeedbackAnswerTitle>인증되지 않은 유저입니다.</AiFeedbackAnswerTitle>
+      <AiFeedbackAnswerTitle>
+        현재 서버량이 많아 판결이 어렵습니다.
+      </AiFeedbackAnswerTitle>
+      <AiFeedbackAnswerSry>
+        이메일을 입력해주시면 순차적으로 답변 발송 드리겠습니다. 죄송합니다.
+      </AiFeedbackAnswerSry>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
 
@@ -92,7 +96,7 @@ function AiAnswer(props) {
       {responseMessage && !isLoading && (
         <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
       )}
-      <SecondBtnStyle onClick={showModal}>인증하기</SecondBtnStyle>
+      <SecondBtnStyle onClick={showModal}>결과 받기</SecondBtnStyle>
       {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
     </ChattingInfo>
   );
@@ -119,6 +123,14 @@ const ChattingInfo = styled.div`
 const AiFeedbackAnswerTitle = styled.p`
   color: #b56a94;
   font-size: 20px;
+  line-height: 1.6;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const AiFeedbackAnswerSry = styled.p`
+  color: #b56a94;
+  font-size: 16px;
   line-height: 1.6;
   margin-top: 20px;
   margin-bottom: 20px;
