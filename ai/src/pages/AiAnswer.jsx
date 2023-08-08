@@ -80,7 +80,7 @@ function AiAnswer(props) {
         현재 서버량이 많아 판결이 어렵습니다.
       </AiFeedbackAnswerTitle>
       <AiFeedbackAnswerSry>
-        이메일을 입력해주시면 순차적으로 답변 발송 드리겠습니다. 죄송합니다.
+        이메일을 입력해주시면 순차적으로 판결 발송 드리겠습니다. 죄송합니다.
       </AiFeedbackAnswerSry>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -105,7 +105,7 @@ function AiAnswer(props) {
 export default AiAnswer;
 
 const ChattingInfo = styled.div`
-  border: solid 1px #424242;
+  border: solid 1px #005a82;
   margin: auto;
   margin-top: 20px;
   width: 570px;
@@ -121,7 +121,7 @@ const ChattingInfo = styled.div`
 `;
 
 const AiFeedbackAnswerTitle = styled.p`
-  color: #b56a94;
+  color: #0077a9;
   font-size: 20px;
   line-height: 1.6;
   margin-top: 20px;
@@ -129,7 +129,7 @@ const AiFeedbackAnswerTitle = styled.p`
 `;
 
 const AiFeedbackAnswerSry = styled.p`
-  color: #b56a94;
+  color: #0077a9;
   font-size: 16px;
   line-height: 1.6;
   margin-top: 20px;
@@ -149,13 +149,13 @@ const AiFeedbackAnswer = styled.p`
 `;
 
 const SecondBtnStyle = styled.button`
-  color: #b56a94;
+  color: white;
   width: 300px;
   height: 50px;
   border-radius: 20px;
   cursor: pointer;
-  background-color: #1e1e1e;
-  border: 2.5px solid #60394f;
+  background-color: #0a1428;
+  border: solid 1px #005a82;
 `;
 
 const ErrorMessage = styled.p`

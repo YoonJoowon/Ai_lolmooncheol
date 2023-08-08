@@ -12,7 +12,7 @@ const firebaseConfig = {
   storageBucket: "aimoon-c9fa4.appspot.com",
   messagingSenderId: "928734093079",
   appId: "1:928734093079:web:d9e3c6d2d41f26298f2152",
-  measurementId: "G-W565SFZ6GF"
+  measurementId: "G-W565SFZ6GF",
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -39,14 +39,27 @@ function Modal(props) {
     alert("결과 신청이 완료되었습니다. 감사합니다.");
   };
 
-  // 이메일 값을 Firebase에 저장하고 모달창 닫기
+  // 이메일 값, chat 값 담기
+  const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
   const saveEmailToFirebase = () => {
     if (input) {
-      bucket.add({ email: input }).then((docRef) => {
+      const dataToAdd = {
+        email: input,
+        input: storedKeywords,
+      };
+
+      bucket.add(dataToAdd).then((docRef) => {
         closeModal();
       });
     }
   };
+  // const saveEmailToFirebase = () => {
+  //   if (input) {
+  //     bucket.add({ email: input }).then((docRef) => {
+  //       closeModal();
+  //     });
+  //   }
+  // };
 
   return (
     <ModalStyle>
@@ -76,7 +89,7 @@ function Modal(props) {
 export default Modal;
 
 const ModalStyle = styled.div`
-  border: 2.5px solid #60394f;
+  border: solid 1px #005A82;
   width: 450px;
   height: 200px;
   color: black;

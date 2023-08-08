@@ -130,7 +130,7 @@ const ChatWrapper = styled.div`
 `;
 
 const ChatAiStyle = styled.div`
-  border: solid 1px #424242;
+  border: solid 1px #a7a7a7;
   padding: 20px;
   color: white;
   margin-left: 23px;
@@ -145,7 +145,7 @@ const ChatAiStyle = styled.div`
 `;
 
 const ChatUserStyle = styled.div`
-  border: solid 1px #424242;
+  border: solid 1px #0ac8b9;
   padding: 20px;
   color: white;
   margin-left: 300px;
@@ -156,7 +156,7 @@ const ChatUserStyle = styled.div`
   max-height: 100%;
   border-radius: 20px;
   line-height: 1.6;
-  background-color: #60394f;
+  background-color: #0a323c;
   white-space: pre-line;
 `;
 
@@ -178,7 +178,7 @@ const CheckAnswer = styled.div`
 `;
 
 const ChatChecking = styled.button`
-  color: #b56a94;
+  color: white;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -188,8 +188,8 @@ const ChatChecking = styled.button`
   margin: auto;
   border-radius: 20px;
   padding: 20px 20px;
-  background-color: #1e1e1e;
-  border: 2.5px solid #60394f;
+  background-color: #0a1428;
+  border: solid 1px #005a82;
   margin-top: 20px;
   cursor: pointer;
 `;

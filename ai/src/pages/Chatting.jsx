@@ -5,8 +5,6 @@ import ChatAi from "../component/ChatAi";
 import ChatInput from "../component/ChatInput";
 
 const Chatting = () => {
-
-
   return (
     <Background>
       <Header />
@@ -25,6 +23,10 @@ export default Chatting;
 
 const Background = styled.div`
   background-color: black;
+  background-image: url("https://www.leagueoflegends.co.kr/upload/EditorImages/20180928113244_nhr4NI9U.jpg");
+  background-size: cover;
+  background-position: center center;
+  /* background-repeat: no-repeat; */
   position: absolute;
   width: 100%;
   min-height: 100%;
@@ -33,10 +35,10 @@ const Background = styled.div`
 `;
 
 const ChattingInfo = styled.div`
-  background-color: #1e1e1e;
-  border: solid 1px #424242;
+  background-color: #131313;
+  border: solid 1px #c89b3c;
   width: 658px;
-  min-height: 700px;
+  min-height: 600px;
   max-height: 100%;
   margin: auto;
   margin-top: 80px;
@@ -45,13 +47,13 @@ const ChattingInfo = styled.div`
 `;
 
 const ChatTemplete = styled.div`
-  border: solid 1px #424242;
+  border: solid 1px #005a82;
   margin: auto;
   margin-top: 20px;
   width: 570px;
   height: 55px;
   border-radius: 20px;
-  background-color: #121212;
+  background-color: #0a1428;
   color: white;
   padding: 20px;
   line-height: 1.8;
