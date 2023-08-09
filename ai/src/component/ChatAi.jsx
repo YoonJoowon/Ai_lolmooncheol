@@ -3,25 +3,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { inputValueState, showCheckAnswerState } from "./Recoil";
 import { styled } from "styled-components";
 import questionsData from "../dummy/questionData.json";
-import AiAnswer from "../pages/AiAnswer";
-
-const TypingAnimation = ({ text }) => {
-  const [typedText, setTypedText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timer = setTimeout(() => {
-        setTypedText((prevTypedText) => prevTypedText + text[currentIndex]);
-        setCurrentIndex(currentIndex + 1);
-      }, 70); // 타이핑 속도 조절을 위한 딜레이 설정
-
-      return () => clearTimeout(timer);
-    }
-  }, [currentIndex, text]);
-
-  return <p>{typedText}</p>;
-};
+import AiAnswer from "./AiAnswer";
+import TypingAnimation from "./TypingAnimation";
 
 const ChatAi = () => {
   const [questionIndex, setQuestionIndex] = useState(1);

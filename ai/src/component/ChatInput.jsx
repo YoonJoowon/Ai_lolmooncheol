@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { inputValueState } from "./Recoil";
 import { styled } from "styled-components";
@@ -6,17 +6,42 @@ import { styled } from "styled-components";
 const ChatInput = () => {
   const [input, setInput] = useRecoilState(inputValueState);
   const [inputBuffer, setInputBuffer] = useState("");
+  const [isInputLocked, setIsInputLocked] = useState(false);
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
+    if (!isInputLocked && e.key === "Enter") {
       setInput(inputBuffer.toLowerCase());
       setInputBuffer("");
+      lockInputForDelay(2000);
     }
   };
 
   const getValue = (e) => {
     setInputBuffer(e.target.value);
   };
+
+  // 2초 동안 입력 잠금
+  const lockInputForDelay = (delay) => {
+    setIsInputLocked(true);
+    setTimeout(() => {
+      setIsInputLocked(false);
+    }, delay);
+  };
+
+  useEffect(() => {
+    const keyDownListener = (e) => {
+      if (isInputLocked) {
+        e.preventDefault(); // 입력 잠금 중에는 다른 키 입력을 막음
+      }
+    };
+
+    window.addEventListener("keydown", keyDownListener);
+
+    return () => {
+      window.removeEventListener("keydown", keyDownListener);
+    };
+  }, [isInputLocked]);
+
   return (
     <ChatInputStyle
       placeholder="여기에 답변을 해주세요!"

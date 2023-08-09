@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import Modal from "./Modal";
+import Modal from "../pages/Modal";
 import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
-import { showCheckAnswerState } from "../component/Recoil";
+import { showCheckAnswerState } from "./Recoil";
 
 function AiAnswer(props) {
   // 모달창 노출 여부 state
