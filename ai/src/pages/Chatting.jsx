@@ -29,7 +29,7 @@ const Background = styled.div`
   /* background-repeat: no-repeat; */
   position: absolute;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   display: flex;
   font-family: Arial, sans-serif;
 `;
@@ -38,12 +38,30 @@ const ChattingInfo = styled.div`
   background-color: #131313;
   border: solid 1px #c89b3c;
   width: 658px;
-  min-height: 600px;
-  max-height: 100%;
+  height: 65%;
   margin: auto;
   margin-top: 80px;
   border-radius: 20px;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
 `;
 
 const ChatTemplete = styled.div`

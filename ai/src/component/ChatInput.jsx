@@ -36,8 +36,8 @@ export const ChatInputStyle = styled.textarea`
   word-wrap: break-word;
   max-width: 618px;
   min-width: 618px;
-  min-height: 60px;
-  max-height: 60px;
+  min-height: 8%;
+  max-height: 8%;
   border-radius: 20px;
   outline: none;
   padding: 20px 20px;
