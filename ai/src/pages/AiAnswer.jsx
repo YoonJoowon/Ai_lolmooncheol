@@ -78,7 +78,11 @@ function AiAnswer(props) {
           <>
             <AiFeedbackAnswerTitle>Ai문철 입니다.</AiFeedbackAnswerTitle>
             {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
-            <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
+            <AiFeedbackAnswer>
+              {formattedMessage}
+              asssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssasssssssssassss\
+              sssssasssssssssasssssssssasssssssssasssssssss
+            </AiFeedbackAnswer>
             <SecondBtnStyle onClick={showModal}>2심 신청하기</SecondBtnStyle>
           </>
         )}
@@ -96,19 +100,15 @@ const Background = styled.div`
   height: 100%;
   font-family: Arial, sans-serif;
 `;
+
 const ChattingInfo = styled.div`
+  background-color: #1e1e1e;
   border: solid 1px #424242;
+  width: 658px;
+  min-height: 700px;
   margin: auto;
-  margin-top: 20px;
-  width: 570px;
+  margin-top: 80px;
   border-radius: 20px;
-  background-color: #121212;
-  color: white;
-  padding: 20px;
-  line-height: 1.8;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
 `;
 
 const AiFeedbackAnswerTitle = styled.p`

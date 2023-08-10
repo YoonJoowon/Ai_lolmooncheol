@@ -30,7 +30,6 @@ const Background = styled.div`
   max-height: 250%;
   font-family: Arial, sans-serif;
   margin-bottom: 400px;
-  /* display: flex; */
 `;
 
 const ChattingInfo = styled.div`

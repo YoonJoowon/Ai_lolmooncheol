@@ -77,6 +77,7 @@ const ChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 20px 0px 20px 0px;
 `;
 
 const ChatAiStyle = styled.div`

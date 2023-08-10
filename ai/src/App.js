@@ -10,8 +10,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Chatting />} />
-          {/* <Route path="/AiAnswer" element={<AiAnswer />} />
-          <Route path="/UserSearch" element={<UserSearch />} /> */}
+          <Route path="/AiAnswer" element={<AiAnswer />} />
+          {/* <Route path="/UserSearch" element={<UserSearch />} /> */}
         </Routes>
       </BrowserRouter>
     </div>
