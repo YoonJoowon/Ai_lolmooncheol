@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { styled } from "styled-components";
 import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
@@ -9,13 +9,12 @@ const Chatting = () => {
     <Background>
       <Header />
       <ChattingInfo>
-        {/* <ConfrontationPicture></ConfrontationPicture> */}
         <ChatTemplete>
           질문에 대하여 최대한 자세하게 설명 해주시면 판결 정확도가 올라갑니다!
         </ChatTemplete>
         <ChatAi></ChatAi>
+        <ChatInput></ChatInput>
       </ChattingInfo>
-      <ChatInput></ChatInput>
     </Background>
   );
 };
@@ -24,42 +23,55 @@ export default Chatting;
 
 const Background = styled.div`
   background-color: black;
+  background-image: url("https://www.leagueoflegends.co.kr/upload/EditorImages/20180928113244_nhr4NI9U.jpg");
+  background-size: cover;
+  background-position: center center;
+  /* background-repeat: no-repeat; */
   position: absolute;
   width: 100%;
-  min-height: 100%;
-  max-height: 250%;
+  height: 100%;
+  display: flex;
   font-family: Arial, sans-serif;
-  margin-bottom: 400px;
 `;
 
 const ChattingInfo = styled.div`
-  background-color: #1e1e1e;
-  border: solid 1px #424242;
+  background-color: #131313;
+  border: solid 1px #c89b3c;
   width: 658px;
-  min-height: 700px;
+  height: 65%;
   margin: auto;
   margin-top: 80px;
   border-radius: 20px;
-`;
+  padding-bottom: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
 
-const ConfrontationPicture = styled.div`
-  border: solid 1px #424242;
-  margin: auto;
-  margin-top: 20px;
-  width: 610px;
-  height: 105px;
-  border-radius: 20px;
-  background-color: #3f3f3f;
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
 `;
 
 const ChatTemplete = styled.div`
-  border: solid 1px #424242;
+  border: solid 1px #005a82;
   margin: auto;
   margin-top: 20px;
   width: 570px;
   height: 55px;
   border-radius: 20px;
-  background-color: #121212;
+  background-color: #0a1428;
   color: white;
   padding: 20px;
   line-height: 1.8;

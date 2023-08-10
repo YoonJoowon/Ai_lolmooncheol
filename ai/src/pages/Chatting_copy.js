@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
 
-const Chatting = () => {
+const Chatting_copy = () => {
   const [keywords1, setKeywords1] = useState("");
   const [keywords2, setKeywords2] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -100,7 +100,7 @@ const Chatting = () => {
   );
 };
 
-export default Chatting;
+export default Chatting_copy;
 
 const Background = styled.div`
   background-color: black;

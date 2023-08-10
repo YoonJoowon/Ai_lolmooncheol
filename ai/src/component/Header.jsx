@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 const HeaderStyle = styled.div`
   background-color: #1e1e1e;
   border-radius: 20px;
-  border: 1px solid #575757;
+  border: solid 1px #c89b3c;
   margin: auto;
   width: 658px;
   height: 42px;

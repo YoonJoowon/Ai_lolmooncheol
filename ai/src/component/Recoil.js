@@ -11,12 +11,12 @@ export const searchInputSelector = selector({
   set: ({ set }, newValue) => set(inputValueState, newValue),
 });
 
-export const checkAiAnswer = atom({
-  key: "checkAiAnswer",
-  default: "",
+export const showCheckAnswerState = atom({
+  key: "showCheckAnswerState",
+  default: false,
 });
 
-export const checkAiAnswerSelector = selector({
-  key: "checkAiAnswerSelector",
-  get: ({ get }) => get(checkAiAnswer),
+export const conversationState = atom({
+  key: "conversationState",
+  default: "",
 });

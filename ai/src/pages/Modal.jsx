@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
-const api_key = process.env.REACT_APP_FIREBASE_API_KEY;
-
 const firebaseConfig = {
-  apiKey: api_key,
-  authDomain: "dor-project-12340.firebaseapp.com",
-  projectId: "dor-project-12340",
-  storageBucket: "dor-project-12340.appspot.com",
-  messagingSenderId: "426903209241",
-  appId: "1:426903209241:web:2626860b249ae1f5213188",
-  measurementId: "G-8MGR4M93CP",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: "aimoon-c9fa4.firebaseapp.com",
+  projectId: "aimoon-c9fa4",
+  storageBucket: "aimoon-c9fa4.appspot.com",
+  messagingSenderId: "928734093079",
+  appId: "1:928734093079:web:d9e3c6d2d41f26298f2152",
+  measurementId: "G-W565SFZ6GF",
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -38,28 +36,41 @@ function Modal(props) {
   // 모달창 끄기
   const closeModal = () => {
     props.setModalOpen(false);
-    alert("인증처리 신청이 완료되었습니다. 감사합니다.");
+    alert("결과 신청이 완료되었습니다. 감사합니다.");
   };
 
-  // 이메일 값을 Firebase에 저장하고 모달창 닫기
+  // 이메일 값, chat 값 담기
+  const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
   const saveEmailToFirebase = () => {
     if (input) {
-      bucket.add({ email: input }).then((docRef) => {
-        console.log("Document ID:", docRef.id);
+      const dataToAdd = {
+        email: input,
+        input: storedKeywords,
+      };
+
+      bucket.add(dataToAdd).then((docRef) => {
         closeModal();
       });
     }
   };
+  // const saveEmailToFirebase = () => {
+  //   if (input) {
+  //     bucket.add({ email: input }).then((docRef) => {
+  //       closeModal();
+  //     });
+  //   }
+  // };
 
   return (
     <ModalStyle>
-      <ModalGuideTitle>2심 신청</ModalGuideTitle>
+      <ModalGuideTitle>결과 신청</ModalGuideTitle>
       <ModalGuide>
-        인증된 유저만 2심신청이 가능합니다. 이메일을 입력 해주세요.
+        {/* 인증된 유저만 확인 가능합니다. 이메일을 입력 해주세요. */}
+        이메일을 입력 해주세요. 이용에 불편을 드려 대단히 죄송합니다.
       </ModalGuide>
       <ModalInputEmailbox>
         <ModalInputEmail
-          placeholder="여기에 답변을 해주세요!"
+          placeholder="이메일을 입력해주세요."
           type="email"
           id="searchInput"
           value={input}
@@ -78,13 +89,13 @@ function Modal(props) {
 export default Modal;
 
 const ModalStyle = styled.div`
-  /* border: 2.5px solid #60394f; */
+  border: solid 1px #005A82;
   width: 450px;
   height: 200px;
   color: black;
   font-weight: 500;
   position: absolute;
-  top: 40%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
