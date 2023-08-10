@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
 import ChatInput from "../component/ChatInput";
+import ChattingInfoGage from "../component/ChattingInfoGage";
 
 const Chatting = () => {
   return (
@@ -13,7 +14,13 @@ const Chatting = () => {
           질문에 대하여 최대한 자세하게 설명 해주시면 판결 정확도가 올라갑니다!
         </ChatTemplete>
         <ChatAi></ChatAi>
-        <ChatInput></ChatInput>
+
+        <ChatInputBox>
+          <ChatInput />
+          <ChattingInfoGagebox>
+            <ChattingInfoGage />
+          </ChattingInfoGagebox>
+        </ChatInputBox>
       </ChattingInfo>
     </Background>
   );
@@ -26,7 +33,6 @@ const Background = styled.div`
   background-image: url("https://www.leagueoflegends.co.kr/upload/EditorImages/20180928113244_nhr4NI9U.jpg");
   background-size: cover;
   background-position: center center;
-  /* background-repeat: no-repeat; */
   position: absolute;
   width: 100%;
   height: 100%;
@@ -76,6 +82,31 @@ const ChatTemplete = styled.div`
   padding: 20px;
   line-height: 1.8;
   display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ChatInputBox = styled.div`
+  margin: auto;
+  margin-top: 40px;
+  width: 600px;
+  height: 1px;
+  padding: none;
+  position: absolute;
+  bottom: 50px;
+`;
+
+
+const ChattingInfoGagebox = styled.div`
+  margin: auto;
+  margin-top: 40px;
+  width: 600px;
+  height: 1px;
+  padding: none;
+  position: absolute;
+  bottom: 50px;
+  /* background-color: #c89b3c; */
   text-align: center;
   justify-content: center;
   align-items: center;

@@ -49,7 +49,8 @@ const ChatInput = () => {
       value={inputBuffer}
       onChange={getValue}
       onKeyDown={handleKeyPress}
-    ></ChatInputStyle>
+    >
+    </ChatInputStyle>
   );
 };
 
@@ -68,7 +69,6 @@ export const ChatInputStyle = styled.textarea`
   padding: 20px 20px;
   background-color: #1e1e1e;
   border: solid 1px #c89b3c;
-  position: absolute;
   bottom: 10px;
   position: fixed;
 `;
