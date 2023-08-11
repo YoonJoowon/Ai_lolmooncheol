@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { inputValueState, showCheckAnswerState } from "./Recoil";
+import { inputValueState, showCheckAnswerState } from "../store/Recoil";
 import { styled } from "styled-components";
 import questionsData from "../dummy/questionData.json";
 import AiAnswer from "./AiAnswer";

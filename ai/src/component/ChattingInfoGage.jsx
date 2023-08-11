@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { inputValueState } from "./Recoil";
+import { inputValueState } from "../store/Recoil";
 import { useRecoilState } from "recoil";
 
 const ChattingInfoGage = () => {
@@ -23,7 +23,7 @@ const ChattingInfoGageStyle = styled.div`
   position: absolute;
   background: #ffd476;
   box-shadow: 0px 0px 10px #ffcd61;
-  /* animation: animFw linear infinite; */
+  transition: width 1s ease-in-out;
 
   &::after,
   &::before {

@@ -13,7 +13,8 @@ const Chatting = () => {
         <ChatTemplete>
           <ChatTempleteTxt>
             질문에 대하여 최대한 자세히 정보를 제공해주세요. <br />
-            자세히 설명 할 수록 <span>최하단의 판결 정확도 게이지</span>가 올라갑니다!
+            자세히 설명 할 수록 <span>최하단의 판결 정확도 게이지</span>가
+            늘어납니다!
           </ChatTempleteTxt>
         </ChatTemplete>
         <ChatAi></ChatAi>

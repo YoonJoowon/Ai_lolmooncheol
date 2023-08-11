@@ -53,13 +53,6 @@ function Modal(props) {
       });
     }
   };
-  // const saveEmailToFirebase = () => {
-  //   if (input) {
-  //     bucket.add({ email: input }).then((docRef) => {
-  //       closeModal();
-  //     });
-  //   }
-  // };
 
   return (
     <ModalStyle>
@@ -89,19 +82,19 @@ function Modal(props) {
 export default Modal;
 
 const ModalStyle = styled.div`
-  border: solid 1px #005A82;
+  border: solid 1px #c89b3c;
   width: 450px;
   height: 200px;
-  color: black;
+  color: white;
   font-weight: 500;
   position: absolute;
-  top: 60%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  background-color: #bababa;
+  background-color: #131313;
   box-shadow: 8px 8px 8px rgba(228, 228, 228, 0.2);
 `;
 
@@ -161,8 +154,8 @@ const ModalInputEmailSendBtn = styled.button`
   height: 40px;
   font-size: 14px;
   border-radius: 20px;
-  background-color: #1e1e1e;
-  color: white;
+  background-color: #ffffff;
+  color: black;
   padding: 10px;
   margin: auto;
 `;

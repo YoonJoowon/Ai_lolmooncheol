@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { inputValueState } from "./Recoil";
+import { inputValueState } from "../store/Recoil";
 import { styled } from "styled-components";
 
 const ChatInput = () => {
