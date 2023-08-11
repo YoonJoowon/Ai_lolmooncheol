@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
@@ -11,7 +11,8 @@ const Chatting = () => {
       <Header />
       <ChattingInfo>
         <ChatTemplete>
-          질문에 대하여 최대한 자세하게 설명 해주시면 판결 정확도가 올라갑니다!
+          질문에 대하여 최대한 자세히 정보를 제공해주세요. <br />
+          자세히 설명 할 수록 아래의 판결 정확도 게이지가 올라갑니다!
         </ChatTemplete>
         <ChatAi></ChatAi>
 
@@ -87,27 +88,13 @@ const ChatTemplete = styled.div`
   align-items: center;
 `;
 
-const ChatInputBox = styled.div`
-  margin: auto;
-  margin-top: 40px;
-  width: 600px;
-  height: 1px;
-  padding: none;
-  position: absolute;
-  bottom: 50px;
-`;
-
+const ChatInputBox = styled.div``;
 
 const ChattingInfoGagebox = styled.div`
   margin: auto;
-  margin-top: 40px;
-  width: 600px;
+  margin-top: 80px;
   height: 1px;
-  padding: none;
   position: absolute;
   bottom: 50px;
-  /* background-color: #c89b3c; */
   text-align: center;
-  justify-content: center;
-  align-items: center;
 `;

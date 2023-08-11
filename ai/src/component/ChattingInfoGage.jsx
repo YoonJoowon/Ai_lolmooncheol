@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { inputValueState } from "./Recoil";
+import { useRecoilState } from "recoil";
 
 const ChattingInfoGage = () => {
-  return <ChattingInfoGageStyle></ChattingInfoGageStyle>;
+  const [inputValue] = useRecoilState(inputValueState);
+  const [gageWidth, setGageWidth] = useState(inputValue.length * 6);
+
+  // 누적 width 값 증가
+  useEffect(() => {
+    setGageWidth((prevGageWidth) => prevGageWidth + inputValue.length * 6);
+  }, [inputValue]);
+  return <ChattingInfoGageStyle width={gageWidth} />;
 };
 
 export default ChattingInfoGage;
 
 const ChattingInfoGageStyle = styled.div`
   height: 2.8px;
-  width: auto;
+  width: ${({ width }) => width}px;
+  max-width: 658px;
   position: absolute;
   background: #ffd476;
   box-shadow: 0px 0px 10px #ffcd61;
-  animation: animFw 4s linear infinite;
+  /* animation: animFw linear infinite; */
 
   &::after,
   &::before {
@@ -32,15 +42,6 @@ const ChattingInfoGageStyle = styled.div`
     top: -4px;
     transform: rotate(45deg);
     animation: coli2 0.3s linear infinite;
-  }
-
-  @keyframes animFw {
-    0% {
-      width: 0;
-    }
-    100% {
-      width: 590px;
-    }
   }
 
   @keyframes coli1 {

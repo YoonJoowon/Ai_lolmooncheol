@@ -12,7 +12,7 @@ const ChatInput = () => {
     if (!isInputLocked && e.key === "Enter") {
       setInput(inputBuffer.toLowerCase());
       setInputBuffer("");
-      lockInputForDelay(2000);
+      lockInputForDelay(2500);
     }
   };
 
@@ -20,7 +20,7 @@ const ChatInput = () => {
     setInputBuffer(e.target.value);
   };
 
-  // 2초 동안 입력 잠금
+  // 입력 잠금
   const lockInputForDelay = (delay) => {
     setIsInputLocked(true);
     setTimeout(() => {
@@ -31,7 +31,7 @@ const ChatInput = () => {
   useEffect(() => {
     const keyDownListener = (e) => {
       if (isInputLocked) {
-        e.preventDefault(); // 입력 잠금 중에는 다른 키 입력을 막음
+        e.preventDefault();
       }
     };
 
@@ -62,13 +62,13 @@ export const ChatInputStyle = styled.textarea`
   word-wrap: break-word;
   max-width: 618px;
   min-width: 618px;
-  min-height: 8%;
-  max-height: 8%;
+  min-height: 5%;
+  max-height: 5%;
   border-radius: 20px;
   outline: none;
   padding: 20px 20px;
   background-color: #1e1e1e;
   border: solid 1px #c89b3c;
-  bottom: 10px;
+  bottom: 70px;
   position: fixed;
 `;
