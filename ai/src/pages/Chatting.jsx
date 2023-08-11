@@ -11,17 +11,17 @@ const Chatting = () => {
       <Header />
       <ChattingInfo>
         <ChatTemplete>
-          질문에 대하여 최대한 자세히 정보를 제공해주세요. <br />
-          자세히 설명 할 수록 아래의 판결 정확도 게이지가 올라갑니다!
+          <ChatTempleteTxt>
+            질문에 대하여 최대한 자세히 정보를 제공해주세요. <br />
+            자세히 설명 할 수록 <span>최하단의 판결 정확도 게이지</span>가 올라갑니다!
+          </ChatTempleteTxt>
         </ChatTemplete>
         <ChatAi></ChatAi>
 
-        <ChatInputBox>
-          <ChatInput />
-          <ChattingInfoGagebox>
-            <ChattingInfoGage />
-          </ChattingInfoGagebox>
-        </ChatInputBox>
+        <ChatInput />
+        <ChattingInfoGagebox>
+          <ChattingInfoGage />
+        </ChattingInfoGagebox>
       </ChattingInfo>
     </Background>
   );
@@ -88,7 +88,11 @@ const ChatTemplete = styled.div`
   align-items: center;
 `;
 
-const ChatInputBox = styled.div``;
+const ChatTempleteTxt = styled.p`
+  span {
+    color: #c89b3c;
+  }
+`;
 
 const ChattingInfoGagebox = styled.div`
   margin: auto;
