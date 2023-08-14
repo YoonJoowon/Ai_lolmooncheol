@@ -12,7 +12,7 @@ const ChatInput = () => {
     if (!isInputLocked && e.key === "Enter") {
       setInput(inputBuffer.toLowerCase());
       setInputBuffer("");
-      lockInputForDelay(10);
+      lockInputForDelay(2500);
     }
   };
 

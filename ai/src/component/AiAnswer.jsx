@@ -19,9 +19,10 @@ function AiAnswer(props) {
   const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
 
   const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
-  const filteredString = storedKeywords
-    .filter((item) => typeof item === "string")
-    .join("");
+  const filteredString =
+    (storedKeywords || [])
+      .filter((item) => typeof item === "string")
+      .join("") || "";
 
   // 모달창 노출
   const showModal = () => {
@@ -35,7 +36,7 @@ function AiAnswer(props) {
 
   useEffect(() => {
     if (showCheckAnswerRecoil) {
-      // handleSubmit();
+      handleSubmit();
       console.log("2번실행");
     }
   }, [showCheckAnswerRecoil]);
@@ -93,7 +94,7 @@ function AiAnswer(props) {
             </>
           )}
           {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
-          <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle>
+          {/* <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle> */}
         </ChattingInfo>
       )}
     </>
