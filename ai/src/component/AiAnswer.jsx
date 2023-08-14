@@ -89,7 +89,7 @@ function AiAnswer(props) {
           {responseMessage && !isLoading && (
             <>
               <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
-              <SecondBtnStyle onClick={reFresh}>다시 판결받기</SecondBtnStyle>
+              <ReplayBtnStyle onClick={reFresh}>다시 판결받기</ReplayBtnStyle>
               <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle>
             </>
           )}
@@ -129,6 +129,17 @@ const AiFeedbackAnswer = styled.p`
   text-align: center;
   justify-content: center;
   align-items: center;
+`;
+
+const ReplayBtnStyle = styled.button`
+  color: white;
+  width: 200px;
+  height: 50px;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: #0a1428;
+  border: solid 1px #005a82;
+  margin: 0px 10px 0px 10px;
 `;
 
 const SecondBtnStyle = styled.button`
