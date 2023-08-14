@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Chatting />} />
           <Route path="/Juror" element={<Juror />} />
-          {/* <Route path="/Chattingcopy" element={<Chatting_copy />} /> */}
+          <Route path="/Chattingcopy" element={<Chatting_copy />} />
           {/* <Route path="/UserSearch" element={<UserSearch />} /> */}
         </Routes>
       </BrowserRouter>

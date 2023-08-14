@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
 
+
 const Chatting_copy = () => {
   const [keywords1, setKeywords1] = useState("");
   const [keywords2, setKeywords2] = useState("");
@@ -9,7 +10,7 @@ const Chatting_copy = () => {
   const [error, setError] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
-  const api_key = process.env.REACT_APP_CHATGPT_API_KEY;
+  const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
   const handleChange1 = (event) => {
     setKeywords1(event.target.value);
@@ -24,7 +25,7 @@ const Chatting_copy = () => {
       {
         role: "system",
         content:
-          "너는 한국에서 리그오브레전드 분쟁의 판결을 가장 잘 내려주는 사람이야! 그리고 입장 중 하나를 무조건 선택 해줘야 돼",
+          "롤 게임 관해서 질문 할 것 입니다. 당신은 최고의 롤 변호사입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 첫번째 선택지를 변호해주세요. 답을 선택한 이유를 말해주세요. 그리고 비유를 사용하여 설명해주세요.",
       },
       {
         role: "user",
@@ -42,7 +43,7 @@ const Chatting_copy = () => {
     axios
       .post("https://api.openai.com/v1/chat/completions", data, {
         headers: {
-          Authorization: "Bearer " + api_key,
+          Authorization: "Bearer " + apiKey,
           "Content-Type": "application/json",
         },
       })

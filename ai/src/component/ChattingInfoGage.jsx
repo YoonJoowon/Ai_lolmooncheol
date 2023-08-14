@@ -5,11 +5,11 @@ import { useRecoilState } from "recoil";
 
 const ChattingInfoGage = () => {
   const [inputValue] = useRecoilState(inputValueState);
-  const [gageWidth, setGageWidth] = useState(inputValue.length * 6);
+  const [gageWidth, setGageWidth] = useState(inputValue.length * 4);
 
   // 누적 width 값 증가
   useEffect(() => {
-    setGageWidth((prevGageWidth) => prevGageWidth + inputValue.length * 6);
+    setGageWidth((prevGageWidth) => prevGageWidth + inputValue.length * 4);
   }, [inputValue]);
   return <ChattingInfoGageStyle width={gageWidth} />;
 };
