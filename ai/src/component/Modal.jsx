@@ -36,7 +36,7 @@ function Modal(props) {
   // 모달창 끄기
   const closeModal = () => {
     props.setModalOpen(false);
-    alert("결과 신청이 완료되었습니다. 감사합니다.");
+    alert("신청이 완료되었습니다. 감사합니다.");
   };
 
   // 이메일 값, chat 값 담기
@@ -56,10 +56,11 @@ function Modal(props) {
 
   return (
     <ModalStyle>
-      <ModalGuideTitle>결과 신청</ModalGuideTitle>
+      <ModalGuideTitle>2심 신청</ModalGuideTitle>
       <ModalGuide>
         {/* 인증된 유저만 확인 가능합니다. 이메일을 입력 해주세요. */}
-        이메일을 입력 해주세요. 이용에 불편을 드려 대단히 죄송합니다.
+        2심제도는 유저들이 과실 비율을 측정하는 시스템입니다. <br />
+        테스트 버전을 받아보고 싶으신 유저는 이메일을 제출 해주세요.
       </ModalGuide>
       <ModalInputEmailbox>
         <ModalInputEmail
@@ -79,7 +80,7 @@ function Modal(props) {
   );
 }
 
-export default Modal;
+export { Modal };
 
 const ModalStyle = styled.div`
   border: solid 1px #c89b3c;
@@ -111,13 +112,13 @@ const ModalGuideTitle = styled.div`
 
 const ModalGuide = styled.div`
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   width: 90%;
-  font-weight: 600;
   padding: 60px 20px 20px 20px;
   line-height: 1.6;
   position: absolute;
   margin: auto;
+  margin-bottom: 10px;
   text-align: center;
   white-space: pre-line;
 `;
@@ -132,6 +133,7 @@ const ModalInputEmail = styled.input`
   margin: auto;
   bottom: 10px;
   left: 15%;
+  color: black;
 `;
 
 const ModalInputEmailbox = styled.div`

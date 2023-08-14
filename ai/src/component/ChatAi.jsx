@@ -11,13 +11,14 @@ const ChatAi = () => {
   const [currentQuestion, setCurrentQuestion] = useState(questionsData[1]);
   const [conversation, setConversation] = useState([]);
   const [inputValues, setInputValues] = useState([]);
-  const [showCheckAnswer, setShowCheckAnswer] =
+  const [showCheckAnswer, setShowCheckAnswer] = useState(false);
+  const [showCheckAnswerRecoil, setShowCheckAnswerRecoil] =
     useRecoilState(showCheckAnswerState);
 
   // 버튼을 누를 때 이벤트 핸들러
   const handleButtonClick = () => {
     setShowCheckAnswer(true);
-    // setTriggerAiAnswer(true);
+    setShowCheckAnswerRecoil(true);
   };
 
   const inputValue = useRecoilValue(inputValueState);
@@ -94,13 +95,13 @@ const ChatAi = () => {
       )}
 
       {showCheckAnswer && (
-        <>
-          <CheckAnswer>
-            판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
-          </CheckAnswer>
-          <AiAnswer></AiAnswer>
-        </>
+        <CheckAnswer>
+          판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
+        </CheckAnswer>
       )}
+
+      <AiAnswer></AiAnswer>
+
       <div ref={scrollContainerRef}></div>
     </ChatWrapper>
   );

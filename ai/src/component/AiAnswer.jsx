@@ -3,15 +3,11 @@ import { styled } from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 import { showCheckAnswerState } from "../store/Recoil";
-import { Modal } from "@mui/material";
+import { Modal } from "./Modal";
 
 function AiAnswer(props) {
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
-  // 모달창 노출
-  const showModal = () => {
-    setModalOpen(true);
-  };
 
   //chatGPT
   const [isLoading, setIsLoading] = useState(false);
@@ -20,20 +16,29 @@ function AiAnswer(props) {
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
   const api_key = process.env.REACT_APP_OPENAI_API_KEY;
 
-  const triggerAiAnswer = useRecoilValue(showCheckAnswerState);
-  const setTriggerAiAnswer = useRecoilState(showCheckAnswerState)[1];
+  const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
 
   const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
   const filteredString = storedKeywords
     .filter((item) => typeof item === "string")
     .join("");
 
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
+  // 새로고침
+  const reFresh = () => {
+    window.location.reload();
+  };
+
   useEffect(() => {
-    if (triggerAiAnswer) {
-      handleSubmit();
-      setTriggerAiAnswer(true);
+    if (showCheckAnswerRecoil) {
+      // handleSubmit();
+      console.log("2번실행");
     }
-  }, []);
+  }, [showCheckAnswerRecoil]);
 
   const handleSubmit = () => {
     setIsLoading(true);
@@ -41,11 +46,11 @@ function AiAnswer(props) {
       {
         role: "system",
         content:
-          "롤 게임 관해서 질문 할 것 입니다. 당신은 최고의 롤 변호사입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 첫번째 선택지를 변호해주세요. 답을 선택한 이유를 말해주세요. 그리고 비유를 사용하여 설명해주세요.",
+          "롤 게임 관해서 질문 할것 입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 한 선택지를 선택하여 이유와 함께 답해주세요. 그리고 비유를 덧붙혀 재미있게 설명해주세요.",
       },
       {
         role: "user",
-        content: filteredString + "변호를 해주세요",
+        content: filteredString + "둘 중 어느것이 맞습니까?",
       },
     ];
 
@@ -74,27 +79,24 @@ function AiAnswer(props) {
   };
 
   return (
-    <ChattingInfo>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+    <>
+      {showCheckAnswerRecoil && (
+        <ChattingInfo>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {isLoading && <Loading />}
 
-      {isLoading && (
-        <Loading>
-          <img
-            src="https://studentrights.sen.go.kr/images/common/loading.gif"
-            alt="로딩"
-          />
-        </Loading>
-      )}
-      {responseMessage && !isLoading && (
-        <>
-          <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
-          <SecondBtnStyle onClick={showModal}>
-            판결 게시글 작성하기
-          </SecondBtnStyle>
+          {responseMessage && !isLoading && (
+            <>
+              <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
+              <SecondBtnStyle onClick={reFresh}>다시 판결받기</SecondBtnStyle>
+              <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle>
+            </>
+          )}
           {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
-        </>
+          <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle>
+        </ChattingInfo>
       )}
-    </ChattingInfo>
+    </>
   );
 }
 
@@ -130,12 +132,13 @@ const AiFeedbackAnswer = styled.p`
 
 const SecondBtnStyle = styled.button`
   color: white;
-  width: 300px;
+  width: 200px;
   height: 50px;
   border-radius: 20px;
   cursor: pointer;
   background-color: #0a1428;
   border: solid 1px #005a82;
+  margin: 0px 10px 0px 10px;
 `;
 
 const ErrorMessage = styled.p`
@@ -143,8 +146,81 @@ const ErrorMessage = styled.p`
   margin-bottom: 10px;
 `;
 
-const Loading = styled.p`
-  color: #007bff;
-  font-size: 18px;
-  margin-top: 10px;
+const Loading = styled.div`
+  width: 96px;
+  height: 48px;
+  display: inline-block;
+  position: relative;
+  background: #fff;
+  border-radius: 48px 48px 0 0;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    width: 24px;
+    height: 12px;
+    border-radius: 24px 24px 0 0;
+    background: #ff3d00;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 32px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 0;
+    background: #ff3d00;
+    transform-origin: 50% 100%;
+    box-sizing: border-box;
+    animation: animloader 2s linear infinite alternate;
+  }
+
+  @keyframes animloader {
+    0% {
+      transform: rotate(-70deg);
+    }
+    10% {
+      transform: rotate(-40deg);
+    }
+    20%,
+    45%,
+    35% {
+      transform: rotate(-10deg);
+    }
+    40%,
+    30% {
+      transform: rotate(-30deg);
+    }
+    50%,
+    60% {
+      transform: rotate(20deg);
+    }
+    55%,
+    65%,
+    75% {
+      transform: rotate(40deg);
+    }
+    70% {
+      transform: rotate(45deg);
+    }
+    85%,
+    90% {
+      transform: rotate(50deg);
+    }
+    95% {
+      transform: rotate(75deg);
+    }
+    100%,
+    93% {
+      transform: rotate(70deg);
+    }
+  }
 `;
