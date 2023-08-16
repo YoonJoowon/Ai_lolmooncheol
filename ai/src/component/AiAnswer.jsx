@@ -20,9 +20,9 @@ function AiAnswer(props) {
 
   const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
   const filteredString =
-    (storedKeywords || [])
-      .filter((item) => typeof item === "string")
-      .join("") || "";
+  (storedKeywords || [])
+    .map(item => String(item))
+    .join(" ");
 
   // 모달창 노출
   const showModal = () => {

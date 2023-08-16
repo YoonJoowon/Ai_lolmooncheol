@@ -36,7 +36,6 @@ function Modal(props) {
   // 모달창 끄기
   const closeModal = () => {
     props.setModalOpen(false);
-    alert("신청이 완료되었습니다. 감사합니다.");
   };
 
   // 이메일 값, chat 값 담기
@@ -49,6 +48,7 @@ function Modal(props) {
       };
 
       bucket.add(dataToAdd).then((docRef) => {
+        alert("신청이 완료되었습니다. 감사합니다.");
         closeModal();
       });
     }
