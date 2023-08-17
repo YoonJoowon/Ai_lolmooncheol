@@ -47,7 +47,7 @@ function AiAnswer(props) {
       {
         role: "system",
         content:
-          "롤 게임 관해서 질문 할것 입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 한 선택지를 선택하여 이유와 함께 답해주세요. 그리고 비유를 덧붙혀 재미있게 설명해주세요.",
+          "롤 게임 관해서 질문 할것 입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 한 선택지를 선택하여 이유와 함께 답해주세요. 그리고 비유를 사용하여 설명해주세요.",
       },
       {
         role: "user",
@@ -75,7 +75,7 @@ function AiAnswer(props) {
       })
       .catch((error) => {
         setIsLoading(false);
-        setError("하루 이용량이 초과 됐습니다.");
+        setError("이용 토큰이 만료되었습니다.");
       });
   };
 

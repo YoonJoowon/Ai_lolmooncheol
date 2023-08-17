@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import Logo from "./Logo";
 
 const Header = () => {
-  const TitleText = "1심 : AI판결";
+  const TitleText = "AI 롤문철";
   return (
     <Wrapper>
       <Logo />
