@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import Modal from "./Modal";
 import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
-import { showCheckAnswerState } from "../component/Recoil";
+import { showCheckAnswerState } from "../store/Recoil";
+import { Modal } from "@mui/material";
 
 function AiAnswer(props) {
   // 모달창 노출 여부 state
@@ -17,12 +17,16 @@ function AiAnswer(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
-  const storedKeywords = sessionStorage.getItem("keywords1");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
   const api_key = process.env.REACT_APP_CHATGPT_API_KEY;
 
   const triggerAiAnswer = useRecoilValue(showCheckAnswerState);
   const setTriggerAiAnswer = useRecoilState(showCheckAnswerState)[1];
+
+  const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
+  const sessionInfo = {
+    strings: storedKeywords,
+  };
 
   useEffect(() => {
     if (triggerAiAnswer) {
@@ -38,11 +42,11 @@ function AiAnswer(props) {
       {
         role: "system",
         content:
-          "롤 게임 관해서 질문 할거야. 넌 두 가지 선택지가 주어지면 중립적인 문구없이 응답해줘. 또한 답을 선택한 이유와 함께 비유를 사용하여 설명해줘.",
+          "롤 게임 관해서 질문 할 것 입니다. 당신은 최고의 롤 변호사입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 첫번째 선택지를 변호해주세요. 답을 선택한 이유를 말해주세요. 그리고 비유를 사용하여 설명해주세요.",
       },
       {
         role: "user",
-        content: storedKeywords + "둘 중 어느것이 맞습니까?",
+        content: sessionInfo + "변호를 해주세요",
       },
     ];
 
@@ -72,7 +76,12 @@ function AiAnswer(props) {
 
   return (
     <ChattingInfo>
-      <AiFeedbackAnswerTitle>Ai문철 입니다.</AiFeedbackAnswerTitle>
+      <AiFeedbackAnswerTitle>
+        현재 서버량이 많아 판결이 어렵습니다.
+      </AiFeedbackAnswerTitle>
+      <AiFeedbackAnswerSry>
+        이메일을 입력해주시면 순차적으로 판결 발송 드리겠습니다. 죄송합니다.
+      </AiFeedbackAnswerSry>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
 
@@ -87,7 +96,7 @@ function AiAnswer(props) {
       {responseMessage && !isLoading && (
         <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
       )}
-      <SecondBtnStyle onClick={showModal}>2심 신청하기</SecondBtnStyle>
+      <SecondBtnStyle onClick={showModal}>결과 받기</SecondBtnStyle>
       {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
     </ChattingInfo>
   );
@@ -96,7 +105,7 @@ function AiAnswer(props) {
 export default AiAnswer;
 
 const ChattingInfo = styled.div`
-  border: solid 1px #424242;
+  border: solid 1px #005a82;
   margin: auto;
   margin-top: 20px;
   width: 570px;
@@ -112,8 +121,16 @@ const ChattingInfo = styled.div`
 `;
 
 const AiFeedbackAnswerTitle = styled.p`
-  color: #b56a94;
+  color: #0077a9;
   font-size: 20px;
+  line-height: 1.6;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const AiFeedbackAnswerSry = styled.p`
+  color: #0077a9;
+  font-size: 16px;
   line-height: 1.6;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -132,13 +149,13 @@ const AiFeedbackAnswer = styled.p`
 `;
 
 const SecondBtnStyle = styled.button`
-  color: #b56a94;
+  color: white;
   width: 300px;
   height: 50px;
   border-radius: 20px;
   cursor: pointer;
-  background-color: #1e1e1e;
-  border: 2.5px solid #60394f;
+  background-color: #0a1428;
+  border: solid 1px #005a82;
 `;
 
 const ErrorMessage = styled.p`

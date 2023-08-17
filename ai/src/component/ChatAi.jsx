@@ -1,35 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { inputValueState, showCheckAnswerState } from "./Recoil";
+import { inputValueState, showCheckAnswerState } from "../store/Recoil";
 import { styled } from "styled-components";
 import questionsData from "../dummy/questionData.json";
-import AiAnswer from "../pages/AiAnswer";
+import AiAnswer from "./AiAnswer";
+import TypingAnimation from "./TypingAnimation";
 
 const ChatAi = () => {
   const [questionIndex, setQuestionIndex] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(questionsData[1]);
   const [conversation, setConversation] = useState([]);
   const [inputValues, setInputValues] = useState([]);
-  const [showCheckAnswer, setShowCheckAnswer] =
+  const [showCheckAnswer, setShowCheckAnswer] = useState(false);
+  const [showCheckAnswerRecoil, setShowCheckAnswerRecoil] =
     useRecoilState(showCheckAnswerState);
-
-  //scroll
-  // const scrollContainerRef = useRef(null);
-  // const scrollToBottom = () => {
-  //   if (scrollContainerRef.current) {
-  //     const scrollContainer = scrollContainerRef.current;
-  //     scrollContainer.scrollTop = scrollContainer.scrollHeight;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [conversation]);
 
   // 버튼을 누를 때 이벤트 핸들러
   const handleButtonClick = () => {
     setShowCheckAnswer(true);
-    // setTriggerAiAnswer(true);
+    setShowCheckAnswerRecoil(true);
   };
 
   const inputValue = useRecoilValue(inputValueState);
@@ -40,7 +29,8 @@ const ChatAi = () => {
       setQuestionIndex(newIndex);
       const newQuestion = questionsData[newIndex];
       setCurrentQuestion(newQuestion);
-      setConversation([...conversation, currentQuestion]);
+      const updatedConversation = [...conversation, currentQuestion];
+      setConversation(updatedConversation);
     }
   };
 
@@ -64,6 +54,19 @@ const ChatAi = () => {
     sessionStorage.setItem("inputValues", JSON.stringify(inputValues));
   }, [inputValues]);
 
+  // scroll
+  const scrollContainerRef = useRef(null);
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    handleScroll();
+  }, [inputValues, showCheckAnswer]);
+
   return (
     <ChatWrapper>
       <ChatAiStyle>
@@ -77,8 +80,9 @@ const ChatAi = () => {
               <p>{inputValues[index]}</p>
             </ChatUserStyle>
           )}
+
           <ChatAiStyle>
-            <p>{item.question}</p>
+            <TypingAnimation text={item.question} />
           </ChatAiStyle>
         </React.Fragment>
       ))}
@@ -91,13 +95,14 @@ const ChatAi = () => {
       )}
 
       {showCheckAnswer && (
-        <>
-          <CheckAnswer>
-            판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
-          </CheckAnswer>
-          <AiAnswer></AiAnswer>
-        </>
+        <CheckAnswer>
+          판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
+        </CheckAnswer>
       )}
+
+      <AiAnswer></AiAnswer>
+
+      <div ref={scrollContainerRef}></div>
     </ChatWrapper>
   );
 };
@@ -109,7 +114,7 @@ const ChatWrapper = styled.div`
 `;
 
 const ChatAiStyle = styled.div`
-  border: solid 1px #424242;
+  border: solid 1px #a7a7a7;
   padding: 20px;
   color: white;
   margin-left: 23px;
@@ -124,7 +129,7 @@ const ChatAiStyle = styled.div`
 `;
 
 const ChatUserStyle = styled.div`
-  border: solid 1px #424242;
+  border: solid 1px #0ac8b9;
   padding: 20px;
   color: white;
   margin-left: 300px;
@@ -135,7 +140,7 @@ const ChatUserStyle = styled.div`
   max-height: 100%;
   border-radius: 20px;
   line-height: 1.6;
-  background-color: #60394f;
+  background-color: #0a323c;
   white-space: pre-line;
 `;
 
@@ -157,7 +162,7 @@ const CheckAnswer = styled.div`
 `;
 
 const ChatChecking = styled.button`
-  color: #b56a94;
+  color: white;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -167,8 +172,8 @@ const ChatChecking = styled.button`
   margin: auto;
   border-radius: 20px;
   padding: 20px 20px;
-  background-color: #1e1e1e;
-  border: 2.5px solid #60394f;
+  background-color: #0a1428;
+  border: solid 1px #005a82;
   margin-top: 20px;
   cursor: pointer;
 `;

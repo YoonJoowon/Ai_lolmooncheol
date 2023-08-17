@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
 import ChatInput from "../component/ChatInput";
+import ChattingInfoGage from "../component/ChattingInfoGage";
 
 const Chatting = () => {
   return (
@@ -10,10 +11,18 @@ const Chatting = () => {
       <Header />
       <ChattingInfo>
         <ChatTemplete>
-          질문에 대하여 최대한 자세하게 설명 해주시면 판결 정확도가 올라갑니다!
+          <ChatTempleteTxt>
+            질문에 대하여 최대한 자세히 정보를 제공해주세요. <br />
+            자세히 설명 할 수록 <span>최하단의 판결 정확도 게이지</span>가
+            늘어납니다!
+          </ChatTempleteTxt>
         </ChatTemplete>
         <ChatAi></ChatAi>
-        <ChatInput></ChatInput>
+
+        <ChatInput />
+        <ChattingInfoGagebox>
+          <ChattingInfoGage />
+        </ChattingInfoGagebox>
       </ChattingInfo>
     </Background>
   );
@@ -23,34 +32,54 @@ export default Chatting;
 
 const Background = styled.div`
   background-color: black;
+  background-image: url("https://www.leagueoflegends.co.kr/upload/EditorImages/20180928113244_nhr4NI9U.jpg");
+  background-size: cover;
+  background-position: center center;
   position: absolute;
   width: 100%;
-  min-height: 100%;
-  max-height: 250%;
+  height: 100%;
+  display: flex;
   font-family: Arial, sans-serif;
-  margin-bottom: 400px;
 `;
 
 const ChattingInfo = styled.div`
-  background-color: #1e1e1e;
-  border: solid 1px #424242;
+  background-color: #131313;
+  border: solid 1px #c89b3c;
   width: 658px;
-  min-height: 1000px;
-  max-height: 5000px;
+  height: 65%;
   margin: auto;
   margin-top: 80px;
   border-radius: 20px;
-  padding-bottom: 150px;
+  padding-bottom: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
 `;
 
 const ChatTemplete = styled.div`
-  border: solid 1px #424242;
+  border: solid 1px #005a82;
   margin: auto;
   margin-top: 20px;
   width: 570px;
   height: 55px;
   border-radius: 20px;
-  background-color: #121212;
+  background-color: #0a1428;
   color: white;
   padding: 20px;
   line-height: 1.8;
@@ -58,4 +87,19 @@ const ChatTemplete = styled.div`
   text-align: center;
   justify-content: center;
   align-items: center;
+`;
+
+const ChatTempleteTxt = styled.p`
+  span {
+    color: #c89b3c;
+  }
+`;
+
+const ChattingInfoGagebox = styled.div`
+  margin: auto;
+  margin-top: 80px;
+  height: 1px;
+  position: absolute;
+  bottom: 50px;
+  text-align: center;
 `;

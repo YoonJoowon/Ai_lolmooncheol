@@ -1,4 +1,4 @@
-import { atom, selector, useRecoilState } from "recoil";
+import { atom, selector } from "recoil";
 
 export const inputValueState = atom({
   key: "inputValueState",
@@ -14,4 +14,9 @@ export const searchInputSelector = selector({
 export const showCheckAnswerState = atom({
   key: "showCheckAnswerState",
   default: false,
+});
+
+export const conversationState = atom({
+  key: "conversationState",
+  default: "",
 });
