@@ -1,10 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { inputValueState, showCheckAnswerState } from "../store/Recoil";
+import {
+  StartAskingNextState,
+  inputValueState,
+  showCheckAnswerState,
+} from "../store/Recoil";
 import { styled } from "styled-components";
 import questionsData from "../dummy/questionData.json";
 import AiAnswer from "./AiAnswer";
 import TypingAnimation from "./TypingAnimation";
+import ChatUserInfo from "./ChatUserInfo";
 
 const ChatAi = () => {
   const [questionIndex, setQuestionIndex] = useState(1);
@@ -15,16 +20,17 @@ const ChatAi = () => {
   const [showCheckAnswerRecoil, setShowCheckAnswerRecoil] =
     useRecoilState(showCheckAnswerState);
 
+  const askStart = useRecoilValue(StartAskingNextState);
+  const inputValue = useRecoilValue(inputValueState);
+
   // 버튼을 누를 때 이벤트 핸들러
   const handleButtonClick = () => {
     setShowCheckAnswer(true);
     setShowCheckAnswerRecoil(true);
   };
 
-  const inputValue = useRecoilValue(inputValueState);
-
   const pickNextQuestion = () => {
-    const newIndex = questionIndex + 1;
+    const newIndex = questionIndex;
     if (newIndex <= questionsData.length) {
       setQuestionIndex(newIndex);
       const newQuestion = questionsData[newIndex];
@@ -35,21 +41,23 @@ const ChatAi = () => {
   };
 
   useEffect(() => {
-    if (inputValue) {
+    if (inputValue || askStart) {
       const cleanedInputValue = inputValue.replace(/\n/g, "");
       setInputValues((prevInputValues) => [
         ...prevInputValues,
         cleanedInputValue,
       ]);
     }
-  }, [inputValue]);
+  }, [inputValue, askStart]);
 
+  // 다음 질문시작
   useEffect(() => {
     if (inputValues.length > 0) {
       pickNextQuestion();
     }
   }, [inputValues]);
 
+  // session 에 추가
   useEffect(() => {
     sessionStorage.setItem("inputValues", JSON.stringify(inputValues));
   }, [inputValues]);
@@ -72,6 +80,7 @@ const ChatAi = () => {
       <ChatAiStyle>
         <p>{questionsData[0].question}</p>
       </ChatAiStyle>
+      <ChatUserInfo></ChatUserInfo>
 
       {conversation.map((item, index) => (
         <React.Fragment key={index}>

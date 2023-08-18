@@ -1,45 +1,80 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { StartAskingNextState, nickNameInputState } from "../store/Recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const SearchInput = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [input, setInput] = useState("");
+  const [nickNameInput, setNickNameInput] = useRecoilState(nickNameInputState);
+  const [inputNickNameBuffer, setNickNameInputBuffer] = useState("");
+  const [isInputLocked, setIsInputLocked] = useState(false);
 
-  const handleSearch = () => {
-    setSearchInput(input);
-  };
+  const reMoveInputFirst = useRecoilValue(StartAskingNextState);
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
+    if (!isInputLocked && e.key === "Enter") {
+      setNickNameInput(inputNickNameBuffer.toLowerCase());
+      setNickNameInputBuffer("");
+      lockInputForDelay(2500);
     }
   };
 
-  const getValue = (e) => {
-    setInput(e.target.value.toLowerCase());
+  const getnickNameValue = (e) => {
+    setNickNameInputBuffer(e.target.value);
   };
 
+  // 입력 잠금
+  const lockInputForDelay = (delay) => {
+    setIsInputLocked(true);
+    setTimeout(() => {
+      setIsInputLocked(false);
+    }, delay);
+  };
+
+  useEffect(() => {
+    const keyDownListener = (e) => {
+      if (isInputLocked) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("keydown", keyDownListener);
+
+    return () => {
+      window.removeEventListener("keydown", keyDownListener);
+    };
+  }, [isInputLocked]);
+
   return (
-    <SearchInputStyle
-      placeholder="소환사 명을 입력하세요."
-      id="searchInput"
-      value={input}
-      onChange={getValue}
-      onKeyDown={handleKeyPress}
-    />
+    <>
+      {!reMoveInputFirst && (
+        <SearchInputStyle
+          placeholder="여기에 답변을 해주세요!"
+          id="searchInput"
+          value={inputNickNameBuffer}
+          onChange={getnickNameValue}
+          onKeyDown={handleKeyPress}
+        />
+      )}
+    </>
   );
 };
 
 export default SearchInput;
 
-export const SearchInputStyle = styled.input`
-  border: solid 1px #424242;
-  margin: auto;
-  margin-top: 20px;
-  text-align: center;
+export const SearchInputStyle = styled.textarea`
   color: white;
-  width: 610px;
-  height: 50px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 618px;
+  min-width: 618px;
+  min-height: 5%;
+  max-height: 5%;
   border-radius: 20px;
-  background-color: #3f3f3f;
+  outline: none;
+  padding: 20px 20px;
+  background-color: #1e1e1e;
+  border: solid 1px #c89b3c;
+  bottom: 70px;
+  position: fixed;
+  z-index: 1;
 `;

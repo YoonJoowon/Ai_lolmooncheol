@@ -4,6 +4,7 @@ import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
 import ChatInput from "../component/ChatInput";
 import ChattingInfoGage from "../component/ChattingInfoGage";
+import SearchInput from "../component/SearchInput";
 
 const Chatting = () => {
   return (
@@ -19,6 +20,7 @@ const Chatting = () => {
         </ChatTemplete>
         <ChatAi></ChatAi>
 
+        <SearchInput />
         <ChatInput />
         <ChattingInfoGagebox>
           <ChattingInfoGage />

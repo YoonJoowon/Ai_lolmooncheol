@@ -5,6 +5,17 @@ export const inputValueState = atom({
   default: "",
 });
 
+export const nickNameInputState = atom({
+  key: "nickNameInputState",
+  default: "",
+});
+
+export const StartAskingNextState = atom({
+  key: "StartAskingNextState",
+  default: false,
+});
+
+
 export const searchInputSelector = selector({
   key: "searchInputSelector",
   get: ({ get }) => get(inputValueState),

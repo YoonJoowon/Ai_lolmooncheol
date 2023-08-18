@@ -19,9 +19,8 @@ function AiAnswer(props) {
   const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
 
   const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
-  const filteredString =
-  (storedKeywords || [])
-    .map(item => String(item))
+  const filteredString = (storedKeywords || [])
+    .map((item) => String(item))
     .join(" ");
 
   // 모달창 노출
@@ -45,7 +44,12 @@ function AiAnswer(props) {
     setIsLoading(true);
     const messages = [
       {
-        role: "system",
+        role: "system", // 행동지정, 역할부여
+        content:
+          "롤 게임 관해서 질문 할것 입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 한 선택지를 선택하여 이유와 함께 답해주세요. 그리고 비유를 사용하여 설명해주세요.",
+      },
+      {
+        role: "assistant", // 이전대화 기억
         content:
           "롤 게임 관해서 질문 할것 입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 한 선택지를 선택하여 이유와 함께 답해주세요. 그리고 비유를 사용하여 설명해주세요.",
       },

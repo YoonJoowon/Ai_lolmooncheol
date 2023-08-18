@@ -8,7 +8,7 @@ const Logo = () => {
 export default Logo;
 
 const LogoStyle = styled.div`
-  color: #ffffff;
+  color: #005a82;
   font-size: 20px;
   position: absolute;
   justify-content: center;
