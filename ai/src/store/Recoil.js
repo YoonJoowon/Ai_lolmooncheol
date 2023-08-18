@@ -15,7 +15,6 @@ export const StartAskingNextState = atom({
   default: false,
 });
 
-
 export const searchInputSelector = selector({
   key: "searchInputSelector",
   get: ({ get }) => get(inputValueState),
