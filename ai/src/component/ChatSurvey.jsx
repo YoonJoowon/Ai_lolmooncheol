@@ -1,17 +1,54 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
+
 import axios from "axios";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/storage";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceSmile as fasFaceSmile } from "@fortawesome/free-solid-svg-icons";
 import { faFaceSadTear as fasFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 
+// const firebaseConfig = {
+//   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+//   authDomain: "aimoon-c9fa4.firebaseapp.com",
+//   projectId: "aimoon-c9fa4",
+//   storageBucket: "aimoon-c9fa4.appspot.com",
+//   messagingSenderId: "928734093079",
+//   appId: "1:928734093079:web:d9e3c6d2d41f26298f2152",
+//   measurementId: "G-W565SFZ6GF",
+// };
+
+// firebase.initializeApp(firebaseConfig);
+
+// const firestore = firebase.firestore();
+
 const ChatSurvey = () => {
+  //   const surbeyBucket = firestore.collection("surbey-bucket");
   // 서버에 보내졌는지 확인하는 상태
+  const [redEmotionState, setRedEmotionState] = useState(false);
+  const [greenEmotionState, setGreenEmotionState] = useState(false);
   const [surveySubmitted, setSurveySubmitted] = useState(false);
+
+  const toggleRedEmotion = () => {
+    setRedEmotionState((prevState) => !prevState);
+    if (greenEmotionState) {
+      setGreenEmotionState((prevState) => !prevState);
+    }
+  };
+
+  const toggleGreenEmotion = () => {
+    setGreenEmotionState((prevState) => !prevState);
+    if (redEmotionState) {
+      setRedEmotionState((prevState) => !prevState);
+    }
+  };
 
   const handleSurveySubmit = (emotion) => {
     if (!surveySubmitted) {
-      setSurveySubmitted(true);
+      //   setSurveySubmitted(true);
       axios
         .post("/submit-survey", { emotion })
         .then((response) => {
@@ -40,7 +77,10 @@ const ChatSurvey = () => {
                   values="good"
                   icon={fasFaceSmile}
                   className="icon smile-icon"
-                  onClick={() => handleSurveySubmit("good")}
+                  onClick={toggleGreenEmotion}
+                  style={{
+                    color: greenEmotionState ? "#00dd00" : "",
+                  }}
                 />
                 <div>만족</div>
               </ChatSurveyEmoziContainer>
@@ -49,7 +89,10 @@ const ChatSurvey = () => {
                   values="bad"
                   icon={fasFaceSadTear}
                   className="icon sad-icon"
-                  onClick={() => handleSurveySubmit("bad")}
+                  onClick={toggleRedEmotion}
+                  style={{
+                    color: redEmotionState ? "#ff00007c" : "",
+                  }}
                 />
                 <div>불만족</div>
               </ChatSurveyEmoziContainer>
