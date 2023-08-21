@@ -20,6 +20,13 @@ const EnterSituationTime = () => {
   const StartAskingNext = () => {
     setStartAskingNextPlz(true);
   };
+  
+  const scrollContainerRef = useRef(null);
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <>

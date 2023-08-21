@@ -30,7 +30,7 @@ const ChatAi = () => {
   };
 
   const pickNextQuestion = () => {
-    const newIndex = questionIndex;
+    const newIndex = questionIndex + 1;
     if (newIndex <= questionsData.length) {
       setQuestionIndex(newIndex);
       const newQuestion = questionsData[newIndex];

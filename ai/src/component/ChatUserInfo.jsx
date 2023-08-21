@@ -12,8 +12,8 @@ const ChatUserInfo = () => {
   const [showNextTeamData, setShowNextTeamData] = useState(false);
   const [showNextWhatTime, setShowNextWhatData] = useState(false);
 
+  // name input
   const dummyName = "쏘이이";
-
   useEffect(() => {
     if (nickNameInput === dummyName) {
       setShowUserData(true);
@@ -29,6 +29,7 @@ const ChatUserInfo = () => {
   };
 
   const nextWhatTimeData = () => {
+    handleScroll();
     setShowNextWhatData(true);
   };
 
@@ -49,6 +50,12 @@ const ChatUserInfo = () => {
     <ChatUserInfoStyle>
       {showUserDataStart && nickNameInput && (
         <>
+          {nickNameInput && (
+            <ChatUserStyle>
+              <p>{nickNameInput}</p>
+            </ChatUserStyle>
+          )}
+
           {showUserData ? (
             <UserMatchingData>
               <UserMatchingDataGuide>
@@ -183,3 +190,19 @@ const UserMatchingDataName = styled.div`
 `;
 
 const UserMatchingDataKda = styled.div``;
+
+const ChatUserStyle = styled.div`
+  border: solid 1px #0ac8b9;
+  padding: 20px;
+  color: white;
+  margin-left: 300px;
+  margin-top: 20px;
+  width: 300px;
+  max-width: 500px;
+  min-height: 30px;
+  max-height: 100%;
+  border-radius: 20px;
+  line-height: 1.6;
+  background-color: #0a323c;
+  white-space: pre-line;
+`;
