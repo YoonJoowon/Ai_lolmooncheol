@@ -11,6 +11,7 @@ const ChatSurvey = () => {
 
   const handleSurveySubmit = (emotion) => {
     if (!surveySubmitted) {
+      setSurveySubmitted(true);
       axios
         .post("/submit-survey", { emotion })
         .then((response) => {
@@ -26,27 +27,35 @@ const ChatSurvey = () => {
   return (
     <>
       <ChatSurveyWrapper>
-        저희 서비스에 만족하셨습니까?
-        <ChatSurveyEmoziWrapper>
-          <ChatSurveyEmoziContainer>
-            <FontAwesomeIcon
-              values="good"
-              icon={fasFaceSmile}
-              className="icon smile-icon"
-              onClick={() => handleSurveySubmit("good")}
-            />
-            <div>만족</div>
-          </ChatSurveyEmoziContainer>
-          <ChatSurveyEmoziContainer>
-            <FontAwesomeIcon
-              values="bad"
-              icon={fasFaceSadTear}
-              className="icon sad-icon"
-              onClick={() => handleSurveySubmit("bad")}
-            />
-            <div>불만족</div>
-          </ChatSurveyEmoziContainer>
-        </ChatSurveyEmoziWrapper>
+        {surveySubmitted ? (
+          <>
+            <div>설문조사에 응해주셔서 감사합니다.</div>
+          </>
+        ) : (
+          <>
+            저희 서비스에 만족하셨습니까?
+            <ChatSurveyEmoziWrapper>
+              <ChatSurveyEmoziContainer>
+                <FontAwesomeIcon
+                  values="good"
+                  icon={fasFaceSmile}
+                  className="icon smile-icon"
+                  onClick={() => handleSurveySubmit("good")}
+                />
+                <div>만족</div>
+              </ChatSurveyEmoziContainer>
+              <ChatSurveyEmoziContainer>
+                <FontAwesomeIcon
+                  values="bad"
+                  icon={fasFaceSadTear}
+                  className="icon sad-icon"
+                  onClick={() => handleSurveySubmit("bad")}
+                />
+                <div>불만족</div>
+              </ChatSurveyEmoziContainer>
+            </ChatSurveyEmoziWrapper>
+          </>
+        )}
       </ChatSurveyWrapper>
     </>
   );
