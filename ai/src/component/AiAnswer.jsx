@@ -36,7 +36,6 @@ function AiAnswer(props) {
   useEffect(() => {
     if (showCheckAnswerRecoil) {
       handleSubmit();
-      console.log("2번실행");
     }
   }, [showCheckAnswerRecoil]);
 
