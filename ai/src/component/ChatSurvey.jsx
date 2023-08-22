@@ -7,9 +7,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFaceSmile as fasFaceSmile } from "@fortawesome/free-solid-svg-icons";
-import { faFaceSadTear as fasFaceSadTear } from "@fortawesome/free-solid-svg-icons";
+import { FaStar, FaStarHalf } from "react-icons/fa";
 
 // const firebaseConfig = {
 //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -28,29 +26,48 @@ import { faFaceSadTear as fasFaceSadTear } from "@fortawesome/free-solid-svg-ico
 const ChatSurvey = () => {
   //   const surbeyBucket = firestore.collection("surbey-bucket");
   // 서버에 보내졌는지 확인하는 상태
-  const [redEmotionState, setRedEmotionState] = useState(false);
-  const [greenEmotionState, setGreenEmotionState] = useState(false);
   const [surveySubmitted, setSurveySubmitted] = useState(false);
+  const [hoverRating, setHoverRating] = useState(0); // 마우스 호버 시 표시되는 별점
+  const [rating, setRating] = useState(5);
+  const [tempRating, setTempRating] = useState(null);
 
-  const toggleRedEmotion = () => {
-    setRedEmotionState((prevState) => !prevState);
-    if (greenEmotionState) {
-      setGreenEmotionState((prevState) => !prevState);
-    }
+  const handleMouseover = (rating) => {
+    setRating(tempRating);
+    setTempRating(rating);
   };
 
-  const toggleGreenEmotion = () => {
-    setGreenEmotionState((prevState) => !prevState);
-    if (redEmotionState) {
-      setRedEmotionState((prevState) => !prevState);
-    }
+  const handleMouseout = () => {
+    setRating(tempRating);
   };
 
-  const handleSurveySubmit = (emotion) => {
+  const rate = (rating) => {
+    setRating(rating);
+    setTempRating(rating);
+  };
+
+  const stars = [];
+  for (let i = 0; i < 10; i++) {
+    const star =
+      rating >= i && rating !== null ? "ion-ios-star" : "ion-ios-star-outline";
+    stars.push(
+      <FaStar
+        key={i}
+        className={star}
+        onMouseOver={() => handleMouseover(i)}
+        onClick={() => rate(i)}
+        onMouseOut={handleMouseout}
+        color={(hoverRating || rating) >= i ? "gold" : "#e4e5e9"}
+        size={25}
+        style={{ cursor: "pointer" }}
+      />
+    );
+  }
+
+  const handleSurveySubmit = (stars) => {
     if (!surveySubmitted) {
       //   setSurveySubmitted(true);
       axios
-        .post("/submit-survey", { emotion })
+        .post("/submit-survey", { stars })
         .then((response) => {
           console.log("Server response:", response.data);
           setSurveySubmitted(true);
@@ -70,37 +87,10 @@ const ChatSurvey = () => {
           </>
         ) : (
           <>
-            저희 서비스에 만족하셨습니까?
+            서비스 만족도 조사
             <ChatSurveyEmoziWrapper>
-              <ChatSurveyEmoziContainer>
-                <FontAwesomeIcon
-                  values="good"
-                  icon={fasFaceSmile}
-                  className="icon smile-icon"
-                  onClick={toggleGreenEmotion}
-                  style={{
-                    color: greenEmotionState ? "#00dd00" : "",
-                  }}
-                />
-                <div>만족</div>
-              </ChatSurveyEmoziContainer>
-              <ChatSurveyEmoziContainer>
-                <FontAwesomeIcon
-                  values="bad"
-                  icon={fasFaceSadTear}
-                  className="icon sad-icon"
-                  onClick={toggleRedEmotion}
-                  style={{
-                    color: redEmotionState ? "#ff00007c" : "",
-                  }}
-                />
-                <div>불만족</div>
-              </ChatSurveyEmoziContainer>
+              <ChatSurveyEmoziContainer>{stars}</ChatSurveyEmoziContainer>
             </ChatSurveyEmoziWrapper>
-            <ChatSurveyInputWrapper
-              className="survey-input"
-              placeholder="의견을 적어주세요"
-            ></ChatSurveyInputWrapper>
           </>
         )}
       </ChatSurveyWrapper>
@@ -122,7 +112,7 @@ const ChatSurveyWrapper = styled.div`
   border: solid 1px #005a82;
   margin-top: 20px;
   gap: 10px;
-  height: 200px;
+  height: 100px;
 `;
 
 const ChatSurveyEmoziWrapper = styled.div`
@@ -132,27 +122,9 @@ const ChatSurveyEmoziWrapper = styled.div`
 
 const ChatSurveyEmoziContainer = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  .icon {
-    font-size: 50px;
-    background-color: transparent;
-  }
-  .icon:hover {
-    cursor: pointer;
-  }
-  .smile-icon:hover {
-    color: #00dd00;
-  }
-  .sad-icon:hover {
-    color: #ff00007c;
-  }
 `;
 
-const ChatSurveyInputWrapper = styled.input`
-  width: 300px;
-  color: black;
-`;
 export default ChatSurvey;
