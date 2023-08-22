@@ -5,6 +5,7 @@ import { StartAskingNextState, nickNameInputState } from "../store/Recoil";
 import { useRecoilValue } from "recoil";
 import lolMatchInfoData from "../dummy/lolMatchInfoData.json";
 import TypingAnimation from "./TypingAnimation";
+import axios from "axios";
 
 const ChatUserInfo = () => {
   const nickNameInput = useRecoilValue(nickNameInputState);
@@ -14,18 +15,30 @@ const ChatUserInfo = () => {
   const [showNextWhatTime, setShowNextWhatData] = useState(false);
 
   // name input
-  const dummyName = "쏘이이";
+  const [summonerName, setSummonerName] = useState("쏘이이"); // 초기값 설정
+
   useEffect(() => {
-    if (nickNameInput === dummyName) {
+    if (nickNameInput === summonerName) {
       setShowUserData(true);
       setShowUserDataStart(true);
+
+      // 서버로 요청 보내는 부분
+      axios
+        .post("http://localhost:8080/summoner", { name: summonerName })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } else {
       setShowUserData(false);
       setShowUserDataStart(true);
     }
-  }, [nickNameInput]);
+  }, [nickNameInput, summonerName]);
 
   const nextTeamData = () => {
+    handleScroll();
     setShowNextTeamData(true);
   };
 
