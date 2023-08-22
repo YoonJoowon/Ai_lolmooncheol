@@ -5,6 +5,8 @@ import axios from "axios";
 import { showCheckAnswerState } from "../store/Recoil";
 import { Modal } from "./Modal";
 
+import ChatSurvey from "./ChatSurvey";
+
 function AiAnswer(props) {
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
@@ -132,8 +134,9 @@ function AiAnswer(props) {
           {responseMessage && !isLoading && (
             <>
               <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
-              <ReplayBtnStyle onClick={reFresh}>다시 판결받기</ReplayBtnStyle>
-              <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle>
+              {/* <ReplayBtnStyle onClick={reFresh}>다시 판결받기</ReplayBtnStyle>
+              <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle> */}
+              <ChatSurvey />
             </>
           )}
           {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
@@ -143,7 +146,6 @@ function AiAnswer(props) {
     </>
   );
 }
-
 export default AiAnswer;
 
 const ChattingInfo = styled.div`
