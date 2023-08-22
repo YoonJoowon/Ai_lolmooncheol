@@ -171,7 +171,8 @@ const AiFeedbackAnswer = styled.p`
   padding: 20px;
   line-height: 1.8;
   display: flex;
-  text-align: center;
+  text-align: justify;
+  white-space: pre-wrap;
   justify-content: center;
   align-items: center;
 `;
