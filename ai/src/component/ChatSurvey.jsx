@@ -97,6 +97,12 @@ const ChatSurvey = () => {
                 <div>불만족</div>
               </ChatSurveyEmoziContainer>
             </ChatSurveyEmoziWrapper>
+            <ChatSurveyInputWrapper>
+              <input
+                className="survey-input"
+                placeholder="의견을 적어주세요"
+              ></input>
+            </ChatSurveyInputWrapper>
           </>
         )}
       </ChatSurveyWrapper>
@@ -118,7 +124,7 @@ const ChatSurveyWrapper = styled.div`
   border: solid 1px #005a82;
   margin-top: 20px;
   gap: 10px;
-  height: 120px;
+  height: 200px;
 `;
 
 const ChatSurveyEmoziWrapper = styled.div`
@@ -147,4 +153,9 @@ const ChatSurveyEmoziContainer = styled.div`
   }
 `;
 
+const ChatSurveyInputWrapper = styled.div`
+  .survey-input {
+    width: 300px;
+  }
+`;
 export default ChatSurvey;
