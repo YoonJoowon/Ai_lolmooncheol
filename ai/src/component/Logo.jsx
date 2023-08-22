@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 
 const Logo = () => {
-  return <LogoStyle>롤 법정 토론</LogoStyle>;
+  // return <LogoStyle>롤 법정 토론</LogoStyle>;
 };
 
 export default Logo;

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { StartAskingNextState } from "../store/Recoil";
+import TypingAnimation from "./TypingAnimation";
 
 const EnterSituationTime = () => {
   const [minutes, setMinutes] = useState("");
@@ -20,19 +21,12 @@ const EnterSituationTime = () => {
   const StartAskingNext = () => {
     setStartAskingNextPlz(true);
   };
-  
-  const scrollContainerRef = useRef(null);
-  const handleScroll = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <>
       <EnterSituationTimeStyle>
         <SituationTimeAnswer>
-          언제 일어난 상황인지 입력해주세요.
+          <TypingAnimation text="언제 일어난 상황인지 입력해주세요." />
         </SituationTimeAnswer>
         <TimeInputContainer>
           <TimeInputLabel>분:</TimeInputLabel>

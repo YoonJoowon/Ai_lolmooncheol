@@ -41,7 +41,8 @@ const HeaderStyle = styled.div`
 const HeaderText = styled.p`
   color: white;
   width: auto;
-  padding: 10px;
+  font-size: 17px;
+  padding: 12px;
   margin: auto;
   justify-content: center;
   align-items: center;

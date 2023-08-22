@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
 
-
 const Chatting_copy = () => {
   const [keywords1, setKeywords1] = useState("");
   const [keywords2, setKeywords2] = useState("");
@@ -23,13 +22,58 @@ const Chatting_copy = () => {
     setIsLoading(true);
     const messages = [
       {
-        role: "system",
+        role: "system", // 행동지정, 역할부여
         content:
-          "롤 게임 관해서 질문 할 것 입니다. 당신은 최고의 롤 변호사입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 첫번째 선택지를 변호해주세요. 답을 선택한 이유를 말해주세요. 그리고 비유를 사용하여 설명해주세요.",
+          "당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 한 선택지를 선택하여 이유와 함께 답해주세요. 이전 내용과 똑같은 형식으로 답을 말해야하고, 당시 상황 지표분석을 토대로 결론을 말해주세요. "+
+          "(첫 번째 제드는 5킬 1데스 14어시스트,  3800gold, 레벨은 11 그리고 두 번째 아무무는 1킬 6데스 2어시스트, 2000gold 레벨은 9) 내용도 함께 분석해주세요." +
+          "다음 형식을 사용합니다:" +
+        
+          "안녕하세요! 주어진 상황에서 판경을 시작해볼게요! \n\n" +
+        
+          "A의 당시 상황 지표분석:\n" +
+          "킬/데스/어시스트: a/b/c\n" +
+          "골드: d\n" +
+          "레벨: e\n\n" +
+
+          "B의 당시 상황 지표분석:\n" +
+          "킬/데스/어시스트: h/i/j\n" +
+          "골드: k\n" +
+          "레벨: l\n\n" +
+          "상황: ```\n\n" +
+          
+          "A의 주장:\n" +
+          "```\n\n" +
+          "B의 주장:\n" +
+          "```\n\n" +
+          "결론:\n" +
+          "```",
+      },
+      {
+        role: "assistant", // 이전 대화 기억
+        content:         
+          "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
+         
+          "A의 당시 상황 지표분석:\n" +
+          "킬/데스/어시스트: a/b/c\n" +
+          "골드: d\n" +
+          "레벨: e\n\n" +
+         
+          "B의 당시 상황 지표분석:\n" +
+          "킬/데스/어시스트: h/i/j\n" +
+          "골드: k\n" +
+          "레벨: l\n\n" +
+          "상황: ```\n\n" +
+         
+          "A의 주장:\n" +
+          "```\n\n" +
+          "B의 주장:\n" +
+          "```\n\n" +
+          "결론:\n" +
+          "```",
       },
       {
         role: "user",
-        content: keywords1 + keywords2 + "에 대하여 정확한 판결을 내려줘",
+        content: keywords1 + "둘 중 누구의 판단이 맞습니까?",
       },
     ];
 
@@ -53,7 +97,7 @@ const Chatting_copy = () => {
       })
       .catch((error) => {
         setIsLoading(false);
-        setError("하루 이용량이 초과 됐습니다.");
+        setError("이용 토큰이 만료되었습니다.");
       });
   };
 
@@ -62,7 +106,7 @@ const Chatting_copy = () => {
       <Title>롤 판결 AI</Title>
       <Wrapper>
         <></>
-        <div>1번 주장</div>
+        <div>주장 정리</div>
         <Input
           type="text"
           value={keywords1}
@@ -70,13 +114,13 @@ const Chatting_copy = () => {
           required
         />
 
-        <div>2번 주장</div>
+        {/* <div>2번 주장</div>
         <Input
           type="text"
           value={keywords2}
           onChange={handleChange2}
           required
-        />
+        /> */}
         <AskAi onClick={handleSubmit}>입력</AskAi>
 
         {error && <ErrorMessage>{error}</ErrorMessage>}
