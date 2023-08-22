@@ -15,16 +15,16 @@ const ChatUserInfo = () => {
   const [showNextWhatTime, setShowNextWhatData] = useState(false);
 
   // name input
-  const [summonerName, setSummonerName] = useState("쏘이이"); // 초기값 설정
+  const [summonerName, setSummonerName] = useState(""); // 초기값 설정
 
   useEffect(() => {
-    if (nickNameInput === summonerName) {
+    if (nickNameInput) {
       setShowUserData(true);
       setShowUserDataStart(true);
-
+      console.log(nickNameInput);
       // 서버로 요청 보내는 부분
       axios
-        .post("http://localhost:8080/summoner", { name: summonerName })
+        .post("http://localhost:8080/summoner", { name: nickNameInput })
         .then((response) => {
           console.log(response.data);
         })

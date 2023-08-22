@@ -123,6 +123,6 @@ app.post("/summoner", async function (req, res) {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "An error occurred" });
+    res.status(500).json({ error: error.message });
   }
 });
