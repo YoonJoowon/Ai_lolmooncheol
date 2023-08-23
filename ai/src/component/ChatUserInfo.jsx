@@ -13,6 +13,7 @@ const ChatUserInfo = () => {
   const [showUserData, setShowUserData] = useState(false);
   const [showNextTeamData, setShowNextTeamData] = useState(false);
   const [showNextWhatTime, setShowNextWhatData] = useState(false);
+  const API_KEY = process.env.REACT_APP_LOL_API_KEY;
 
   // name input
   const [summonerName, setSummonerName] = useState(""); // 초기값 설정
@@ -23,8 +24,11 @@ const ChatUserInfo = () => {
       setShowUserDataStart(true);
       console.log(nickNameInput);
       // 서버로 요청 보내는 부분
+      const data = { name: nickNameInput };
       axios
-        .post("http://localhost:8080/summoner", { name: nickNameInput })
+        .post("http://localhost:8080/summoner", data, {
+          "X-Riot-Token": API_KEY,
+        })
         .then((response) => {
           console.log(response.data);
         })

@@ -1,10 +1,9 @@
+const API_KEY = process.env.REACT_APP_LOL_API_KEY;
 const express = require("express");
 const cors = require("cors");
-const axios = require("axios");
 const app = express();
 const bodyParser = require("body-parser");
-
-const API_KEY = process.env.REACT_APP_LOL_API_KEY;
+const axios = require("axios");
 const baseUrl = "https://KR.api.riotgames.com/lol";
 const baseUrl2 = "https://asia.api.riotgames.com/lol";
 
@@ -12,7 +11,55 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.listen(8080, function () {
-  console.log("listening on 8080");
+  console.log("소환사의 협곡에 오신 것을 환영합니다");
+});
+
+// matchId 추출
+app.post("/summoner", async function (req, res) {
+  const summonerName = req.body.name;
+  console.log(summonerName);
+
+  try {
+    // Get summoner information
+    const summonerResponse = await axios.get(
+      `${baseUrl}/summoner/v4/summoners/by-name/${summonerName}`,
+      {
+        headers: {
+          "X-Riot-Token": API_KEY,
+        },
+      }
+    );
+
+    const puuid = summonerResponse.data.puuid;
+
+    try {
+      // 최근 4개 경기
+      const matchResponse = await axios.get(
+        `${baseUrl2}/match/v5/matches/by-puuid/${puuid}/ids`,
+        {
+          headers: {
+            "X-Riot-Token": API_KEY,
+          },
+        }
+      );
+
+      const matchIds = matchResponse.data.slice(0, 4);
+      console.log(matchIds);
+
+      // Retrieve details for each match
+      const matchDetails = await Promise.all(
+        matchIds.map((matchId) => getMatchDetails(matchId, puuid))
+      );
+
+      res.json({ matchDetails });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "An error occurred" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
 });
 
 async function getMatchDetails(matchId, puuid) {
@@ -42,20 +89,17 @@ async function getMatchDetails(matchId, puuid) {
     const assists = participant.assists;
     const championName = participant.championName;
     const win = participant.win;
-
-    // Determine the lane the user played
     const lane = participant.lane;
 
-    // Image URL by champion name
+    // 챔피언 이미지
     const championImageUrl = `http://ddragon.leagueoflegends.com/cdn/13.15.1/img/champion/${championName}.png`;
 
-    // Get team members of the user's team
+    // 팀원
     const teamId = participant.teamId;
     const teamMembers = matchData.info.participants.filter(
       (participant) => participant.teamId === teamId
     );
 
-    // Extract information for team members
     const teamMemberInfo = teamMembers.map((teamMember) => ({
       championName: teamMember.championName,
       championImageUrl: `http://ddragon.leagueoflegends.com/cdn/13.15.1/img/champion/${teamMember.championName}.png`,
@@ -80,49 +124,3 @@ async function getMatchDetails(matchId, puuid) {
     return null;
   }
 }
-
-app.post("/summoner", async function (req, res) {
-  const summonerName = req.body.name;
-
-  try {
-    // Get summoner information
-    const summonerResponse = await axios.get(
-      `${baseUrl}/summoner/v4/summoners/by-name/${summonerName}`,
-      {
-        headers: {
-          "X-Riot-Token": API_KEY,
-        },
-      }
-    );
-
-    const puuid = summonerResponse.data.puuid;
-
-    try {
-      // Get the last 4 match IDs
-      const matchResponse = await axios.get(
-        `${baseUrl2}/match/v5/matches/by-puuid/${puuid}/ids`,
-        {
-          headers: {
-            "X-Riot-Token": API_KEY,
-          },
-        }
-      );
-
-      // Last 4 matches
-      const matchIds = matchResponse.data.slice(0, 4);
-
-      // Retrieve details for each match
-      const matchDetails = await Promise.all(
-        matchIds.map((matchId) => getMatchDetails(matchId, puuid))
-      );
-
-      res.json({ matchDetails });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "An error occurred" });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error.message });
-  }
-});
