@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-
+import firebase from "../Firebase";
 import axios from "axios";
-import { db } from "../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
 
 import { FaStar, FaStarHalf } from "react-icons/fa";
 
 const ChatSurvey = () => {
   // 서버에 보내졌는지 확인하는 상태
+  const firestore = firebase.firestore();
+  const bucket = firestore.collection("surbey-bucket");
   const [surveySubmitted, setSurveySubmitted] = useState(false);
   const [hoverRating, setHoverRating] = useState(0); // 마우스 호버 시 표시되는 별점
+
   const [rating, setRating] = useState(null);
   const [tempRating, setTempRating] = useState(null);
 
@@ -48,17 +49,16 @@ const ChatSurvey = () => {
     );
   }
 
-  const handleSurveySubmit = (stars) => {
-    if (!surveySubmitted) {
-      //   setSurveySubmitted(true);
-      axios
-        .post("/submit-survey", { stars })
-        .then((response) => {
-          console.log("Server response:", response.data);
+  const saveRatingFirebase = () => {
+    if (rating !== null) {
+      bucket
+        .add({ rating }) // Rating을 Firebase에 저장
+        .then(() => {
+          console.log("Rating successfully saved to Firebase!", rating);
           setSurveySubmitted(true);
         })
         .catch((error) => {
-          console.error("Error sending data to server:", error);
+          console.error("Error saving rating to Firebase:", error);
         });
     }
   };
@@ -75,6 +75,17 @@ const ChatSurvey = () => {
             서비스 만족도 조사
             <ChatSurveyEmoziWrapper>
               <ChatSurveyEmoziContainer>{stars}</ChatSurveyEmoziContainer>
+              <div
+                style={{
+                  border: "1px solid white",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  backgroundColor: "#2D93CF",
+                }}
+                onClick={saveRatingFirebase}
+              >
+                제출하기
+              </div>
             </ChatSurveyEmoziWrapper>
           </>
         )}
@@ -102,7 +113,8 @@ const ChatSurveyWrapper = styled.div`
 
 const ChatSurveyEmoziWrapper = styled.div`
   display: flex;
-  gap: 50px;
+  gap: 20px;
+  flex-direction: column;
 `;
 
 const ChatSurveyEmoziContainer = styled.div`

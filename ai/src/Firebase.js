@@ -1,5 +1,7 @@
 import firebase from "firebase/app";
+import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -11,5 +13,6 @@ const firebaseConfig = {
   measurementId: "G-W565SFZ6GF",
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+export default !firebase.apps.length
+  ? firebase.initializeApp(firebaseConfig)
+  : firebase.app();
