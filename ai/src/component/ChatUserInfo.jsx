@@ -9,10 +9,11 @@ import axios from "axios";
 
 const ChatUserInfo = () => {
   const nickNameInput = useRecoilValue(nickNameInputState);
-  const [showUserDataStart, setShowUserDataStart] = useState(false);
+  const [showUserDataStart, setShowUserDataStart] = useState();
   const [showUserData, setShowUserData] = useState(false);
   const [showNextTeamData, setShowNextTeamData] = useState(false);
   const [showNextWhatTime, setShowNextWhatData] = useState(false);
+  const [lolAPIData, setLolAPIData] = useState({ matchDetails: [] });
   const API_KEY = process.env.REACT_APP_LOL_API_KEY;
 
   // name input
@@ -20,7 +21,6 @@ const ChatUserInfo = () => {
 
   useEffect(() => {
     if (nickNameInput) {
-      setShowUserData(true);
       setShowUserDataStart(true);
       console.log(nickNameInput);
       // 서버로 요청 보내는 부분
@@ -31,6 +31,8 @@ const ChatUserInfo = () => {
         })
         .then((response) => {
           console.log(response.data);
+          setShowUserData(true);
+          setLolAPIData(response.data);
         })
         .catch((error) => {
           console.error(error);
@@ -39,7 +41,8 @@ const ChatUserInfo = () => {
       setShowUserData(false);
       setShowUserDataStart(true);
     }
-  }, [nickNameInput, summonerName]);
+    console.log("lolAPIData", lolAPIData);
+  }, [nickNameInput]);
 
   const nextTeamData = () => {
     handleScroll();
@@ -79,22 +82,24 @@ const ChatUserInfo = () => {
               <UserMatchingDataGuide>
                 <TypingAnimation text="판결을 원하는 게임을 선택해주세요." />
               </UserMatchingDataGuide>
-              {lolMatchInfoData.map((champion, index) => (
-                <UserMatchingDataBox key={index} onClick={nextTeamData}>
-                  <UserMatchingDataImg>
-                    <img
-                      src={champion.championImage}
-                      alt={champion.championName}
-                    />
-                  </UserMatchingDataImg>
-                  <UserMatchingDataName>
-                    {champion.championName}
-                    <UserMatchingDataKda>
-                      {champion.kills}/{champion.deaths}/{champion.assists}
-                    </UserMatchingDataKda>
-                  </UserMatchingDataName>
-                </UserMatchingDataBox>
-              ))}
+              {lolAPIData &&
+                lolAPIData.matchDetails.map((champion, index) => (
+                  <UserMatchingDataBox key={index} onClick={nextTeamData}>
+                    <UserMatchingDataImg>
+                      <img
+                        src={champion.championImageUrl}
+                        alt={champion.championName}
+                        style={{ width: "60px" }}
+                      />
+                    </UserMatchingDataImg>
+                    <UserMatchingDataName>
+                      {champion.championName}
+                      <UserMatchingDataKda>
+                        {champion.kills}/{champion.deaths}/{champion.assists}
+                      </UserMatchingDataKda>
+                    </UserMatchingDataName>
+                  </UserMatchingDataBox>
+                ))}
             </UserMatchingData>
           ) : (
             <UserMatchingDataFale>
@@ -115,7 +120,11 @@ const ChatUserInfo = () => {
           {lolMatchInfoData.map((champion, index) => (
             <UserMatchingDataBox key={index} onClick={nextWhatTimeData}>
               <UserMatchingDataImg>
-                <img src={champion.championImage} alt={champion.championName} />
+                <img
+                  src={champion.championImageUrl}
+                  alt={champion.championName}
+                  style={{ width: "60px" }}
+                />
               </UserMatchingDataImg>
               <UserMatchingDataName>
                 {champion.championName}
