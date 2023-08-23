@@ -10,7 +10,7 @@ const baseUrl2 = 'https://asia.api.riotgames.com/lol';
 
 app.use(cors());
 app.use(bodyParser.json());
-
+//ㅁㄴㅇㄹㅁㄴㅇㄹㅇㅁㄴㄹㄴㅁㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㄴ
 app.listen(8080, function () {
   console.log('소환사의 협곡에 오신 것을 환영합니다');
 });
