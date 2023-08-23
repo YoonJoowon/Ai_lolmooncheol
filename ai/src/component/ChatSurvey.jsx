@@ -2,33 +2,16 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 
 import axios from "axios";
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/storage";
+import { db } from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 import { FaStar, FaStarHalf } from "react-icons/fa";
 
-// const firebaseConfig = {
-//   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-//   authDomain: "aimoon-c9fa4.firebaseapp.com",
-//   projectId: "aimoon-c9fa4",
-//   storageBucket: "aimoon-c9fa4.appspot.com",
-//   messagingSenderId: "928734093079",
-//   appId: "1:928734093079:web:d9e3c6d2d41f26298f2152",
-//   measurementId: "G-W565SFZ6GF",
-// };
-
-// firebase.initializeApp(firebaseConfig);
-
-// const firestore = firebase.firestore();
-
 const ChatSurvey = () => {
-  //   const surbeyBucket = firestore.collection("surbey-bucket");
   // 서버에 보내졌는지 확인하는 상태
   const [surveySubmitted, setSurveySubmitted] = useState(false);
   const [hoverRating, setHoverRating] = useState(0); // 마우스 호버 시 표시되는 별점
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(null);
   const [tempRating, setTempRating] = useState(null);
 
   const handleMouseover = (rating) => {
@@ -46,7 +29,7 @@ const ChatSurvey = () => {
   };
 
   const stars = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 5; i++) {
     const star =
       rating >= i && rating !== null ? "ion-ios-star" : "ion-ios-star-outline";
     stars.push(
@@ -54,7 +37,9 @@ const ChatSurvey = () => {
         key={i}
         className={star}
         onMouseOver={() => handleMouseover(i)}
-        onClick={() => rate(i)}
+        onClick={() => {
+          rate(i);
+        }}
         onMouseOut={handleMouseout}
         color={(hoverRating || rating) >= i ? "gold" : "#e4e5e9"}
         size={25}
