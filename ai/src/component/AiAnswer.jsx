@@ -5,7 +5,7 @@ import axios from "axios";
 import { showCheckAnswerState } from "../store/Recoil";
 import { Modal } from "./Modal";
 import ChatSurvey from "./ChatSurvey";
-import ClipboardJS from "clipboard";
+import html2canvas from "html2canvas";
 
 function AiAnswer(props) {
   // 모달창 노출 여부 state
@@ -121,29 +121,32 @@ function AiAnswer(props) {
   };
 
   // 클립보드 추가
-  const elementRef = useRef(null);
+  // const elementRef = useRef(null);
 
-  const captureAndCopyToClipboard = async () => {
-    const element = elementRef.current;
+  // const captureAndCopyToClipboard = async () => {
+  //   const element = elementRef.current;
 
-    if (element) {
-      const { width, height } = element.getBoundingClientRect();
+  //   if (element) {
+  //     try {
+  //       const canvas = await html2canvas(element);
+  //       const imageDataURL = canvas.toDataURL("image/png");
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = width;
-      canvas.height = height;
+  //       await navigator.clipboard.writeText(imageDataURL);
+  //       alert("클립보드에 이미지 복사가 완료되었습니다.");
+  //     } catch (error) {
+  //       alert("클립보드 복사에 실패했습니다.");
+  //     }
+  //   }
+  // };
 
-      ctx.drawWindow(window, 0, 0, width, height, "rgb(255,255,255)");
-
-      const imageDataURL = canvas.toDataURL("image/png");
-
-      try {
-        await navigator.clipboard.writeText(imageDataURL);
-        alert("클립보드에 이미지 복사가 완료되었습니다.");
-      } catch (error) {
-        alert("클립보드 복사에 실패했습니다.");
-      }
+  // 사이트 공유
+  const urlToCopy = "https://aimoon-c9fa4.web.app/";
+  const urlCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(urlToCopy);
+      alert("URL이 클립보드에 복사되었습니다.");
+    } catch (error) {
+      alert("URL 복사에 실패했습니다.");
     }
   };
 
@@ -157,9 +160,7 @@ function AiAnswer(props) {
           {responseMessage && !isLoading && (
             <>
               <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
-              <ReplayBtnStyle onClick={captureAndCopyToClipboard}>
-                공유하기
-              </ReplayBtnStyle>
+              <ReplayBtnStyle onClick={urlCopy}>사이트 공유하기</ReplayBtnStyle>
               {/* <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle> */}
               <ChatSurvey />
             </>
@@ -168,9 +169,6 @@ function AiAnswer(props) {
           {/* <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle> */}
         </ChattingInfo>
       )}
-      <ReplayBtnStyle onClick={captureAndCopyToClipboard} ref={elementRef}>
-        공유하기
-      </ReplayBtnStyle>
     </>
   );
 }
