@@ -56,7 +56,6 @@ const EnterSituationTimeStyle = styled.div`
   border: solid 1px #0ac8b9;
   padding: 20px;
   color: white;
-  margin-left: 300px;
   margin-top: 20px;
   width: 300px;
   max-width: 500px;
@@ -66,6 +65,13 @@ const EnterSituationTimeStyle = styled.div`
   line-height: 1.6;
   background-color: #0a323c;
   white-space: pre-line;
+  align-self: flex-end;
+  margin-right: 20px;
+
+  @media (max-width: 673px) {
+    width: 40%;
+    margin-right: 20px;
+  }
 `;
 
 const SituationTimeAnswer = styled.div``;
@@ -73,10 +79,17 @@ const SituationTimeAnswer = styled.div``;
 const TimeInputContainer = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: 673px) {
+    display: block;
+  }
 `;
 
 const TimeInputLabel = styled.label`
   margin-right: 10px;
+  @media (max-width: 673px) {
+    display: block;
+  }
 `;
 
 const TimeInput = styled.input`
@@ -91,11 +104,17 @@ const TimeInput = styled.input`
 const TimeInputLabelSubmit = styled.button`
   border: solid 1px #0ac8b9;
   color: white;
-  margin-left: 300px;
   margin-top: 20px;
   width: 340px;
   height: 40px;
   border-radius: 20px;
   background-color: #0a323c;
   cursor: pointer;
+  white-space: pre-line;
+  align-self: flex-end;
+  margin-right: 20px;
+
+  @media (max-width: 673px) {
+    width: 47%;
+  }
 `;

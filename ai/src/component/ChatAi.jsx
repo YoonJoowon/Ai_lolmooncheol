@@ -129,11 +129,14 @@ const ChatAiStyle = styled.div`
   margin-top: 20px;
   width: 300px;
   max-width: 500px;
-  min-height: 30px;
   max-height: 100%;
   border-radius: 20px;
   line-height: 1.6;
   background-color: #3f3f3f;
+
+  @media (max-width: 673px) {
+    width: 40%;
+  }
 `;
 
 const ChatUserStyle = styled.div`
@@ -150,6 +153,10 @@ const ChatUserStyle = styled.div`
   line-height: 1.6;
   background-color: #0a323c;
   white-space: pre-line;
+
+  @media (max-width: 673px) {
+    width: 40%;
+  }
 `;
 
 const CheckAnswer = styled.div`

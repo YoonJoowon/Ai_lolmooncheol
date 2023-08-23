@@ -46,12 +46,11 @@ const ChatInput = () => {
   return (
     <ChatInputStyle
       placeholder="여기에 답변을 해주세요!"
-      id="searchInput"
+      id="chatInput"
       value={inputBuffer}
       onChange={getValue}
       onKeyDown={handleKeyPress}
-    >
-    </ChatInputStyle>
+    ></ChatInputStyle>
   );
 };
 
@@ -61,8 +60,8 @@ export const ChatInputStyle = styled.textarea`
   color: white;
   white-space: pre-wrap;
   word-wrap: break-word;
-  max-width: 618px;
-  min-width: 618px;
+  display: block;
+  width: 620px;
   min-height: 5%;
   max-height: 5%;
   border-radius: 20px;
@@ -72,4 +71,9 @@ export const ChatInputStyle = styled.textarea`
   border: solid 1px #c89b3c;
   bottom: 70px;
   position: fixed;
+
+  @media (max-width: 660px) {
+    width: 93%;
+    bottom: 10px;
+  }
 `;
