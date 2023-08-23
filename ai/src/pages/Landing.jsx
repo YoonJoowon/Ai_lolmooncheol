@@ -12,7 +12,7 @@ const Landing = () => {
         <LandingExplainBox>
           <LandingTitle>AI 롤문철은</LandingTitle>
           <LandingExplain>
-            게임 플레이 전적의 데이터를 통해 <span>즉각적인 상황을 분석</span>
+            게임 전적의 데이터를 통해 <span>즉각적인 상황을 분석</span>
             하여
             <br />
             플레이어의 판단을 평가하고
@@ -118,8 +118,8 @@ const ChatStartBtn = styled.button`
 const ChatStartLink = styled(Link)``;
 
 const LandingImageBox = styled.div`
-  width: 1000px;
-  height: 800px;
+  width: 800px;
+  height: 550px;
   position: relative;
 `;
 
@@ -128,8 +128,8 @@ const LandingImage1 = styled.div`
   background-image: url(${landingImgBackImg});
   background-size: cover;
   background-position: center center;
-  width: 800px;
-  height: 600px;
+  width: 600px;
+  height: 400px;
   border-radius: 20px;
   box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.8);
 `;
@@ -137,10 +137,10 @@ const LandingImage1 = styled.div`
 const LandingImage2 = styled.div`
   color: white;
   background-image: url(${backImgRealUse});
-  background-size: cover;
+  background-size: 280% auto;
   background-position: center center;
-  width: 800px;
-  height: 600px;
+  width: 600px;
+  height: 400px;
   border-radius: 20px;
   box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.8);
   position: absolute;
@@ -152,6 +152,6 @@ const LandingImageInfoTxt = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   color: rgba(38, 69, 223, 0.786);
   position: absolute;
-  bottom: 80px;
+  bottom: 40px;
   right: 100px;
 `;
