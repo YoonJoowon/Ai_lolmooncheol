@@ -3,11 +3,11 @@ import { styled } from "styled-components";
 import { StartAskingNextState, nickNameInputState } from "../store/Recoil";
 import { useRecoilState, useRecoilValue } from "recoil";
 
+// 첫 정보 받는 input
 const SearchInput = () => {
   const [nickNameInput, setNickNameInput] = useRecoilState(nickNameInputState);
   const [inputNickNameBuffer, setNickNameInputBuffer] = useState("");
   const [isInputLocked, setIsInputLocked] = useState(false);
-
   const reMoveInputFirst = useRecoilValue(StartAskingNextState);
 
   const handleKeyPress = (e) => {

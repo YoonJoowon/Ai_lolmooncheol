@@ -8,6 +8,7 @@ const ChatInput = () => {
   const [inputBuffer, setInputBuffer] = useState("");
   const [isInputLocked, setIsInputLocked] = useState(false);
 
+  // 채팅 입력
   const handleKeyPress = (e) => {
     if (!isInputLocked && e.key === "Enter") {
       setInput(inputBuffer.toLowerCase());

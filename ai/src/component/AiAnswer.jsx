@@ -1,48 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import axios from "axios";
 import { showCheckAnswerState } from "../store/Recoil";
-import { Modal } from "./Modal";
 import ChatSurvey from "./ChatSurvey";
-import html2canvas from "html2canvas";
 
 function AiAnswer(props) {
-  // 모달창 노출 여부 state
-  const [modalOpen, setModalOpen] = useState(false);
-
   //chatGPT
+  const api_key = process.env.REACT_APP_OPENAI_API_KEY;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
-  const api_key = process.env.REACT_APP_OPENAI_API_KEY;
-
   const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
-
   const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
 
-  // 모달창 노출
-  const showModal = () => {
-    setModalOpen(true);
-  };
-
-  // 새로고침
-  const reFresh = () => {
-    window.location.reload();
-  };
+  const A = "제드";
+  const B = "아무무";
 
   useEffect(() => {
     if (showCheckAnswerRecoil) {
       // handleSubmit();
     }
   }, [showCheckAnswerRecoil]);
-
-  const A = "제드";
-  const B = "아무무";
 
   const handleSubmit = () => {
     setIsLoading(true);
@@ -120,25 +103,6 @@ function AiAnswer(props) {
       });
   };
 
-  // 클립보드 추가
-  // const elementRef = useRef(null);
-
-  // const captureAndCopyToClipboard = async () => {
-  //   const element = elementRef.current;
-
-  //   if (element) {
-  //     try {
-  //       const canvas = await html2canvas(element);
-  //       const imageDataURL = canvas.toDataURL("image/png");
-
-  //       await navigator.clipboard.writeText(imageDataURL);
-  //       alert("클립보드에 이미지 복사가 완료되었습니다.");
-  //     } catch (error) {
-  //       alert("클립보드 복사에 실패했습니다.");
-  //     }
-  //   }
-  // };
-
   // 사이트 공유
   const urlToCopy = "https://aimoon-c9fa4.web.app/";
   const urlCopy = async () => {
@@ -161,12 +125,9 @@ function AiAnswer(props) {
             <>
               <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
               <ReplayBtnStyle onClick={urlCopy}>사이트 공유하기</ReplayBtnStyle>
-              {/* <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle> */}
               <ChatSurvey />
             </>
           )}
-          {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
-          {/* <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle> */}
         </ChattingInfo>
       )}
     </>

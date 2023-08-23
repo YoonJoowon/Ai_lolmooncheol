@@ -19,11 +19,10 @@ const ChatAi = () => {
   const [showCheckAnswer, setShowCheckAnswer] = useState(false);
   const [showCheckAnswerRecoil, setShowCheckAnswerRecoil] =
     useRecoilState(showCheckAnswerState);
-
   const askStart = useRecoilValue(StartAskingNextState);
   const inputValue = useRecoilValue(inputValueState);
 
-  // 버튼을 누를 때 이벤트 핸들러
+  // 결과보기 버튼
   const handleButtonClick = () => {
     setShowCheckAnswer(true);
     setShowCheckAnswerRecoil(true);
@@ -50,6 +49,11 @@ const ChatAi = () => {
     }
   }, [inputValue, askStart]);
 
+  // session 에 추가
+  useEffect(() => {
+    sessionStorage.setItem("inputValues", JSON.stringify(inputValues));
+  }, [inputValues]);
+
   // 다음 질문시작
   useEffect(() => {
     if (inputValues.length > 0) {
@@ -57,12 +61,7 @@ const ChatAi = () => {
     }
   }, [inputValues]);
 
-  // session 에 추가
-  useEffect(() => {
-    sessionStorage.setItem("inputValues", JSON.stringify(inputValues));
-  }, [inputValues]);
-
-  // scroll
+  // auto scroll
   const scrollContainerRef = useRef(null);
 
   const handleScroll = () => {

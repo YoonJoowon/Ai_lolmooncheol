@@ -42,7 +42,6 @@ const Background = styled.div`
   background-color: #ffffff;
   background-size: cover;
   background-position: center center;
-  /* background-image: url(${landingImgBackImg}); */
   position: absolute;
   width: 100%;
   height: 100%;
