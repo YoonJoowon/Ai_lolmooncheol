@@ -31,8 +31,12 @@ const ChatUserInfo = () => {
         })
         .then((response) => {
           console.log(response.data);
-          setShowUserData(true);
-          setLolAPIData(response.data);
+          if (Array.isArray(response.data) && response.data.length === 0) {
+            setShowUserData(false);
+          } else {
+            setShowUserData(true);
+            setLolAPIData(response.data);
+          }
         })
         .catch((error) => {
           console.error(error);
