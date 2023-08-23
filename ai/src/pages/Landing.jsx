@@ -2,8 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import landingImgBackImg from "../imges/landingBackground.jpg";
-import landingImg1 from "../imges/landingImg1.jpg";
-import backImgRealUse from "../imges/backImgRealUse2.png";
+import backImgRealUse from "../imges/example3.png";
 
 const Landing = () => {
   return (
@@ -137,7 +136,7 @@ const LandingImage1 = styled.div`
 const LandingImage2 = styled.div`
   color: white;
   background-image: url(${backImgRealUse});
-  background-size: 280% auto;
+  background-size: 210% auto;
   background-position: center center;
   width: 600px;
   height: 400px;
