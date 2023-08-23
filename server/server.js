@@ -1,4 +1,5 @@
-const API_KEY = process.env.REACT_APP_LOL_API_KEY;
+require("dotenv").config();
+const API_KEY = process.env.LOL_API_KEY;
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -18,7 +19,8 @@ app.listen(8080, function () {
 app.post("/summoner", async function (req, res) {
   const summonerName = req.body.name;
   console.log(summonerName);
-
+  console.log("MY_VARIABLE: " + process.env.LOL_API_KEY);
+  console.log("-------- ", API_KEY);
   try {
     // Get summoner information
     const summonerResponse = await axios.get(
