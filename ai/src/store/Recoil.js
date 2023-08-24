@@ -58,3 +58,27 @@ export const timeState = atom({
     second: 0,
   },
 });
+
+export const promptDataState = atom({
+  key: "promptDataState",
+  default: {
+    // 내정보
+    myChamp: "",
+    myCurrentGold: "",
+    myLevel: "",
+    myLocation: { x: "", y: "" },
+    myHealth: "",
+    // 아군 분쟁 상대 정보
+    yourChamp: "",
+    yourCurrentGold: "",
+    yourLevel: "",
+    yourLocation: { x: "", y: "" },
+    yourHealth: "",
+    // 내 팀 정보
+    myTeamGold: "",
+    myTeamLevel: "",
+    // 상대 팀 정보
+    enemyTeamGold: "",
+    enemyTeamLevel: "",
+  },
+});

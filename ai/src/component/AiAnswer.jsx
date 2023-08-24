@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { promptDataState } from "../store/Recoil";
 import axios from "axios";
 import ChatSurvey from "./ChatSurvey";
 import { showCheckAnswerState } from "../store/Recoil";
@@ -14,28 +15,29 @@ function AiAnswer(props) {
   const [responseMessage, setResponseMessage] = useState("");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
   const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
+  const promptData = useRecoilValue(promptDataState);
   const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
 
-  const aChamp = "제드";
-  const aChampHp = "50";
-  const aChampGold = "2300";
-  const aChampLevel = "10level";
+  const aChamp = promptData.myChamp;
+  const aChampHp = promptData.myHealth;
+  const aChampGold = promptData.myCurrentGold;
+  const aChampLevel = promptData.myLevel;
   const aChampLocation = "x:6447 y:6447";
 
-  const bChamp = "아무무";
-  const bChampHp = "2150hp";
-  const bChampGold = "2100gold";
-  const bChampLevel = "9level";
+  const bChamp = promptData.yourChamp;
+  const bChampHp = promptData.yourHealth;
+  const bChampGold = promptData.yourCurrentGold;
+  const bChampLevel = promptData.yourLevel;
   const bChampLocation = "x:8154 y:2524";
 
-  const teamLevel = "9.2level";
-  const teamGold = "10000gold";
+  const teamLevel = promptData.myTeamLevel;
+  const teamGold = promptData.myTeamGold;
 
-  const enemyLevel = "9.2level";
-  const enemyGold = "12000gold";
+  const enemyLevel = promptData.enemyTeamLevel;
+  const enemyGold = promptData.enemyTeamGold;
 
   useEffect(() => {
     if (showCheckAnswerRecoil) {

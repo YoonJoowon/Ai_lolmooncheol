@@ -7,6 +7,7 @@ import {
   lolTeamMemberDataState,
   matchTimelineDataState,
   timeState,
+  promptDataState,
 } from "../store/Recoil";
 import { useRecoilValue, useRecoilState } from "recoil";
 import TypingAnimation from "./TypingAnimation";
@@ -25,6 +26,7 @@ const ChatUserInfo = () => {
   const [matchTimelineData, setMatchTimelineData] = useRecoilState(
     matchTimelineDataState
   );
+  const [promptData, setPromptData] = useRecoilState(promptDataState);
   const eventTime = useRecoilValue(timeState);
   const API_KEY = process.env.REACT_APP_LOL_API_KEY;
 
@@ -69,7 +71,11 @@ const ChatUserInfo = () => {
           myPuuId: matchData.matchDetails[index].puuid,
           matchId: matchData.matchDetails[index].matchId,
         }));
-
+        setPromptData((prevState) => ({
+          ...prevState,
+          myChamp: matchData.matchDetails[index].championName,
+        }));
+        console.log(promptData);
         setShowTeamData(true);
       })
       .catch((error) => {
@@ -85,6 +91,11 @@ const ChatUserInfo = () => {
       ...prevState,
       yourPuuId: lolTeamMemberData[index].memberPuuid,
     }));
+    setPromptData((prevState) => ({
+      ...prevState,
+      yourChamp: lolTeamMemberData[index].championName,
+    }));
+    console.log(promptData);
   };
 
   // scroll

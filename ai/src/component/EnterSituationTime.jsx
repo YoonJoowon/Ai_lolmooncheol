@@ -5,18 +5,20 @@ import {
   StartAskingNextState,
   timeState,
   matchTimelineDataState,
+  promptDataState,
 } from "../store/Recoil";
 import TypingAnimation from "./TypingAnimation";
 import axios from "axios";
 
 const EnterSituationTime = () => {
+  const API_KEY = process.env.REACT_APP_LOL_API_KEY;
   const [eventTime, setEventTimeState] = useRecoilState(timeState);
   const [matchTimelineData, setMatchTimelineData] = useRecoilState(
     matchTimelineDataState
   );
   const [startAskingNextPlz, setStartAskingNextPlz] =
     useRecoilState(StartAskingNextState);
-
+  const [promptData, setPromptData] = useRecoilState(promptDataState);
   useEffect(() => {
     setMatchTimelineData((prevState) => ({
       ...prevState,
@@ -44,8 +46,30 @@ const EnterSituationTime = () => {
     setStartAskingNextPlz(true);
     axios
       .post("http://localhost:8080/fetchMatchTimeline", matchTimelineData)
-      .then((response) => {})
-      .catch((error) => {});
+      .then((response) => {
+        setPromptData((prevData) => ({
+          ...prevData,
+          myCurrentGold: response.data.myData.currentGold,
+          myLevel: response.data.myData.level,
+          myLocation: { x: "", y: "" },
+          myHealth: response.data.myData.health,
+          // 아군 분쟁 상대 정보
+          yourCurrentGold: response.data.teamData.currentGold,
+          yourLevel: response.data.teamData.level,
+          yourLocation: { x: "", y: "" },
+          yourHealth: response.data.teamData.health,
+          // 내 팀 정보
+          myTeamGold: response.data.myTeamInfo.totalGold,
+          myTeamLevel: response.data.myTeamInfo.AvgLevel,
+          // 상대 팀 정보
+          enemyTeamGold: response.data.yourTeamInfo.totalGold,
+          enemyTeamLevel: response.data.yourTeamInfo.AvgLevel,
+        }));
+        console.log(promptData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
