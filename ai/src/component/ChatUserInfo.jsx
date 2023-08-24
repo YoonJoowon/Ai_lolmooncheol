@@ -62,14 +62,14 @@ const ChatUserInfo = () => {
     handleScroll();
     const selectedGame = matchData.matchDetails[index];
     axios
-      .post("http://localhost:8080/summoner", selectedGame.puuID)
+      .post("http://localhost:8080/summoner", selectedGame.puuid)
       .then((response) => {
         console.log("Post successful:", selectedGame.teamMembers);
         setLolTeamMemberData(selectedGame.teamMembers);
         setMatchTimelineData((prevState) => ({
           ...prevState,
-          myPuuID: matchData.matchDetails[index].puuID,
-          matchID: matchData.matchDetails[index].matchID,
+          myPuuID: matchData.matchDetails[index].puuid,
+          matchID: matchData.matchDetails[index].matchId,
         }));
         console.log("selectGame", matchTimelineData);
         setShowTeamData(true);
@@ -85,7 +85,7 @@ const ChatUserInfo = () => {
     setShowTime(true);
     setMatchTimelineData((prevState) => ({
       ...prevState,
-      yourPuuID: lolTeamMemberData[index].memberPuuID,
+      yourPuuID: lolTeamMemberData[index].memberPuuid,
     }));
     console.log("selectTeam", matchTimelineData); // 확인을 위한 로그
   };
