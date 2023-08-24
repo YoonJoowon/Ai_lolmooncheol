@@ -119,6 +119,7 @@ const ChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
 `;
 
 const ChatAiStyle = styled.div`
@@ -143,7 +144,6 @@ const ChatUserStyle = styled.div`
   border: solid 1px #0ac8b9;
   padding: 20px;
   color: white;
-  margin-left: 300px;
   margin-top: 20px;
   width: 300px;
   max-width: 500px;
@@ -153,9 +153,33 @@ const ChatUserStyle = styled.div`
   line-height: 1.6;
   background-color: #0a323c;
   white-space: pre-line;
+  align-self: flex-end;
+  margin-right: 20px;
 
   @media (max-width: 673px) {
     width: 40%;
+    margin-right: 20px;
+  }
+`;
+
+const ChatChecking = styled.button`
+  color: white;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 600px;
+  height: 25px;
+  margin: auto;
+  border-radius: 20px;
+  padding: 20px 20px;
+  background-color: #0a1428;
+  border: solid 1px #005a82;
+  margin-top: 20px;
+  cursor: pointer;
+
+  @media (max-width: 673px) {
+    width: 90%;
   }
 `;
 
@@ -174,23 +198,10 @@ const CheckAnswer = styled.div`
   text-align: center;
   justify-content: center;
   align-items: center;
-`;
 
-const ChatChecking = styled.button`
-  color: white;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  width: 600px;
-  height: 25px;
-  margin: auto;
-  border-radius: 20px;
-  padding: 20px 20px;
-  background-color: #0a1428;
-  border: solid 1px #005a82;
-  margin-top: 20px;
-  cursor: pointer;
+  @media (max-width: 673px) {
+    width: 80%;
+  }
 `;
 
 export default ChatAi;

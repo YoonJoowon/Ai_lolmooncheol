@@ -23,7 +23,7 @@ function AiAnswer(props) {
 
   useEffect(() => {
     if (showCheckAnswerRecoil) {
-      // handleSubmit();
+      handleSubmit();
     }
   }, [showCheckAnswerRecoil]);
 
@@ -149,6 +149,10 @@ const ChattingInfo = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+
+  @media (max-width: 673px) {
+    width: 80%;
+  }
 `;
 
 const AiFeedbackAnswer = styled.p`
