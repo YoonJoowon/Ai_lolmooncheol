@@ -19,8 +19,23 @@ function AiAnswer(props) {
     .map((item) => String(item))
     .join(" ");
 
-  const A = "제드";
-  const B = "아무무";
+  const aChamp = "제드";
+  const aChampHp = "50";
+  const aChampGold = "2300";
+  const aChampLevel = "10level";
+  const aChampLocation = "x:6447 y:6447";
+
+  const bChamp = "아무무";
+  const bChampHp = "2150hp";
+  const bChampGold = "2100gold";
+  const bChampLevel = "9level";
+  const bChampLocation = "x:8154 y:2524";
+
+  const teamLevel = "9.2level";
+  const teamGold = "10000gold";
+
+  const enemyLevel = "9.2level";
+  const enemyGold = "12000gold";
 
   useEffect(() => {
     if (showCheckAnswerRecoil) {
@@ -34,49 +49,65 @@ function AiAnswer(props) {
       {
         role: "system", // 행동지정, 역할부여
         content:
-          `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 한 선택지를 선택하여 이유와 함께 답해주세요. 이전 내용과 똑같은 형식으로 답을 말해야하고, 당시 상황 지표분석을 토대로 결론을 말해주세요. ` +
-          `(첫 번째 ${A}는 5킬 1데스 14어시스트,  3800gold, 레벨은 11 그리고 두 번째 ${B}는 1킬 6데스 2어시스트, 2000gold 레벨은 9) 내용도 함께 분석해주세요.` +
+          `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 한 의견을 선택하여 이유와 함께 답해주세요. 
+          아래의 형식을 사용하고, 주어진 골드, 레벨 등 각각 의 지표들을 하나씩 근거로 들면서 결론을 말해주세요.` +
           "다음 형식을 사용합니다:" +
-          "안녕하세요! 주어진 상황에서 판경을 시작해볼게요! \n\n" +
-          `${A}의 당시 상황 지표분석:\n` +
-          "킬/데스/어시스트: a/b/c\n" +
-          "골드: d\n" +
-          "레벨: e\n\n" +
-          `${B}의 당시 상황 지표분석:\n` +
-          "킬/데스/어시스트: h/i/j\n" +
-          "골드: k\n" +
-          "레벨: l\n\n" +
-          "상황: ```\n\n" +
-          `${A}의 주장:\n` +
+          "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
+          `${aChamp}의 당시 상황 지표분석:\n` +
+          `체력:${aChampHp}\n` +
+          `골드:${aChampGold}\n` +
+          `레벨:${aChampLevel}\n\n` +
+          `위치:${aChampLocation}\n\n` +
+          `${bChamp}의 당시 상황 지표분석:\n` +
+          `체력:${bChampHp}\n` +
+          `골드:${bChampGold}\n` +
+          `레벨:${bChampLevel}\n\n` +
+          `위치:${bChampLocation}\n\n` +
+          `우리 팀 지표분석:\n` +
+          `평균 레벨:${teamLevel}\n` +
+          `총 골드:${teamGold}\n` +
+          `상대 팀 지표분석:\n` +
+          `평균 레벨:${enemyLevel}\n` +
+          `총 골드:${enemyGold}\n` +
+          `${aChamp}의 주장:\n` +
           "```\n\n" +
-          `${B}의 주장:\n` +
+          `${bChamp}의 주장:\n` +
           "```\n\n" +
           "결론:\n" +
           "```",
       },
       {
-        role: "assistant", // 이전 대화 기억
+        role: "assistant",
         content:
           "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
-          "A의 당시 상황 지표분석:\n" +
-          "킬/데스/어시스트: a/b/c\n" +
-          "골드: d\n" +
-          "레벨: e\n\n" +
-          "B의 당시 상황 지표분석:\n" +
-          "킬/데스/어시스트: h/i/j\n" +
-          "골드: k\n" +
-          "레벨: l\n\n" +
-          "상황: ```\n\n" +
-          "A의 주장:\n" +
+          `${aChamp}의 당시 상황 지표분석:\n` +
+          `체력:${aChampHp}\n` +
+          `골드:${aChampGold}\n` +
+          `레벨:${aChampLevel}\n\n` +
+          `위치:${aChampLocation}\n\n` +
+          `${bChamp}의 당시 상황 지표분석:\n` +
+          `체력:${bChampHp}\n` +
+          `골드:${bChampGold}\n` +
+          `레벨:${bChampLevel}\n\n` +
+          `위치:${bChampLocation}\n\n` +
+          `우리 팀 지표분석:\n` +
+          `평균 레벨:${teamLevel}\n` +
+          `총 골드:${teamGold}\n` +
+          `상대 팀 지표분석:\n` +
+          `평균 레벨:${enemyLevel}\n` +
+          `총 골드:${enemyGold}\n` +
+          `${aChamp}의 주장:\n` +
           "```\n\n" +
-          "B의 주장:\n" +
+          `${bChamp}의 주장:\n` +
           "```\n\n" +
           "결론:\n" +
           "```",
       },
       {
         role: "user",
-        content: filteredString + "둘 중 누구의 판단이 맞습니까?",
+        content:
+          filteredString +
+          "당시 상황을 토대로 누구의 주장이 맞는지 판단해주세요.",
       },
     ];
 
