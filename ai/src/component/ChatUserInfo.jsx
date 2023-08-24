@@ -72,6 +72,18 @@ const ChatUserInfo = () => {
   const nextWhatTimeData = (index) => {
     handleScroll();
     setShowNextWhatData(true);
+    const selectedTeamChampion = lolTeamMemberData[index];
+    console.log("Selected champion:", selectedTeamChampion); // 확인을 위한 로그
+    axios
+      .post("http://localhost:8080/summoner", selectedTeamChampion)
+      .then((response) => {
+        console.log("Post successful:", response.data);
+        setShowNextTeamData(true);
+      })
+      .catch((error) => {
+        console.error("Error posting:", error);
+        // 에러 처리 로직을 추가할 수 있습니다.
+      });
   };
 
   // scroll
@@ -143,7 +155,13 @@ const ChatUserInfo = () => {
           {lolTeamMemberData.map(
             (champion, index) =>
               index <= 3 && (
-                <UserMatchingDataBox key={index} onClick={nextWhatTimeData}>
+                <UserMatchingDataBox
+                  key={index}
+                  onClick={() => {
+                    console.log("Clicked index:", index);
+                    nextWhatTimeData(index);
+                  }}
+                >
                   <UserMatchingDataImg>
                     <img
                       src={champion.championImageUrl}
