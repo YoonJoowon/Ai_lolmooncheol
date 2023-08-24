@@ -18,7 +18,7 @@ const EnterSituationTime = () => {
     setSeconds(event.target.value);
   };
 
-  const StartAskingNext = () => {
+  const startAskingNext = () => {
     setStartAskingNextPlz(true);
   };
 
@@ -43,7 +43,7 @@ const EnterSituationTime = () => {
           />
         </TimeInputContainer>
       </EnterSituationTimeStyle>
-      <TimeInputLabelSubmit onClick={StartAskingNext}>
+      <TimeInputLabelSubmit onClick={startAskingNext}>
         전송
       </TimeInputLabelSubmit>
     </>
