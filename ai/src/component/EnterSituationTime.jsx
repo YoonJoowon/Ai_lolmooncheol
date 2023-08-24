@@ -20,7 +20,7 @@ const EnterSituationTime = () => {
   useEffect(() => {
     setMatchTimelineData((prevState) => ({
       ...prevState,
-      timeline: eventTime,
+      specificTime: eventTime,
     }));
     console.log(matchTimelineData);
   }, [eventTime]);
