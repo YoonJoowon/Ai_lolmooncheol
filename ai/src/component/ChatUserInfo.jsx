@@ -32,7 +32,7 @@ const ChatUserInfo = () => {
   useEffect(() => {
     if (nickNameInput) {
       setShowUserDataStart(true);
-      console.log(nickNameInput);
+
       // 서버로 요청 보내는 부분
       const data = { name: nickNameInput };
       axios
@@ -40,7 +40,6 @@ const ChatUserInfo = () => {
           "X-Riot-Token": API_KEY,
         })
         .then((response) => {
-          console.log(response.data);
           if (Array.isArray(response.data) && response.data.length === 0) {
             setShowUserData(false);
           } else {
@@ -55,7 +54,7 @@ const ChatUserInfo = () => {
       setShowUserData(false);
       setShowUserDataStart(true);
     }
-  }, [nickNameInput, eventTime]);
+  }, [nickNameInput]);
 
   // 어떤 게임을 선택했는지 index를 post
   const selectGame = (index) => {
@@ -64,14 +63,13 @@ const ChatUserInfo = () => {
     axios
       .post("http://localhost:8080/summoner", selectedGame.puuid)
       .then((response) => {
-        console.log("Post successful:", selectedGame.teamMembers);
         setLolTeamMemberData(selectedGame.teamMembers);
         setMatchTimelineData((prevState) => ({
           ...prevState,
           myPuuId: matchData.matchDetails[index].puuid,
           matchId: matchData.matchDetails[index].matchId,
         }));
-        console.log("selectGame", matchTimelineData);
+
         setShowTeamData(true);
       })
       .catch((error) => {
@@ -87,7 +85,6 @@ const ChatUserInfo = () => {
       ...prevState,
       yourPuuId: lolTeamMemberData[index].memberPuuid,
     }));
-    console.log("selectTeam", matchTimelineData); // 확인을 위한 로그
   };
 
   // scroll

@@ -22,7 +22,6 @@ const EnterSituationTime = () => {
       ...prevState,
       specificTime: eventTime,
     }));
-    console.log(matchTimelineData);
   }, [eventTime]);
 
   const handleMinutesChange = (event) => {
@@ -41,18 +40,12 @@ const EnterSituationTime = () => {
     }));
   };
 
-
   const postTimelineData = () => {
     setStartAskingNextPlz(true);
     axios
       .post("http://localhost:8080/fetchMatchTimeline", matchTimelineData)
-      .then((response) => {
-        console.log("Post successful:");
-      })
-      .catch((error) => {
-        console.error("Error posting:", error);
-        // 에러 처리 로직을 추가할 수 있습니다.
-      });
+      .then((response) => {})
+      .catch((error) => {});
   };
 
   return (
@@ -78,7 +71,6 @@ const EnterSituationTime = () => {
       </EnterSituationTimeStyle>
 
       <TimeInputLabelSubmit onClick={postTimelineData}>
-
         전송
       </TimeInputLabelSubmit>
     </>
