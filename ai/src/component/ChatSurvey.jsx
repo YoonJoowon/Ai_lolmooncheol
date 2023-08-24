@@ -9,7 +9,7 @@ const ChatSurvey = () => {
   const firestore = firebase.firestore();
   const bucket = firestore.collection("surbey-bucket");
   const [surveySubmitted, setSurveySubmitted] = useState(false);
-  const [hoverRating, setHoverRating] = useState(0); // 마우스 호버 시 표시되는 별점
+  const [hoverRating, setHoverRating] = useState(4); // 마우스 호버 시 표시되는 별점
 
   const [rating, setRating] = useState(null);
   const [tempRating, setTempRating] = useState(null);
