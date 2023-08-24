@@ -204,7 +204,6 @@ export default AiAnswer;
 
 const ChattingInfo = styled.div`
   border: solid 1px #005a82;
-  margin-top: 20px;
   width: 570px;
   border-radius: 20px;
   background-color: #121212;
@@ -212,11 +211,9 @@ const ChattingInfo = styled.div`
   padding: 20px;
   line-height: 1.8;
   text-align: center;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
   margin: auto;
   margin-top: 20px;
+  margin-left: 23px;
 
   @media (max-width: 673px) {
     width: 80%;
