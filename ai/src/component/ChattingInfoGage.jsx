@@ -65,4 +65,8 @@ const ChattingInfoGageStyle = styled.div`
       opacity: 0.7;
     }
   }
+
+  @media (max-width: 673px) {
+    display: none;
+  }
 `;

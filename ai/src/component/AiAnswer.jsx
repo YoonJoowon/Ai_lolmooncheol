@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
-import { showCheckAnswerState } from "../store/Recoil";
 import ChatSurvey from "./ChatSurvey";
+import { showCheckAnswerState } from "../store/Recoil";
+import html2canvas from "html2canvas";
 
 function AiAnswer(props) {
   //chatGPT
@@ -114,22 +115,55 @@ function AiAnswer(props) {
     }
   };
 
+  // 결과 공유
+  const ref = useRef(null);
+  const clipboardHandler = () => {
+    if (ref.current) {
+      html2canvas(ref.current).then((canvas) => {
+        canvas.toBlob((blob) => {
+          if (blob) {
+            try {
+              navigator.clipboard
+                .write([new ClipboardItem({ "image/png": blob })])
+                .then(() => {
+                  alert("결과 이미지가 클립보드에 복사되었습니다.");
+                })
+                .catch((error) => {
+                  console.error("Clipboard write error:", error);
+                  alert("결과 이미지 복사에 실패했습니다.");
+                });
+            } catch (error) {
+              console.error("Clipboard write error:", error);
+              alert("결과 이미지 복사에 실패했습니다.");
+            }
+          }
+        });
+      });
+    }
+  };
+
   return (
     <>
-      {showCheckAnswerRecoil && (
-        <ChattingInfo>
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          {isLoading && <Loading />}
-
-          {responseMessage && !isLoading && (
-            <>
-              <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
-              <ReplayBtnStyle onClick={urlCopy}>사이트 공유하기</ReplayBtnStyle>
-              <ChatSurvey />
-            </>
-          )}
-        </ChattingInfo>
-      )}
+      <div ref={ref}>
+        {showCheckAnswerRecoil && (
+          <ChattingInfo>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            {isLoading && <Loading />}
+            {responseMessage && !isLoading && (
+              <>
+                <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
+                <ReplayBtnStyle onClick={urlCopy}>
+                  사이트 공유하기
+                </ReplayBtnStyle>
+                <ReplayBtnStyle onClick={clipboardHandler}>
+                  결과 공유하기
+                </ReplayBtnStyle>
+                <ChatSurvey />
+              </>
+            )}
+          </ChattingInfo>
+        )}
+      </div>
     </>
   );
 }
@@ -137,7 +171,6 @@ export default AiAnswer;
 
 const ChattingInfo = styled.div`
   border: solid 1px #005a82;
-  margin: auto;
   margin-top: 20px;
   width: 570px;
   border-radius: 20px;
@@ -149,6 +182,8 @@ const ChattingInfo = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  margin: auto;
+  margin-top: 20px;
 
   @media (max-width: 673px) {
     width: 80%;
@@ -177,6 +212,10 @@ const ReplayBtnStyle = styled.button`
   background-color: #0a1428;
   border: solid 1px #005a82;
   margin: 0px 10px 0px 10px;
+
+  @media (max-width: 550px) {
+    margin-top: 10px;
+  }
 `;
 
 const SecondBtnStyle = styled.button`

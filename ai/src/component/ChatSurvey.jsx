@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import firebase from "../Firebase";
-import axios from "axios";
 
-import { FaStar, FaStarHalf } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 const ChatSurvey = () => {
   // 서버에 보내졌는지 확인하는 상태
@@ -77,10 +76,10 @@ const ChatSurvey = () => {
               <ChatSurveyEmoziContainer>{stars}</ChatSurveyEmoziContainer>
               <div
                 style={{
-                  border: "1px solid white",
+                  border: "0.1px solid white",
                   borderRadius: "20px",
                   cursor: "pointer",
-                  backgroundColor: "#2D93CF",
+                  backgroundColor: "#005a82",
                 }}
                 onClick={saveRatingFirebase}
               >

@@ -25,8 +25,8 @@ const Landing = () => {
           </ChatStartLink>
         </LandingExplainBox>
         <LandingImageBox>
-          <LandingImage1></LandingImage1>
-          <LandingImage2></LandingImage2>
+          <LandingImage1 />
+          <LandingImage2 />
           <LandingImageInfoTxt>
             ※실제 서비스 사용 예시입니다.
           </LandingImageInfoTxt>
@@ -73,6 +73,11 @@ const LandingExplainBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 200px;
+
+  @media (max-width: 610px) {
+    text-align: center;
+    margin: auto;
+  }
 `;
 
 const LandingTitle = styled.p`
@@ -119,6 +124,10 @@ const LandingImageBox = styled.div`
   width: 800px;
   height: 550px;
   position: relative;
+
+  @media (max-width: 610px) {
+    display: none;
+  }
 `;
 
 const LandingImage1 = styled.div`
@@ -130,6 +139,15 @@ const LandingImage1 = styled.div`
   height: 400px;
   border-radius: 20px;
   box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.8);
+
+  @media (max-width: 1070px) {
+    width: 400px;
+  }
+
+  @media (max-width: 850px) {
+    width: 200px;
+    background-size: 400% auto;
+  }
 `;
 
 const LandingImage2 = styled.div`
@@ -144,6 +162,16 @@ const LandingImage2 = styled.div`
   position: absolute;
   top: 80px;
   right: 100px;
+
+  @media (max-width: 1070px) {
+    width: 400px;
+  }
+
+  @media (max-width: 850px) {
+    width: 200px;
+    height: 400px;
+    background-size: 400% auto;
+  }
 `;
 
 const LandingImageInfoTxt = styled.div`
