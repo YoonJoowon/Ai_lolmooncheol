@@ -26,16 +26,18 @@ const EnterSituationTime = () => {
   }, [eventTime]);
 
   const handleMinutesChange = (event) => {
+    const newMinute = parseInt(event.target.value, 10); // 문자열을 숫자로 변환
     setEventTimeState((prevState) => ({
       ...prevState,
-      minute: event.target.value,
+      minute: newMinute,
     }));
   };
 
   const handleSecondsChange = (event) => {
+    const newSecond = parseInt(event.target.value, 10); // 문자열을 숫자로 변환
     setEventTimeState((prevState) => ({
       ...prevState,
-      second: event.target.value,
+      second: newSecond,
     }));
   };
 

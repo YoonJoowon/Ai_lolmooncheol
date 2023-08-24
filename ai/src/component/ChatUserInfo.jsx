@@ -68,8 +68,8 @@ const ChatUserInfo = () => {
         setLolTeamMemberData(selectedGame.teamMembers);
         setMatchTimelineData((prevState) => ({
           ...prevState,
-          myPuuID: matchData.matchDetails[index].puuid,
-          matchID: matchData.matchDetails[index].matchId,
+          myPuuId: matchData.matchDetails[index].puuid,
+          matchId: matchData.matchDetails[index].matchId,
         }));
         console.log("selectGame", matchTimelineData);
         setShowTeamData(true);
@@ -85,7 +85,7 @@ const ChatUserInfo = () => {
     setShowTime(true);
     setMatchTimelineData((prevState) => ({
       ...prevState,
-      yourPuuID: lolTeamMemberData[index].memberPuuid,
+      yourPuuId: lolTeamMemberData[index].memberPuuid,
     }));
     console.log("selectTeam", matchTimelineData); // 확인을 위한 로그
   };

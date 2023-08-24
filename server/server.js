@@ -8,7 +8,6 @@ const axios = require("axios");
 const baseUrl = "https://KR.api.riotgames.com/lol";
 const baseUrl2 = "https://asia.api.riotgames.com/lol";
 
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -79,8 +78,9 @@ async function getMatchDetails(matchId, puuid) {
     const matchData = matchResponse.data;
 
     // puuid를 통해 팀원 찾기
-    const participant = matchData.info.participants.find(participant => participant.puuid === puuid);
-
+    const participant = matchData.info.participants.find(
+      (participant) => participant.puuid === puuid
+    );
 
     if (!participant) {
       return null; // Participant not found, handle this case
@@ -97,25 +97,38 @@ async function getMatchDetails(matchId, puuid) {
     const championImageUrl = `http://ddragon.leagueoflegends.com/cdn/13.15.1/img/champion/${championName}.png`;
 
     // 챔피언 이름 한글번역
-    const championNameKR = 'http://ddragon.leagueoflegends.com/cdn/13.16.1/'
+    const championNameKR = "http://ddragon.leagueoflegends.com/cdn/13.16.1/";
 
     // 팀원
     const teamId = participant.teamId;
 
     const teamMembers = matchData.info.participants
-      .filter(teamMember => teamMember.teamId === teamId && teamMember.puuid !== puuid)
-      .map(teamMember => ({
+      .filter(
+        (teamMember) =>
+          teamMember.teamId === teamId && teamMember.puuid !== puuid
+      )
+      .map((teamMember) => ({
         championName: teamMember.championName,
         championImageUrl: `http://ddragon.leagueoflegends.com/cdn/13.15.1/img/champion/${teamMember.championName}.png`,
         kills: teamMember.kills,
         deaths: teamMember.deaths,
         assists: teamMember.assists,
         lane: teamMember.lane,
-        memberPuuid: teamMember.puuid
+        memberPuuid: teamMember.puuid,
       }));
 
-    return { championName, championImageUrl, kills, deaths, assists, win, lane, puuid, matchId, teamMembers };
-
+    return {
+      championName,
+      championImageUrl,
+      kills,
+      deaths,
+      assists,
+      win,
+      lane,
+      puuid,
+      matchId,
+      teamMembers,
+    };
   } catch (error) {
     console.error(error);
     return null;
@@ -164,7 +177,7 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
     let myId = -1;
     for (let p = 0; p <= 10; p++) {
       if (myPuuId === timelineData.info.participants[p].puuid) {
-        myId = p+1;
+        myId = p + 1;
         break;
       }
     }
@@ -172,78 +185,82 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
     let yourId = -1;
     for (let q = 0; q <= 10; q++) {
       if (yourPuuId === timelineData.info.participants[q].puuid) {
-        yourId = q+1;
+        yourId = q + 1;
         break;
       }
     }
 
-    
     // 시간 양식 재설정
     const time = specificTime.minute + "분 " + specificTime.second + "초";
-    
-    
+
     // 두 챔피언 선택
     const summoner1Data = frames[frameIndex].participantFrames[myId];
     const summoner2Data = frames[frameIndex].participantFrames[yourId];
-    
-    
-    
+
     // 개인 필요정보 추출
     const summoner1Info = {
       level: summoner1Data.level,
       health: summoner1Data.championStats.health,
       currentGold: summoner1Data.currentGold,
-      totalGold: summoner1Data.totalGold
+      totalGold: summoner1Data.totalGold,
     };
-
 
     const summoner2Info = {
       level: summoner2Data.level,
       health: summoner2Data.championStats.health,
       currentGold: summoner2Data.currentGold,
-      totalGold: summoner2Data.totalGold
+      totalGold: summoner2Data.totalGold,
     };
-
-    
 
     // 팀 필요정보 추출
 
     let team1TotalGold = 0;
     let team2TotalGold = 0;
 
-    for (let j = 1; j <= 5; j++){
+    for (let j = 1; j <= 5; j++) {
       team1TotalGold += frames[frameIndex].participantFrames[j].totalGold;
     }
 
-    for (let k = 6; k <= 10; k++){
+    for (let k = 6; k <= 10; k++) {
       team2TotalGold += frames[frameIndex].participantFrames[k].totalGold;
     }
 
     let team1AvgLevel = 0;
     let team2AvgLevel = 0;
 
-    for (let m = 1; m <= 5; m++){
+    for (let m = 1; m <= 5; m++) {
       team1AvgLevel += frames[frameIndex].participantFrames[m].level;
     }
-    
-    for (let n = 6; n <= 10; n++){
+
+    for (let n = 6; n <= 10; n++) {
       team2AvgLevel += frames[frameIndex].participantFrames[n].level;
     }
 
     console.log(team1TotalGold);
-    
-    const myTeamInfo =  {
+
+    const myTeamInfo = {
       totalGold: team1TotalGold,
-      AvgLevel: team1AvgLevel/5
+      AvgLevel: team1AvgLevel / 5,
     };
 
-    const yourTeamInfo =  {
+    const yourTeamInfo = {
       totalGold: team2TotalGold,
-      AvgLevel: team2AvgLevel/5
+      AvgLevel: team2AvgLevel / 5,
     };
-
-
-    return { time: time, myData: summoner1Info, teamData: summoner2Info, myTeamInfo: myTeamInfo, yourTeamInfo: yourTeamInfo };
+    console.log({
+      time: time,
+      myData: summoner1Info,
+      teamData: summoner2Info,
+      myTeamInfo: myTeamInfo,
+      yourTeamInfo: yourTeamInfo,
+    });
+    return {
+      time: time,
+      myData: summoner1Info,
+      teamData: summoner2Info,
+      myTeamInfo: myTeamInfo,
+      yourTeamInfo: yourTeamInfo,
+    };
   } catch (error) {
     console.error("타임라인 데이터 오류", error.message);
     throw error;
@@ -252,16 +269,20 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
 
 // 입력 값을 받고 특정 시간에 대한 매치 타임라인 데이터를 가져오는 라우트를 정의합니다.
 
-app.post('/fetchMatchTimeline', async (req, res) => {
+app.post("/fetchMatchTimeline", async (req, res) => {
   const myPuuid = req.body.myPuuId;
   const yourPuuid = req.body.yourPuuId;
   const matchId = req.body.matchId;
 
-
   const specificTime = req.body.specificTime;
 
   try {
-    const timelineData = await getMatchTimeline(myPuuid, yourPuuid, matchId, specificTime);
+    const timelineData = await getMatchTimeline(
+      myPuuid,
+      yourPuuid,
+      matchId,
+      specificTime
+    );
     res.json(timelineData);
   } catch (error) {
     res
@@ -269,5 +290,3 @@ app.post('/fetchMatchTimeline', async (req, res) => {
       .json({ error: "매치 타임라인 데이터를 가져오는 중 오류 발생" });
   }
 });
-
-
