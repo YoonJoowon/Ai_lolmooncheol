@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import EnterSituationTime from "./EnterSituationTime";
 import {
-  StartAskingNextState,
   nickNameInputState,
-  lolAPIDataState,
+  matchDataState,
   lolTeamMemberDataState,
+  matchTimelineDataState,
 } from "../store/Recoil";
 import { useRecoilValue, useRecoilState } from "recoil";
 import TypingAnimation from "./TypingAnimation";
@@ -15,16 +15,16 @@ const ChatUserInfo = () => {
   const nickNameInput = useRecoilValue(nickNameInputState);
   const [showUserDataStart, setShowUserDataStart] = useState();
   const [showUserData, setShowUserData] = useState(false);
-  const [showNextTeamData, setShowNextTeamData] = useState(false);
-  const [showNextWhatTime, setShowNextWhatData] = useState(false);
-  const [lolAPIData, setLolAPIData] = useRecoilState(lolAPIDataState);
+  const [showTeamData, setShowTeamData] = useState(false);
+  const [showTime, setShowTime] = useState(false);
+  const [matchData, setMatchData] = useRecoilState(matchDataState);
   const [lolTeamMemberData, setLolTeamMemberData] = useRecoilState(
     lolTeamMemberDataState
   );
+  const [matchTimelineData, setMatchTimelineData] = useRecoilState(
+    matchTimelineDataState
+  );
   const API_KEY = process.env.REACT_APP_LOL_API_KEY;
-
-  // name input
-  const [summonerName, setSummonerName] = useState(""); // 초기값 설정
 
   // 소환사 명 post와 매치데이터 get
   useEffect(() => {
@@ -38,12 +38,12 @@ const ChatUserInfo = () => {
           "X-Riot-Token": API_KEY,
         })
         .then((response) => {
-          console.log("============", response.data);
+          console.log(response.data);
           if (Array.isArray(response.data) && response.data.length === 0) {
             setShowUserData(false);
           } else {
             setShowUserData(true);
-            setLolAPIData(response.data);
+            setMatchData(response.data);
           }
         })
         .catch((error) => {
@@ -53,19 +53,24 @@ const ChatUserInfo = () => {
       setShowUserData(false);
       setShowUserDataStart(true);
     }
-    console.log("lolAPIData", lolAPIData);
   }, [nickNameInput]);
 
   // 어떤 게임을 선택했는지 index를 post
-  const nextTeamData = (index) => {
+  const selectGame = (index) => {
     handleScroll();
-    const selectedChampion = lolAPIData.matchDetails[index];
+    const selectedGame = matchData.matchDetails[index];
     axios
-      .post("http://localhost:8080/summoner", selectedChampion)
+      .post("http://localhost:8080/summoner", selectedGame.puuid)
       .then((response) => {
-        console.log("Post successful:", selectedChampion.teamMembers);
-        setLolTeamMemberData(selectedChampion.teamMembers);
-        setShowNextTeamData(true);
+        console.log("Post successful:", selectedGame.teamMembers);
+        setLolTeamMemberData(selectedGame.teamMembers);
+        setMatchTimelineData((prevState) => ({
+          ...prevState,
+          puuid: matchData.matchDetails[index].puuid,
+          matchid: matchData.matchDetails[index].matchId,
+        }));
+        console.log("selectGame", matchTimelineData);
+        setShowTeamData(true);
       })
       .catch((error) => {
         console.error("Error posting:", error);
@@ -73,21 +78,21 @@ const ChatUserInfo = () => {
       });
   };
 
-  const nextWhatTimeData = (index) => {
+  const selectTeam = (index) => {
     handleScroll();
-    setShowNextWhatData(true);
-    const selectedTeamChampion = lolTeamMemberData[index];
-    console.log("Selected champion:", selectedTeamChampion); // 확인을 위한 로그
-    axios
-      .post("http://localhost:8080/summoner", selectedTeamChampion)
-      .then((response) => {
-        console.log("Post successful:", response.data);
-        setShowNextTeamData(true);
-      })
-      .catch((error) => {
-        console.error("Error posting:", error);
-        // 에러 처리 로직을 추가할 수 있습니다.
-      });
+    setShowTime(true);
+    setMatchTimelineData((prevState) => ({
+      ...prevState,
+      memberPuuid: lolTeamMemberData[index].memberPuuid,
+    }));
+    console.log("selectTeam", matchTimelineData); // 확인을 위한 로그
+  };
+
+  const selectTimeLine = () => {
+    setMatchTimelineData((prevState) => ({
+      ...prevState,
+      timeline: "",
+    }));
   };
 
   // scroll
@@ -101,7 +106,7 @@ const ChatUserInfo = () => {
 
   useEffect(() => {
     handleScroll();
-  }, [nickNameInput, showNextTeamData, showNextWhatTime]);
+  }, [nickNameInput, showTeamData, showTime]);
 
   return (
     <ChatUserInfoStyle>
@@ -118,11 +123,11 @@ const ChatUserInfo = () => {
               <UserMatchingDataGuide>
                 <TypingAnimation text="판결을 원하는 게임을 선택해주세요." />
               </UserMatchingDataGuide>
-              {lolAPIData &&
-                lolAPIData.matchDetails.map((champion, index) => (
+              {matchData &&
+                matchData.matchDetails.map((champion, index) => (
                   <UserMatchingDataBox
                     key={index}
-                    onClick={() => nextTeamData(index)}
+                    onClick={() => selectGame(index)}
                   >
                     <UserMatchingDataImg>
                       <img
@@ -151,7 +156,7 @@ const ChatUserInfo = () => {
         </>
       )}
 
-      {showNextTeamData && (
+      {showTeamData && (
         <UserMatchingData>
           <UserMatchingDataGuide>
             <TypingAnimation text="분쟁이 일어났던 아군을 선택해주세요." />
@@ -162,8 +167,7 @@ const ChatUserInfo = () => {
                 <UserMatchingDataBox
                   key={index}
                   onClick={() => {
-                    console.log("Clicked index:", index);
-                    nextWhatTimeData(index);
+                    selectTeam(index);
                   }}
                 >
                   <UserMatchingDataImg>
@@ -185,7 +189,7 @@ const ChatUserInfo = () => {
         </UserMatchingData>
       )}
 
-      {showNextWhatTime && <EnterSituationTime />}
+      {showTime && <EnterSituationTime />}
       <div ref={scrollContainerRef}></div>
     </ChatUserInfoStyle>
   );

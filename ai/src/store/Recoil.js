@@ -31,12 +31,17 @@ export const conversationState = atom({
   default: "",
 });
 
-export const lolAPIDataState = atom({
-  key: "lolAPIDataState",
+export const matchDataState = atom({
+  key: "matchDataState",
   default: { matchDetails: [] },
 });
 
 export const lolTeamMemberDataState = atom({
   key: "lolTeamMemberDataState",
   default: { teamMembers: [] },
+});
+
+export const matchTimelineDataState = atom({
+  key: "matchTimelineDataState",
+  default: { puuid: {}, memberPuuid: {}, matchid: {}, timeline: {} },
 });
