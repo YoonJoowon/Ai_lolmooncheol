@@ -1,32 +1,52 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import EnterSituationTime from "./EnterSituationTime";
-import { StartAskingNextState, nickNameInputState } from "../store/Recoil";
-import { useRecoilValue } from "recoil";
-import lolMatchInfoData from "../dummy/lolMatchInfoData.json";
+import {
+  nickNameInputState,
+  matchDataState,
+  lolTeamMemberDataState,
+  matchTimelineDataState,
+  timeState,
+} from "../store/Recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import TypingAnimation from "./TypingAnimation";
 import axios from "axios";
 
 const ChatUserInfo = () => {
   const nickNameInput = useRecoilValue(nickNameInputState);
-  const [showUserDataStart, setShowUserDataStart] = useState(false);
+  const [showUserDataStart, setShowUserDataStart] = useState();
   const [showUserData, setShowUserData] = useState(false);
-  const [showNextTeamData, setShowNextTeamData] = useState(false);
-  const [showNextWhatTime, setShowNextWhatData] = useState(false);
+  const [showTeamData, setShowTeamData] = useState(false);
+  const [showTime, setShowTime] = useState(false);
+  const [matchData, setMatchData] = useRecoilState(matchDataState);
+  const [lolTeamMemberData, setLolTeamMemberData] = useRecoilState(
+    lolTeamMemberDataState
+  );
+  const [matchTimelineData, setMatchTimelineData] = useRecoilState(
+    matchTimelineDataState
+  );
+  const eventTime = useRecoilValue(timeState);
+  const API_KEY = process.env.REACT_APP_LOL_API_KEY;
 
-  // name input
-  const [summonerName, setSummonerName] = useState("쏘이이"); // 초기값 설정
-
+  // 소환사 명 post와 매치데이터 get
   useEffect(() => {
-    if (nickNameInput === summonerName) {
-      setShowUserData(true);
+    if (nickNameInput) {
       setShowUserDataStart(true);
-
+      console.log(nickNameInput);
       // 서버로 요청 보내는 부분
+      const data = { name: nickNameInput };
       axios
-        .post("http://localhost:8080/summoner", { name: summonerName })
+        .post("http://localhost:8080/summoner", data, {
+          "X-Riot-Token": API_KEY,
+        })
         .then((response) => {
           console.log(response.data);
+          if (Array.isArray(response.data) && response.data.length === 0) {
+            setShowUserData(false);
+          } else {
+            setShowUserData(true);
+            setMatchData(response.data);
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -35,16 +55,39 @@ const ChatUserInfo = () => {
       setShowUserData(false);
       setShowUserDataStart(true);
     }
-  }, [nickNameInput, summonerName]);
+  }, [nickNameInput, eventTime]);
 
-  const nextTeamData = () => {
+  // 어떤 게임을 선택했는지 index를 post
+  const selectGame = (index) => {
     handleScroll();
-    setShowNextTeamData(true);
+    const selectedGame = matchData.matchDetails[index];
+    axios
+      .post("http://localhost:8080/summoner", selectedGame.puuid)
+      .then((response) => {
+        console.log("Post successful:", selectedGame.teamMembers);
+        setLolTeamMemberData(selectedGame.teamMembers);
+        setMatchTimelineData((prevState) => ({
+          ...prevState,
+          myPuuId: matchData.matchDetails[index].puuid,
+          matchId: matchData.matchDetails[index].matchId,
+        }));
+        console.log("selectGame", matchTimelineData);
+        setShowTeamData(true);
+      })
+      .catch((error) => {
+        console.error("Error posting:", error);
+        // 에러 처리 로직을 추가할 수 있습니다.
+      });
   };
 
-  const nextWhatTimeData = () => {
+  const selectTeam = (index) => {
     handleScroll();
-    setShowNextWhatData(true);
+    setShowTime(true);
+    setMatchTimelineData((prevState) => ({
+      ...prevState,
+      yourPuuId: lolTeamMemberData[index].memberPuuid,
+    }));
+    console.log("selectTeam", matchTimelineData); // 확인을 위한 로그
   };
 
   // scroll
@@ -58,7 +101,7 @@ const ChatUserInfo = () => {
 
   useEffect(() => {
     handleScroll();
-  }, [nickNameInput, showNextTeamData, showNextWhatTime]);
+  }, [nickNameInput, showTeamData, showTime]);
 
   return (
     <ChatUserInfoStyle>
@@ -75,22 +118,27 @@ const ChatUserInfo = () => {
               <UserMatchingDataGuide>
                 <TypingAnimation text="판결을 원하는 게임을 선택해주세요." />
               </UserMatchingDataGuide>
-              {lolMatchInfoData.map((champion, index) => (
-                <UserMatchingDataBox key={index} onClick={nextTeamData}>
-                  <UserMatchingDataImg>
-                    <img
-                      src={champion.championImage}
-                      alt={champion.championName}
-                    />
-                  </UserMatchingDataImg>
-                  <UserMatchingDataName>
-                    {champion.championName}
-                    <UserMatchingDataKda>
-                      {champion.kills}/{champion.deaths}/{champion.assists}
-                    </UserMatchingDataKda>
-                  </UserMatchingDataName>
-                </UserMatchingDataBox>
-              ))}
+              {matchData &&
+                matchData.matchDetails.map((champion, index) => (
+                  <UserMatchingDataBox
+                    key={index}
+                    onClick={() => selectGame(index)}
+                  >
+                    <UserMatchingDataImg>
+                      <img
+                        src={champion.championImageUrl}
+                        alt={champion.championName}
+                        style={{ width: "60px" }}
+                      />
+                    </UserMatchingDataImg>
+                    <UserMatchingDataName>
+                      {champion.championName}
+                      <UserMatchingDataKda>
+                        {champion.kills}/{champion.deaths}/{champion.assists}
+                      </UserMatchingDataKda>
+                    </UserMatchingDataName>
+                  </UserMatchingDataBox>
+                ))}
             </UserMatchingData>
           ) : (
             <UserMatchingDataFale>
@@ -103,28 +151,40 @@ const ChatUserInfo = () => {
         </>
       )}
 
-      {showNextTeamData && (
+      {showTeamData && (
         <UserMatchingData>
           <UserMatchingDataGuide>
             <TypingAnimation text="분쟁이 일어났던 아군을 선택해주세요." />
           </UserMatchingDataGuide>
-          {lolMatchInfoData.map((champion, index) => (
-            <UserMatchingDataBox key={index} onClick={nextWhatTimeData}>
-              <UserMatchingDataImg>
-                <img src={champion.championImage} alt={champion.championName} />
-              </UserMatchingDataImg>
-              <UserMatchingDataName>
-                {champion.championName}
-                <UserMatchingDataKda>
-                  {champion.kills}/{champion.deaths}/{champion.assists}
-                </UserMatchingDataKda>
-              </UserMatchingDataName>
-            </UserMatchingDataBox>
-          ))}
+          {lolTeamMemberData.map(
+            (champion, index) =>
+              index <= 3 && (
+                <UserMatchingDataBox
+                  key={index}
+                  onClick={() => {
+                    selectTeam(index);
+                  }}
+                >
+                  <UserMatchingDataImg>
+                    <img
+                      src={champion.championImageUrl}
+                      alt={champion.championName}
+                      style={{ width: "60px" }}
+                    />
+                  </UserMatchingDataImg>
+                  <UserMatchingDataName>
+                    {champion.championName}
+                    <UserMatchingDataKda>
+                      {champion.kills}/{champion.deaths}/{champion.assists}
+                    </UserMatchingDataKda>
+                  </UserMatchingDataName>
+                </UserMatchingDataBox>
+              )
+          )}
         </UserMatchingData>
       )}
 
-      {showNextWhatTime && <EnterSituationTime />}
+      {showTime && <EnterSituationTime />}
       <div ref={scrollContainerRef}></div>
     </ChatUserInfoStyle>
   );
