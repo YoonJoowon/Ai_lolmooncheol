@@ -94,30 +94,51 @@ async function getMatchDetails(matchId, puuid) {
     const lane = participant.lane;
 
     // 챔피언 이미지
-    const championImageUrl = `http://ddragon.leagueoflegends.com/cdn/13.15.1/img/champion/${championName}.png`;
+    const championImageUrl = `http://ddragon.leagueoflegends.com/cdn/13.16.1/img/champion/${championName}.png`;
 
     // 챔피언 이름 한글번역
-    const championNameKR = "http://ddragon.leagueoflegends.com/cdn/13.16.1/";
+    const EngToKoR = await axios.get(
+      `http://ddragon.leagueoflegends.com/cdn/13.16.1/data/ko_KR/champion/${championName}.json`
+    );
+
+    const championNameKR = EngToKoR.data.data[championName].name;
+    
+    
+    
+
+    
+
+    
 
     // 팀원
     const teamId = participant.teamId;
+  
 
+      
     const teamMembers = matchData.info.participants
-      .filter(
-        (teamMember) =>
-          teamMember.teamId === teamId && teamMember.puuid !== puuid
-      )
-      .map((teamMember) => ({
-        championName: teamMember.championName,
-        championImageUrl: `http://ddragon.leagueoflegends.com/cdn/13.15.1/img/champion/${teamMember.championName}.png`,
-        kills: teamMember.kills,
-        deaths: teamMember.deaths,
-        assists: teamMember.assists,
-        lane: teamMember.lane,
-        memberPuuid: teamMember.puuid,
-      }));
+      .filter((teamMember) => teamMember.teamId === teamId && teamMember.puuid !== puuid) 
+      
+      .map(
+            (teamMember) => {
+              // const teamChampionName = EngToKoR.data.data[teamMember.championName];
+              console.log(teamMember.championName)
+              return {
+              championName: teamMember.championName,
+              championNameKR: EngToKoR.data.data[teamMember],
+              championImageUrl: `http://ddragon.leagueoflegends.com/cdn/13.16.1/img/champion/${teamMember.championName}.png`,
+              kills: teamMember.kills,
+              deaths: teamMember.deaths,
+              assists: teamMember.assists,
+              lane: teamMember.lane,
+              memberPuuid: teamMember.puuid
+              }
+            }
+        );
+      
+        
 
     return {
+      championNameKR,
       championName,
       championImageUrl,
       kills,
@@ -136,6 +157,10 @@ async function getMatchDetails(matchId, puuid) {
 }
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+
 
 // 특정 시간에 대한 매치 타임라인 데이터를 가져오는 함수.
 async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
@@ -203,6 +228,7 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
       health: summoner1Data.championStats.health,
       currentGold: summoner1Data.currentGold,
       totalGold: summoner1Data.totalGold,
+      position: summoner1Data.position
     };
 
     const summoner2Info = {
@@ -210,6 +236,7 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
       health: summoner2Data.championStats.health,
       currentGold: summoner2Data.currentGold,
       totalGold: summoner2Data.totalGold,
+      position: summoner2Data.position
     };
 
     // 팀 필요정보 추출
