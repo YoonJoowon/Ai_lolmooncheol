@@ -1,25 +1,55 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
-import { StartAskingNextState } from "../store/Recoil";
+import {
+  StartAskingNextState,
+  timeState,
+  matchTimelineDataState,
+} from "../store/Recoil";
 import TypingAnimation from "./TypingAnimation";
+import axios from "axios";
 
 const EnterSituationTime = () => {
-  const [minutes, setMinutes] = useState("");
-  const [seconds, setSeconds] = useState("");
+  const [eventTime, setEventTimeState] = useRecoilState(timeState);
+  const [matchTimelineData, setMatchTimelineData] = useRecoilState(
+    matchTimelineDataState
+  );
   const [startAskingNextPlz, setStartAskingNextPlz] =
     useRecoilState(StartAskingNextState);
 
+  useEffect(() => {
+    setMatchTimelineData((prevState) => ({
+      ...prevState,
+      timeline: eventTime,
+    }));
+    console.log(matchTimelineData);
+  }, [eventTime]);
+
   const handleMinutesChange = (event) => {
-    setMinutes(event.target.value);
+    setEventTimeState((prevState) => ({
+      ...prevState,
+      minute: event.target.value,
+    }));
   };
 
   const handleSecondsChange = (event) => {
-    setSeconds(event.target.value);
+    setEventTimeState((prevState) => ({
+      ...prevState,
+      second: event.target.value,
+    }));
   };
 
-  const StartAskingNext = () => {
+  const postTimelineData = () => {
     setStartAskingNextPlz(true);
+    axios
+      .post("http://localhost:8080/fetchMatchTimeline", matchTimelineData)
+      .then((response) => {
+        console.log("Post successful:");
+      })
+      .catch((error) => {
+        console.error("Error posting:", error);
+        // 에러 처리 로직을 추가할 수 있습니다.
+      });
   };
 
   return (
@@ -32,18 +62,18 @@ const EnterSituationTime = () => {
           <TimeInputLabel>분:</TimeInputLabel>
           <TimeInput
             type="number"
-            value={minutes}
+            value={eventTime.minute}
             onChange={handleMinutesChange}
           />
           <TimeInputLabel>초:</TimeInputLabel>
           <TimeInput
             type="number"
-            value={seconds}
+            value={eventTime.second}
             onChange={handleSecondsChange}
           />
         </TimeInputContainer>
       </EnterSituationTimeStyle>
-      <TimeInputLabelSubmit onClick={StartAskingNext}>
+      <TimeInputLabelSubmit onClick={postTimelineData}>
         전송
       </TimeInputLabelSubmit>
     </>

@@ -6,6 +6,7 @@ import {
   matchDataState,
   lolTeamMemberDataState,
   matchTimelineDataState,
+  timeState,
 } from "../store/Recoil";
 import { useRecoilValue, useRecoilState } from "recoil";
 import TypingAnimation from "./TypingAnimation";
@@ -24,6 +25,7 @@ const ChatUserInfo = () => {
   const [matchTimelineData, setMatchTimelineData] = useRecoilState(
     matchTimelineDataState
   );
+  const eventTime = useRecoilValue(timeState);
   const API_KEY = process.env.REACT_APP_LOL_API_KEY;
 
   // 소환사 명 post와 매치데이터 get
@@ -53,7 +55,7 @@ const ChatUserInfo = () => {
       setShowUserData(false);
       setShowUserDataStart(true);
     }
-  }, [nickNameInput]);
+  }, [nickNameInput, eventTime]);
 
   // 어떤 게임을 선택했는지 index를 post
   const selectGame = (index) => {
@@ -86,13 +88,6 @@ const ChatUserInfo = () => {
       memberPuuid: lolTeamMemberData[index].memberPuuid,
     }));
     console.log("selectTeam", matchTimelineData); // 확인을 위한 로그
-  };
-
-  const selectTimeLine = () => {
-    setMatchTimelineData((prevState) => ({
-      ...prevState,
-      timeline: "",
-    }));
   };
 
   // scroll

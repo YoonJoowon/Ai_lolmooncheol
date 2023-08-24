@@ -43,5 +43,18 @@ export const lolTeamMemberDataState = atom({
 
 export const matchTimelineDataState = atom({
   key: "matchTimelineDataState",
-  default: { puuid: {}, memberPuuid: {}, matchid: {}, timeline: {} },
+  default: {
+    puuid: {},
+    memberPuuid: {},
+    matchid: {},
+    timeline: {},
+  },
+});
+
+export const timeState = atom({
+  key: "timeState",
+  default: {
+    minute: "",
+    second: "",
+  },
 });
