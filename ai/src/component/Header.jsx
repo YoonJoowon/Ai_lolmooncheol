@@ -23,6 +23,10 @@ const Wrapper = styled.div`
   position: absolute;
   top: 20px;
   align-items: center;
+
+  @media (max-width: 660px) {
+    top: 10px;
+  }
 `;
 
 const HeaderStyle = styled.div`
@@ -46,4 +50,8 @@ const HeaderText = styled.p`
   margin: auto;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 660px) {
+    font-size: 14px;
+  }
 `;

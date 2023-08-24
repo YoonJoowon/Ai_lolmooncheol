@@ -1,39 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import axios from "axios";
-import { showCheckAnswerState } from "../store/Recoil";
-import { Modal } from "./Modal";
-
 import ChatSurvey from "./ChatSurvey";
+import { showCheckAnswerState } from "../store/Recoil";
+import html2canvas from "html2canvas";
 
 function AiAnswer(props) {
-  // 모달창 노출 여부 state
-  const [modalOpen, setModalOpen] = useState(false);
-
   //chatGPT
+  const api_key = process.env.REACT_APP_OPENAI_API_KEY;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
-  const api_key = process.env.REACT_APP_OPENAI_API_KEY;
-
   const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
-
   const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
 
-  // 모달창 노출
-  const showModal = () => {
-    setModalOpen(true);
-  };
-
-  // 새로고침
-  const reFresh = () => {
-    window.location.reload();
-  };
+  const A = "제드";
+  const B = "아무무";
 
   useEffect(() => {
     if (showCheckAnswerRecoil) {
@@ -47,46 +34,39 @@ function AiAnswer(props) {
       {
         role: "system", // 행동지정, 역할부여
         content:
-          "당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 한 선택지를 선택하여 이유와 함께 답해주세요. 이전 내용과 똑같은 형식으로 답을 말해야하고, 당시 상황 지표분석을 토대로 결론을 말해주세요. "+
-          "(첫 번째 제드는 5킬 1데스 14어시스트,  3800gold, 레벨은 11 그리고 두 번째 아무무는 1킬 6데스 2어시스트, 2000gold 레벨은 9) 내용도 함께 분석해주세요." +
+          `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 두 가지 선택지가 주어지면 중립적인 문구없이 한 선택지를 선택하여 이유와 함께 답해주세요. 이전 내용과 똑같은 형식으로 답을 말해야하고, 당시 상황 지표분석을 토대로 결론을 말해주세요. ` +
+          `(첫 번째 ${A}는 5킬 1데스 14어시스트,  3800gold, 레벨은 11 그리고 두 번째 ${B}는 1킬 6데스 2어시스트, 2000gold 레벨은 9) 내용도 함께 분석해주세요.` +
           "다음 형식을 사용합니다:" +
-        
           "안녕하세요! 주어진 상황에서 판경을 시작해볼게요! \n\n" +
-        
-          "A의 당시 상황 지표분석:\n" +
+          `${A}의 당시 상황 지표분석:\n` +
           "킬/데스/어시스트: a/b/c\n" +
           "골드: d\n" +
           "레벨: e\n\n" +
-
-          "B의 당시 상황 지표분석:\n" +
+          `${B}의 당시 상황 지표분석:\n` +
           "킬/데스/어시스트: h/i/j\n" +
           "골드: k\n" +
           "레벨: l\n\n" +
           "상황: ```\n\n" +
-          
-          "A의 주장:\n" +
+          `${A}의 주장:\n` +
           "```\n\n" +
-          "B의 주장:\n" +
+          `${B}의 주장:\n` +
           "```\n\n" +
           "결론:\n" +
           "```",
       },
       {
         role: "assistant", // 이전 대화 기억
-        content:         
+        content:
           "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
-         
           "A의 당시 상황 지표분석:\n" +
           "킬/데스/어시스트: a/b/c\n" +
           "골드: d\n" +
           "레벨: e\n\n" +
-         
           "B의 당시 상황 지표분석:\n" +
           "킬/데스/어시스트: h/i/j\n" +
           "골드: k\n" +
           "레벨: l\n\n" +
           "상황: ```\n\n" +
-         
           "A의 주장:\n" +
           "```\n\n" +
           "B의 주장:\n" +
@@ -124,25 +104,66 @@ function AiAnswer(props) {
       });
   };
 
+  // 사이트 공유
+  const urlToCopy = "https://aimoon-c9fa4.web.app/";
+  const urlCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(urlToCopy);
+      alert("URL이 클립보드에 복사되었습니다.");
+    } catch (error) {
+      alert("URL 복사에 실패했습니다.");
+    }
+  };
+
+  // 결과 공유
+  const ref = useRef(null);
+  const clipboardHandler = () => {
+    if (ref.current) {
+      html2canvas(ref.current).then((canvas) => {
+        canvas.toBlob((blob) => {
+          if (blob) {
+            try {
+              navigator.clipboard
+                .write([new ClipboardItem({ "image/png": blob })])
+                .then(() => {
+                  alert("결과 이미지가 클립보드에 복사되었습니다.");
+                })
+                .catch((error) => {
+                  console.error("Clipboard write error:", error);
+                  alert("결과 이미지 복사에 실패했습니다.");
+                });
+            } catch (error) {
+              console.error("Clipboard write error:", error);
+              alert("결과 이미지 복사에 실패했습니다.");
+            }
+          }
+        });
+      });
+    }
+  };
+
   return (
     <>
-      {showCheckAnswerRecoil && (
-        <ChattingInfo>
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          {isLoading && <Loading />}
-
-          {responseMessage && !isLoading && (
-            <>
-              <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
-              {/* <ReplayBtnStyle onClick={reFresh}>다시 판결받기</ReplayBtnStyle>
-              <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle> */}
-              <ChatSurvey />
-            </>
-          )}
-          {modalOpen && <Modal setModalOpen={setModalOpen} {...props} />}
-          {/* <SecondBtnStyle onClick={showModal}>2심 신청</SecondBtnStyle> */}
-        </ChattingInfo>
-      )}
+      <div ref={ref}>
+        {showCheckAnswerRecoil && (
+          <ChattingInfo>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            {isLoading && <Loading />}
+            {responseMessage && !isLoading && (
+              <>
+                <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
+                <ReplayBtnStyle onClick={urlCopy}>
+                  사이트 공유하기
+                </ReplayBtnStyle>
+                <ReplayBtnStyle onClick={clipboardHandler}>
+                  결과 공유하기
+                </ReplayBtnStyle>
+                <ChatSurvey />
+              </>
+            )}
+          </ChattingInfo>
+        )}
+      </div>
     </>
   );
 }
@@ -150,7 +171,6 @@ export default AiAnswer;
 
 const ChattingInfo = styled.div`
   border: solid 1px #005a82;
-  margin: auto;
   margin-top: 20px;
   width: 570px;
   border-radius: 20px;
@@ -162,6 +182,12 @@ const ChattingInfo = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  margin: auto;
+  margin-top: 20px;
+
+  @media (max-width: 673px) {
+    width: 80%;
+  }
 `;
 
 const AiFeedbackAnswer = styled.p`
@@ -171,7 +197,8 @@ const AiFeedbackAnswer = styled.p`
   padding: 20px;
   line-height: 1.8;
   display: flex;
-  text-align: center;
+  text-align: justify;
+  white-space: pre-wrap;
   justify-content: center;
   align-items: center;
 `;
@@ -185,6 +212,10 @@ const ReplayBtnStyle = styled.button`
   background-color: #0a1428;
   border: solid 1px #005a82;
   margin: 0px 10px 0px 10px;
+
+  @media (max-width: 550px) {
+    margin-top: 10px;
+  }
 `;
 
 const SecondBtnStyle = styled.button`

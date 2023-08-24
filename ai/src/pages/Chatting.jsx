@@ -56,6 +56,11 @@ const ChattingInfo = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 
+  @media (max-width: 660px) {
+    margin-top: 60px;
+    height: 70%;
+  }
+
   &::-webkit-scrollbar {
     width: 0px;
   }
@@ -78,7 +83,7 @@ const ChatTemplete = styled.div`
   border: solid 1px #005a82;
   margin: auto;
   margin-top: 20px;
-  width: 570px;
+  max-width: 570px;
   height: 55px;
   border-radius: 20px;
   background-color: #0a1428;
@@ -89,11 +94,23 @@ const ChatTemplete = styled.div`
   text-align: center;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 767px) {
+    width: 88%;
+  }
+
+  @media (max-width: 467px) {
+    height: 80px;
+  }
 `;
 
-const ChatTempleteTxt = styled.p`
+const ChatTempleteTxt = styled.span`
   span {
     color: #c89b3c;
+  }
+
+  @media (max-width: 767px) {
+    width: 90%;
   }
 `;
 

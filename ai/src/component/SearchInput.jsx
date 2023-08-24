@@ -3,11 +3,11 @@ import { styled } from "styled-components";
 import { StartAskingNextState, nickNameInputState } from "../store/Recoil";
 import { useRecoilState, useRecoilValue } from "recoil";
 
+// 첫 정보 받는 input
 const SearchInput = () => {
   const [nickNameInput, setNickNameInput] = useRecoilState(nickNameInputState);
   const [inputNickNameBuffer, setNickNameInputBuffer] = useState("");
   const [isInputLocked, setIsInputLocked] = useState(false);
-
   const reMoveInputFirst = useRecoilValue(StartAskingNextState);
 
   const handleKeyPress = (e) => {
@@ -65,8 +65,8 @@ export const SearchInputStyle = styled.textarea`
   color: white;
   white-space: pre-wrap;
   word-wrap: break-word;
-  max-width: 618px;
-  min-width: 618px;
+  display: block;
+  width: 620px;
   min-height: 5%;
   max-height: 5%;
   border-radius: 20px;
@@ -77,4 +77,9 @@ export const SearchInputStyle = styled.textarea`
   bottom: 70px;
   position: fixed;
   z-index: 1;
+
+  @media (max-width: 660px) {
+    width: 93%;
+    bottom: 10px;
+  }
 `;

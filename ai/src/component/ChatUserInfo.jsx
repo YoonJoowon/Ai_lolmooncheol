@@ -196,6 +196,28 @@ const ChatUserInfoStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
+`;
+
+const ChatUserStyle = styled.div`
+  border: solid 1px #0ac8b9;
+  padding: 20px;
+  color: white;
+  margin-top: 20px;
+  width: 300px;
+  min-height: 30px;
+  max-height: 100%;
+  border-radius: 20px;
+  line-height: 1.6;
+  background-color: #0a323c;
+  white-space: pre-line;
+  align-self: flex-end;
+  margin-right: 20px;
+
+  @media (max-width: 673px) {
+    width: 40%;
+    margin-right: 20px;
+  }
 `;
 
 const UserMatchingData = styled.div`
@@ -205,7 +227,6 @@ const UserMatchingData = styled.div`
   color: white;
   margin-left: 23px;
   margin-top: 20px;
-  min-width: 570px;
   max-width: 570px;
   max-height: 100%;
   border-radius: 20px;
@@ -213,6 +234,13 @@ const UserMatchingData = styled.div`
   background-color: #3f3f3f;
   display: flex;
   position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 2fr);
+
+  @media (max-width: 673px) {
+    width: 300px;
+    grid-template-columns: repeat(2, 2fr);
+  }
 `;
 
 const UserMatchingDataGuide = styled.div`
@@ -247,6 +275,10 @@ const UserMatchingDataBox = styled.button`
   font-size: 14px;
   margin-right: 20px;
   cursor: pointer;
+
+  @media (max-width: 673px) {
+    margin-top: 20px;
+  }
 `;
 
 const UserMatchingDataImg = styled.div`
@@ -266,19 +298,3 @@ const UserMatchingDataName = styled.div`
 `;
 
 const UserMatchingDataKda = styled.div``;
-
-const ChatUserStyle = styled.div`
-  border: solid 1px #0ac8b9;
-  padding: 20px;
-  color: white;
-  margin-left: 300px;
-  margin-top: 20px;
-  width: 300px;
-  max-width: 500px;
-  min-height: 30px;
-  max-height: 100%;
-  border-radius: 20px;
-  line-height: 1.6;
-  background-color: #0a323c;
-  white-space: pre-line;
-`;
