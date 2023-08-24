@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import EnterSituationTime from "./EnterSituationTime";
-import { StartAskingNextState, nickNameInputState } from "../store/Recoil";
-import { useRecoilValue } from "recoil";
-import lolMatchInfoData from "../dummy/lolMatchInfoData.json";
+import {
+  StartAskingNextState,
+  nickNameInputState,
+  lolAPIDataState,
+  lolTeamMemberDataState,
+} from "../store/Recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import TypingAnimation from "./TypingAnimation";
 import axios from "axios";
 
@@ -13,10 +17,10 @@ const ChatUserInfo = () => {
   const [showUserData, setShowUserData] = useState(false);
   const [showNextTeamData, setShowNextTeamData] = useState(false);
   const [showNextWhatTime, setShowNextWhatData] = useState(false);
-  const [lolAPIData, setLolAPIData] = useState({ matchDetails: [] });
-  const [lolTeamMemberData, setLolTeamMemberData] = useState({
-    teamMembers: [],
-  });
+  const [lolAPIData, setLolAPIData] = useRecoilState(lolAPIDataState);
+  const [lolTeamMemberData, setLolTeamMemberData] = useRecoilState(
+    lolTeamMemberDataState
+  );
   const API_KEY = process.env.REACT_APP_LOL_API_KEY;
 
   // name input
@@ -34,7 +38,7 @@ const ChatUserInfo = () => {
           "X-Riot-Token": API_KEY,
         })
         .then((response) => {
-          console.log(response.data);
+          console.log("============", response.data);
           if (Array.isArray(response.data) && response.data.length === 0) {
             setShowUserData(false);
           } else {
