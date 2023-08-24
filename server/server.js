@@ -125,7 +125,7 @@ async function getMatchDetails(matchId, puuid) {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // 특정 시간에 대한 매치 타임라인 데이터를 가져오는 함수.
-async function getMatchTimeline(myPuuid, yourPuuid, matchId2, specificTime) {
+async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
   try {
     // 특정 시간에 대한 타임스탬프를 계산합니다. (밀리초 단위)
     const timestamp = (specificTime.minute * 60 + specificTime.second) * 1000;
@@ -134,7 +134,7 @@ async function getMatchTimeline(myPuuid, yourPuuid, matchId2, specificTime) {
 
     // 매치 타임라인 데이터를 가져옵니다.
     const response = await axios.get(
-      `${baseUrl2}/match/v5/matches/${matchId2}/timeline`,
+      `${baseUrl2}/match/v5/matches/${matchId}/timeline`,
       {
         headers: {
           "X-Riot-Token": API_KEY,
@@ -163,7 +163,7 @@ async function getMatchTimeline(myPuuid, yourPuuid, matchId2, specificTime) {
     // 입력된 puuid를 통해 participantId 매칭
     let myId = -1;
     for (let p = 0; p <= 10; p++) {
-      if (myPuuid === timelineData.info.participants[p].puuid) {
+      if (myPuuId === timelineData.info.participants[p].puuid) {
         myId = p+1;
         break;
       }
@@ -171,7 +171,7 @@ async function getMatchTimeline(myPuuid, yourPuuid, matchId2, specificTime) {
 
     let yourId = -1;
     for (let q = 0; q <= 10; q++) {
-      if (yourPuuid === timelineData.info.participants[q].puuid) {
+      if (yourPuuId === timelineData.info.participants[q].puuid) {
         yourId = q+1;
         break;
       }
@@ -253,15 +253,15 @@ async function getMatchTimeline(myPuuid, yourPuuid, matchId2, specificTime) {
 // 입력 값을 받고 특정 시간에 대한 매치 타임라인 데이터를 가져오는 라우트를 정의합니다.
 
 app.post('/fetchMatchTimeline', async (req, res) => {
-  const myPuuid = req.body.myPuuid;
-  const yourPuuid = req.body.yourPuuid;
-  const matchId2 = req.body.matchId2;
+  const myPuuid = req.body.myPuuId;
+  const yourPuuid = req.body.yourPuuId;
+  const matchId = req.body.matchId;
 
 
   const specificTime = req.body.specificTime;
 
   try {
-    const timelineData = await getMatchTimeline(myPuuid, yourPuuid, matchId2, specificTime);
+    const timelineData = await getMatchTimeline(myPuuid, yourPuuid, matchId, specificTime);
     res.json(timelineData);
   } catch (error) {
     res
