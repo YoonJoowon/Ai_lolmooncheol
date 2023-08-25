@@ -109,7 +109,7 @@ function AiAnswer(props) {
         role: "user",
         content:
           filteredString +
-          "당시 상황을 토대로 누구의 주장이 맞는지 판단해주세요.",
+          "당시 상황을 토대로 누구의 주장이 맞는지 판단해주세요. 만약 롤 관련된 질문이 아니면 답변을 하지 못한다고 안내해주세요.",
       },
     ];
 
