@@ -19,6 +19,8 @@ const ChatUserInfo = () => {
   const [showUserData, setShowUserData] = useState(false);
   const [showTeamData, setShowTeamData] = useState(false);
   const [showTime, setShowTime] = useState(false);
+  const [selectedGameIndex, setSelectedGameIndex] = useState(null);
+  const [selectedTeamIndex, setSelectedTeamIndex] = useState(null);
   const [matchData, setMatchData] = useRecoilState(matchDataState);
   const [lolTeamMemberData, setLolTeamMemberData] = useRecoilState(
     lolTeamMemberDataState
@@ -65,6 +67,7 @@ const ChatUserInfo = () => {
   // 어떤 게임을 선택했는지 index를 post
   const selectGame = (index) => {
     handleScroll();
+    setSelectedGameIndex(index);
     const selectedGame = matchData.matchDetails[index];
     axios
       .post("http://localhost:8080/summoner", selectedGame.puuid)
@@ -77,7 +80,7 @@ const ChatUserInfo = () => {
         }));
         setPromptData((prevState) => ({
           ...prevState,
-          myChamp: matchData.matchDetails[index].championName,
+          myChamp: matchData.matchDetails[index].championNameKR,
         }));
         setShowTeamData(true);
       })
@@ -88,6 +91,7 @@ const ChatUserInfo = () => {
   };
 
   const selectTeam = (index) => {
+    setSelectedTeamIndex(index);
     handleScroll();
     setShowTime(true);
     setMatchTimelineData((prevState) => ({
@@ -96,7 +100,7 @@ const ChatUserInfo = () => {
     }));
     setPromptData((prevState) => ({
       ...prevState,
-      yourChamp: lolTeamMemberData[index].championName,
+      yourChamp: lolTeamMemberData[index].championNameKR,
     }));
   };
 
@@ -132,16 +136,17 @@ const ChatUserInfo = () => {
                   <UserMatchingDataBox
                     key={index}
                     onClick={() => selectGame(index)}
+                    isGameSelected={selectedGameIndex === index}
                   >
                     <UserMatchingDataImg>
                       <img
                         src={champion.championImageUrl}
-                        alt={champion.championName}
+                        alt={champion.championNameKR}
                         style={{ width: "60px" }}
                       />
                     </UserMatchingDataImg>
                     <UserMatchingDataName>
-                      {champion.championName}
+                      {champion.championNameKR}
                       <UserMatchingDataKda>
                         {champion.kills}/{champion.deaths}/{champion.assists}
                       </UserMatchingDataKda>
@@ -170,16 +175,17 @@ const ChatUserInfo = () => {
                   onClick={() => {
                     selectTeam(index);
                   }}
+                  isGameSelected={selectedTeamIndex === index}
                 >
                   <UserMatchingDataImg>
                     <img
                       src={champion.championImageUrl}
-                      alt={champion.championName}
+                      alt={champion.championNameKR}
                       style={{ width: "60px" }}
                     />
                   </UserMatchingDataImg>
                   <UserMatchingDataName>
-                    {champion.championName}
+                    {champion.championNameKR}
                     <UserMatchingDataKda>
                       {champion.kills}/{champion.deaths}/{champion.assists}
                     </UserMatchingDataKda>
@@ -274,7 +280,7 @@ const UserMatchingDataFale = styled.div`
 const UserMatchingDataBox = styled.button`
   width: 130px;
   height: 170px;
-  border: solid 1px #a7a7a7;
+  border: solid 1px ${(index) => (index.isGameSelected ? "red" : "#a7a7a7")};
   border-radius: 20px;
   justify-content: center;
   align-items: center;
