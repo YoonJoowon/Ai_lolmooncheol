@@ -33,9 +33,6 @@ const ChatUserInfo = () => {
   // 첫 화면 들어와서 렌더링 되면 값 초기화
   useEffect(() => {
     setNickNameInput("");
-    setMatchData("");
-    setLolTeamMemberData("");
-    setPromptData("");
   }, []);
   // 소환사 명 post와 매치데이터 get
   useEffect(() => {

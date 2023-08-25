@@ -26,13 +26,13 @@ function AiAnswer(props) {
   const aChampHp = promptData.myHealth;
   const aChampGold = promptData.myCurrentGold;
   const aChampLevel = promptData.myLevel;
-  const aChampLocation = "x:6447 y:6447";
+  const aChampPosition = promptData.myPosition;
 
   const bChamp = promptData.yourChamp;
   const bChampHp = promptData.yourHealth;
   const bChampGold = promptData.yourCurrentGold;
   const bChampLevel = promptData.yourLevel;
-  const bChampLocation = "x:8154 y:2524";
+  const bChampPosition = promptData.yourPosition;
 
   const teamLevel = promptData.myTeamLevel;
   const teamGold = promptData.myTeamGold;
@@ -81,12 +81,12 @@ function AiAnswer(props) {
           `체력:${aChampHp}\n` +
           `골드:${aChampGold}\n` +
           `레벨:${aChampLevel}\n\n` +
-          `위치:${aChampLocation}\n\n` +
+          `위치:${aChampPosition}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
           `체력:${bChampHp}\n` +
           `골드:${bChampGold}\n` +
           `레벨:${bChampLevel}\n\n` +
-          `위치:${bChampLocation}\n\n` +
+          `위치:${bChampPosition}\n\n` +
           `우리 팀 지표분석:\n` +
           `평균 레벨:${teamLevel}\n` +
           `총 골드:${teamGold}\n` +
@@ -108,12 +108,12 @@ function AiAnswer(props) {
           `체력:${aChampHp}\n` +
           `골드:${aChampGold}\n` +
           `레벨:${aChampLevel}\n\n` +
-          `위치:${aChampLocation}\n\n` +
+          `위치:${aChampPosition}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
           `체력:${bChampHp}\n` +
           `골드:${bChampGold}\n` +
           `레벨:${bChampLevel}\n\n` +
-          `위치:${bChampLocation}\n\n` +
+          `위치:${bChampPosition}\n\n` +
           `우리 팀 지표분석:\n` +
           `평균 레벨:${teamLevel}\n` +
           `총 골드:${teamGold}\n` +
