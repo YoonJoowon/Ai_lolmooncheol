@@ -42,7 +42,7 @@ function AiAnswer(props) {
 
   // firebase
   const firestore = firebase.firestore();
-  const bucket = firestore.collection("chat-bucket");
+  const bucket = firestore.collection("chat-bucket2");
 
   const saveFilteredStringToFirebase = () => {
     if ((filteredString, formattedMessage)) {

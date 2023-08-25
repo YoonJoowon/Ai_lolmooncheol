@@ -11,7 +11,6 @@ import TypingAnimation from "./TypingAnimation";
 import axios from "axios";
 
 const EnterSituationTime = () => {
-  const API_KEY = process.env.REACT_APP_LOL_API_KEY;
   const [eventTime, setEventTimeState] = useRecoilState(timeState);
   const [matchTimelineData, setMatchTimelineData] = useRecoilState(
     matchTimelineDataState
