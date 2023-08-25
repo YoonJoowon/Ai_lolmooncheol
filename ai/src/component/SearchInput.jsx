@@ -29,7 +29,6 @@ const SearchInput = () => {
   // 입력 버튼 클릭
   const handleButtonClicked = () => {
     handleInput();
-    console.log('asd');
   };
 
   const getnickNameValue = (e) => {
