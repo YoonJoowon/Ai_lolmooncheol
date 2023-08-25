@@ -44,7 +44,7 @@ const ChatUserInfo = () => {
       // 서버로 요청 보내는 부분
       const data = { name: nickNameInput };
       axios
-        .post("http://localhost:8080/summoner", data, {
+        .post("http://43.200.177.135:8080/summoner", data, {
           "X-Riot-Token": API_KEY,
         })
         .then((response) => {
@@ -69,25 +69,17 @@ const ChatUserInfo = () => {
     handleScroll();
     setSelectedGameIndex(index);
     const selectedGame = matchData.matchDetails[index];
-    axios
-      .post("http://localhost:8080/summoner", selectedGame.puuid)
-      .then((response) => {
-        setLolTeamMemberData(selectedGame.teamMembers);
-        setMatchTimelineData((prevState) => ({
-          ...prevState,
-          myPuuId: matchData.matchDetails[index].puuid,
-          matchId: matchData.matchDetails[index].matchId,
-        }));
-        setPromptData((prevState) => ({
-          ...prevState,
-          myChamp: matchData.matchDetails[index].championNameKR,
-        }));
-        setShowTeamData(true);
-      })
-      .catch((error) => {
-        console.error("Error posting:", error);
-        // 에러 처리 로직을 추가할 수 있습니다.
-      });
+    setLolTeamMemberData(selectedGame.teamMembers);
+    setMatchTimelineData((prevState) => ({
+      ...prevState,
+      myPuuId: matchData.matchDetails[index].puuid,
+      matchId: matchData.matchDetails[index].matchId,
+    }));
+    setPromptData((prevState) => ({
+      ...prevState,
+      myChamp: matchData.matchDetails[index].championNameKR,
+    }));
+    setShowTeamData(true);
   };
 
   const selectTeam = (index) => {
@@ -165,7 +157,7 @@ const ChatUserInfo = () => {
       {showTeamData && (
         <UserMatchingData>
           <UserMatchingDataGuide>
-            <TypingAnimation text="분쟁이 일어났던 아군을 선택해주세요." />
+            <TypingAnimation text="분쟁이 일어났던 아군을 선택해주세요. (최근 4게임 정보를 불러옵니다) " />
           </UserMatchingDataGuide>
           {lolTeamMemberData.map(
             (champion, index) =>
