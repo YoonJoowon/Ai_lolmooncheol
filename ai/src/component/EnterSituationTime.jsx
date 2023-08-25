@@ -27,7 +27,8 @@ const EnterSituationTime = () => {
   }, [eventTime]);
 
   const handleMinutesChange = (event) => {
-    const newMinute = parseInt(event.target.value, 10); // 문자열을 숫자로 변환
+    let newMinute = parseInt(event.target.value, 10); // 문자열을 숫자로 변환
+    newMinute = Math.min(60, Math.max(0, newMinute)); // 범위 제한
     setEventTimeState((prevState) => ({
       ...prevState,
       minute: newMinute,
@@ -35,7 +36,8 @@ const EnterSituationTime = () => {
   };
 
   const handleSecondsChange = (event) => {
-    const newSecond = parseInt(event.target.value, 10); // 문자열을 숫자로 변환
+    let newSecond = parseInt(event.target.value, 10); // 문자열을 숫자로 변환
+    newSecond = Math.min(59, Math.max(0, newSecond)); // 범위 제한
     setEventTimeState((prevState) => ({
       ...prevState,
       second: newSecond,
@@ -65,7 +67,6 @@ const EnterSituationTime = () => {
           enemyTeamGold: response.data.yourTeamInfo.totalGold,
           enemyTeamLevel: response.data.yourTeamInfo.AvgLevel,
         }));
-        console.log(promptData);
       })
       .catch((error) => {
         console.log(error);
@@ -84,12 +85,16 @@ const EnterSituationTime = () => {
             type="number"
             value={eventTime.minute}
             onChange={handleMinutesChange}
+            min="0"
+            max="60"
           />
           <TimeInputLabel>초:</TimeInputLabel>
           <TimeInput
             type="number"
             value={eventTime.second}
             onChange={handleSecondsChange}
+            min="0"
+            max="59"
           />
         </TimeInputContainer>
       </EnterSituationTimeStyle>
