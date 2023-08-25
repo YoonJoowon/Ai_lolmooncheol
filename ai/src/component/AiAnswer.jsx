@@ -75,29 +75,19 @@ function AiAnswer(props) {
           `${aChamp}의 당시 상황 지표분석:\n` +
           `체력:${aChampHp}\n` +
           `골드:${aChampGold}\n` +
-<<<<<<< HEAD
           `레벨:${aChampLevel}\n` +
-          `위치:${aChampLocation}\n\n` +
-          `${bChamp}의 당시 상황 지표분석:\n` +
-          `체력:${bChampHp}\n` +
-          `골드:${bChampGold}\n` +
-          `레벨:${bChampLevel}\n` +
-          `위치:${bChampLocation}\n\n` +
-=======
-          `레벨:${aChampLevel}\n\n` +
           `위치:${aChampPosition}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
           `체력:${bChampHp}\n` +
           `골드:${bChampGold}\n` +
-          `레벨:${bChampLevel}\n\n` +
+          `레벨:${bChampLevel}\n` +
           `위치:${bChampPosition}\n\n` +
->>>>>>> 40483709168843557a6fc4d08c2d46a7bfc33f4f
           `우리 팀 지표분석:\n` +
           `평균 레벨:${teamLevel}\n` +
           `총 골드:${teamGold}\n\n` +
           `상대 팀 지표분석:\n` +
           `평균 레벨:${enemyLevel}\n` +
-          `총 골드:${enemyGold}\n` +
+          `총 골드:${enemyGold}\n\n` +
           `${aChamp}의 주장:\n` +
           "```\n\n" +
           `${bChamp}의 주장:\n` +
@@ -112,15 +102,6 @@ function AiAnswer(props) {
           `${aChamp}의 당시 상황 지표분석:\n` +
           `체력:${aChampHp}\n` +
           `골드:${aChampGold}\n` +
-<<<<<<< HEAD
-          `레벨:${aChampLevel}\n` +
-          `위치:${aChampLocation}\n\n` +
-          `${bChamp}의 당시 상황 지표분석:\n` +
-          `체력:${bChampHp}\n` +
-          `골드:${bChampGold}\n` +
-          `레벨:${bChampLevel}\n` +
-          `위치:${bChampLocation}\n\n` +
-=======
           `레벨:${aChampLevel}\n\n` +
           `위치:${aChampPosition}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
@@ -128,13 +109,12 @@ function AiAnswer(props) {
           `골드:${bChampGold}\n` +
           `레벨:${bChampLevel}\n\n` +
           `위치:${bChampPosition}\n\n` +
->>>>>>> 40483709168843557a6fc4d08c2d46a7bfc33f4f
           `우리 팀 지표분석:\n` +
           `평균 레벨:${teamLevel}\n` +
-          `총 골드:${teamGold}\n` +
+          `총 골드:${teamGold}\n\n` +
           `상대 팀 지표분석:\n` +
           `평균 레벨:${enemyLevel}\n` +
-          `총 골드:${enemyGold}\n` +
+          `총 골드:${enemyGold}\n\n` +
           `${aChamp}의 주장:\n` +
           "```\n\n" +
           `${bChamp}의 주장:\n` +
