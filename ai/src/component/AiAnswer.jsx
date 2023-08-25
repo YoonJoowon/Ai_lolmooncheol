@@ -67,50 +67,64 @@ function AiAnswer(props) {
     const messages = [
       {
         role: "system", // 행동지정, 역할부여
+        content: `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요. 
+          아래의 형식을 사용하고, 지표들을 하나씩 근거로 들면서 결론을 말해주세요.`,
+      },
+      {
+        role: "assistant",
         content:
-          `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 한 의견을 선택하여 이유와 함께 답해주세요. 
-          아래의 형식을 사용하고, 주어진 골드, 레벨 등 각각 의 지표들을 하나씩 근거로 들면서 결론을 말해주세요.` +
-          "다음 대화의 형식을 무조건 사용합니다" +
           "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
           `${aChamp}의 당시 상황 지표분석:\n` +
           `체력: ${aChampHp}\n` +
           `골드: ${aChampGold}\n` +
           `레벨: ${aChampLevel}\n` +
-          `위치: X: ${aChampPosition.x} Y: ${aChampPosition.y}\n\n` +
+          `위치: ${aChampPosition}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
           `체력: ${bChampHp}\n` +
           `골드: ${bChampGold}\n` +
           `레벨: ${bChampLevel}\n` +
-          `위치: X: ${bChampPosition.x} Y: ${bChampPosition.y}\n\n` +
+          `위치: ${bChampPosition}\n\n` +
           `우리 팀 지표분석:\n` +
           `평균 레벨: ${teamLevel}\n` +
           `총 골드: ${teamGold}\n\n` +
           `상대 팀 지표분석:\n` +
           `평균 레벨: ${enemyLevel}\n` +
           `총 골드: ${enemyGold}\n\n` +
-          `${aChamp}의 주장:\n` +
+          `${aChamp}의 상황:\n` +
           "```\n\n" +
-          `${bChamp}의 주장:\n` +
+          `${bChamp}의 상황:\n` +
           "```\n\n" +
           "결론:\n" +
           "```",
       },
-      // {
-      //   role: "assistant",
-      //   content:
-
-      // },
       {
         role: "user",
         content:
           filteredString +
-          "당시 상황 지표들을 토대로 누구의 주장이 맞는지 판단해주세요.",
+          `${aChamp}의 당시 상황 지표분석:\n` +
+          `체력: ${aChampHp}\n` +
+          `골드: ${aChampGold}\n` +
+          `레벨: ${aChampLevel}\n` +
+          `위치: ${aChampPosition}\n\n` +
+          `${bChamp}의 당시 상황 지표분석:\n` +
+          `체력: ${bChampHp}\n` +
+          `골드: ${bChampGold}\n` +
+          `레벨: ${bChampLevel}\n` +
+          `위치: ${bChampPosition}\n\n` +
+          `우리 팀 지표분석:\n` +
+          `평균 레벨: ${teamLevel}\n` +
+          `총 골드: ${teamGold}\n\n` +
+          `상대 팀 지표분석:\n` +
+          `평균 레벨: ${enemyLevel}\n` +
+          `총 골드: ${enemyGold}\n\n` +
+          "이 지표들을 기반해서 3가지 이유와 함께 누가 판단을 잘못했는지 결론을 말 해주세요." +
+          `참고로 ${aChamp}와 ${bChamp}는 같은 팀입니다.`,
       },
     ];
 
     const data = {
       model: "gpt-3.5-turbo",
-      temperature: 0.5,
+      temperature: 1,
       n: 1,
       messages: messages,
     };
@@ -179,7 +193,44 @@ function AiAnswer(props) {
             {isLoading && <Loading />}
             {responseMessage && !isLoading && (
               <>
-                <AiFeedbackAnswer>{formattedMessage}</AiFeedbackAnswer>
+                <AiFeedbackAnswer>
+                  {`${aChamp}의 당시 상황 지표분석:`}
+                  <br />
+                  {`체력: ${aChampHp}`}
+                  <br />
+                  {`골드: ${aChampGold}`}
+                  <br />
+                  {`레벨: ${aChampLevel}`}
+                  <br />
+                  {`위치: X: ${aChampPosition.x} Y: ${aChampPosition.y}`}
+                  <br />
+                  <br />
+                  {`${bChamp}의 당시 상황 지표분석:`}
+                  <br />
+                  {`체력: ${bChampHp}`}
+                  <br />
+                  {`골드: ${bChampGold}`}
+                  <br />
+                  {`레벨: ${bChampLevel}`}
+                  <br />
+                  {`위치: X: ${bChampPosition.x} Y: ${bChampPosition.y}`}
+                  <br />
+                  <br />
+                  {`우리 팀 지표분석:`}
+                  <br />
+                  {`평균 레벨: ${teamLevel}`}
+                  <br />
+                  {`총 골드: ${teamGold}`}
+                  <br />
+                  <br />
+                  {`상대 팀 지표분석:`}
+                  <br />
+                  {`평균 레벨: ${enemyLevel}`}
+                  <br />
+                  {`총 골드: ${enemyGold}`}
+                  <br />
+                  <br /> {formattedMessage}
+                </AiFeedbackAnswer>
                 <ReplayBtnStyle onClick={urlCopy}>
                   사이트 공유하기
                 </ReplayBtnStyle>
