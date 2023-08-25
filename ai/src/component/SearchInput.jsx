@@ -88,7 +88,7 @@ export const SearchInputStyleBox = styled.div`
   position: absolute;
   border-radius: 20px;
   outline: none;
-  bottom: 20px;
+  bottom: 60px;
   z-index: 1;
 
   @media (max-width: 660px) {
@@ -102,7 +102,7 @@ export const SearchInputStyleBox = styled.div`
 export const SearchInputStyle = styled.textarea`
   color: white;
   width: 550px;
-  height: 80px;
+  height: 45px;
   border-radius: 20px;
   outline: none;
   padding: 20px 20px;
@@ -118,7 +118,7 @@ export const SearchInputStyle = styled.textarea`
 
 export const SpendInputTextBtn = styled.button`
   width: 60px;
-  height: 120px;
+  height: 90px;
   border-radius: 20px;
   color: white;
   background-color: #1e1e1e;

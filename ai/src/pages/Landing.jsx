@@ -2,23 +2,24 @@ import React from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import landingImgBackImg from "../imges/landingBackground.jpg";
-import backImgRealUse from "../imges/example3.png";
+import backImgRealUse from "../imges/backImgRealUse2.png";
 
 const Landing = () => {
   return (
     <Background>
       <BackgroundColor>
         <LandingExplainBox>
-          <LandingTitle>AI 롤문철은</LandingTitle>
+          <LandingTitle>AI 롤문철</LandingTitle>
+          <LandingSubTitle>
+            데이터 기반 롤 AI가 게임 상황을 분석하고 <br />
+            옳은 판단을 내려줍니다.
+          </LandingSubTitle>
           <LandingExplain>
-            게임 전적의 데이터를 통해 <span>즉각적인 상황을 분석</span>
-            하여
-            <br />
-            플레이어의 판단을 평가하고
-            <br />
-            이로부터 유도되는 <span>전략적 타당한 선택을 판단</span>하는
-            <br />
-            채팅형 기반의 인공 지능 서비스입니다.
+            게임 전적을 분석하여 플레이어의 판단 평가하고 <br />
+            전략적 선택지를 제안하는 채팅형 게임 인공지능 서비스입니다. <br />
+            <span>즉각적인 상황을 분석</span>
+            하여 이로부터 유도되는 <br />
+            <span>전략적 타당한 선택을 판단</span>을 도와줍니다.
           </LandingExplain>
           <ChatStartLink to="/Chatting">
             <ChatStartBtn>시작하기</ChatStartBtn>
@@ -73,6 +74,7 @@ const LandingExplainBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 200px;
+  margin-left: 200px;
 
   @media (max-width: 610px) {
     text-align: center;
@@ -88,10 +90,18 @@ const LandingTitle = styled.p`
   font-family: "Noto Sans KR", sans-serif;
 `;
 
+const LandingSubTitle = styled.p`
+  font-weight: bold;
+  line-height: 1.6;
+  font-size: 24px;
+  margin-bottom: 32px;
+  font-family: "Noto Sans KR", sans-serif;
+`;
+
 const LandingExplain = styled.div`
   color: #000000;
-  line-height: 2.4;
-  font-size: 18px;
+  line-height: 2;
+  font-size: 16px;
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 450;
   letter-spacing: 2px;
@@ -124,6 +134,7 @@ const LandingImageBox = styled.div`
   width: 800px;
   height: 550px;
   position: relative;
+  margin-right: 200px;
 
   @media (max-width: 610px) {
     display: none;
