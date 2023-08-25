@@ -14,7 +14,6 @@ const ChatSurvey = () => {
   const [rating, setRating] = useState(4);
   const [tempRating, setTempRating] = useState(4);
 
-
   const handleMouseover = (rating) => {
     setRating(tempRating);
     setTempRating(rating);
@@ -54,12 +53,9 @@ const ChatSurvey = () => {
       bucket
         .add({ rating }) // Rating을 Firebase에 저장
         .then(() => {
-          console.log("Rating successfully saved to Firebase!", rating);
           setSurveySubmitted(true);
         })
-        .catch((error) => {
-          console.error("Error saving rating to Firebase:", error);
-        });
+        .catch((error) => {});
     }
   };
 

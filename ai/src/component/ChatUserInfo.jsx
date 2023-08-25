@@ -14,7 +14,7 @@ import TypingAnimation from "./TypingAnimation";
 import axios from "axios";
 
 const ChatUserInfo = () => {
-  const nickNameInput = useRecoilValue(nickNameInputState);
+  const [nickNameInput, setNickNameInput] = useRecoilState(nickNameInputState);
   const [showUserDataStart, setShowUserDataStart] = useState();
   const [showUserData, setShowUserData] = useState(false);
   const [showTeamData, setShowTeamData] = useState(false);
@@ -30,6 +30,13 @@ const ChatUserInfo = () => {
   const eventTime = useRecoilValue(timeState);
   const API_KEY = process.env.REACT_APP_LOL_API_KEY;
 
+  // 첫 화면 들어와서 렌더링 되면 값 초기화
+  useEffect(() => {
+    setNickNameInput("");
+    setMatchData("");
+    setLolTeamMemberData("");
+    setPromptData("");
+  }, []);
   // 소환사 명 post와 매치데이터 get
   useEffect(() => {
     if (nickNameInput) {
@@ -75,7 +82,6 @@ const ChatUserInfo = () => {
           ...prevState,
           myChamp: matchData.matchDetails[index].championName,
         }));
-        console.log(promptData);
         setShowTeamData(true);
       })
       .catch((error) => {
@@ -95,7 +101,6 @@ const ChatUserInfo = () => {
       ...prevState,
       yourChamp: lolTeamMemberData[index].championName,
     }));
-    console.log(promptData);
   };
 
   // scroll
@@ -120,7 +125,6 @@ const ChatUserInfo = () => {
               <p>{nickNameInput}</p>
             </ChatUserStyle>
           )}
-
           {showUserData ? (
             <UserMatchingData>
               <UserMatchingDataGuide>
@@ -150,10 +154,7 @@ const ChatUserInfo = () => {
             </UserMatchingData>
           ) : (
             <UserMatchingDataFale>
-              <TypingAnimation
-                text="등록되지 않은 소환사입니다.
-                다시 입력해주세요."
-              />
+              <TypingAnimation text="찾는 중입니다..." />
             </UserMatchingDataFale>
           )}
         </>
