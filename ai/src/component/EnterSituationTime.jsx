@@ -53,13 +53,19 @@ const EnterSituationTime = () => {
           ...prevData,
           myCurrentGold: response.data.myData.currentGold,
           myLevel: response.data.myData.level,
-          myLocation: { x: "", y: "" },
           myHealth: response.data.myData.health,
+          myPosition: {
+            x: response.data.myData.position.x,
+            y: response.data.myData.position.y,
+          },
           // 아군 분쟁 상대 정보
           yourCurrentGold: response.data.teamData.currentGold,
           yourLevel: response.data.teamData.level,
-          yourLocation: { x: "", y: "" },
           yourHealth: response.data.teamData.health,
+          yourPosition: {
+            x: response.data.teamData.position.x,
+            y: response.data.teamData.position.y,
+          },
           // 내 팀 정보
           myTeamGold: response.data.myTeamInfo.totalGold,
           myTeamLevel: response.data.myTeamInfo.AvgLevel,
@@ -67,6 +73,7 @@ const EnterSituationTime = () => {
           enemyTeamGold: response.data.yourTeamInfo.totalGold,
           enemyTeamLevel: response.data.yourTeamInfo.AvgLevel,
         }));
+        console.log(promptData);
       })
       .catch((error) => {
         console.log(error);
