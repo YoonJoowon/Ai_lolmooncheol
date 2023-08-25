@@ -45,7 +45,6 @@ const EnterSituationTime = () => {
   };
 
   const postTimelineData = () => {
-    setStartAskingNextPlz(true);
     axios
       .post("http://localhost:8080/fetchMatchTimeline", matchTimelineData)
       .then((response) => {
@@ -74,6 +73,7 @@ const EnterSituationTime = () => {
           enemyTeamLevel: response.data.yourTeamInfo.AvgLevel,
         }));
         // console.log(promptData);
+        setStartAskingNextPlz(true);
       })
       .catch((error) => {
         console.log(error);
