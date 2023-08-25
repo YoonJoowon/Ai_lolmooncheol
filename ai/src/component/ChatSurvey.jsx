@@ -9,10 +9,11 @@ const ChatSurvey = () => {
   const firestore = firebase.firestore();
   const bucket = firestore.collection("surbey-bucket");
   const [surveySubmitted, setSurveySubmitted] = useState(false);
-  const [hoverRating, setHoverRating] = useState(4); // 마우스 호버 시 표시되는 별점
+  const [hoverRating, setHoverRating] = useState(0); // 마우스 호버 시 표시되는 별점
 
-  const [rating, setRating] = useState(null);
-  const [tempRating, setTempRating] = useState(null);
+  const [rating, setRating] = useState(4);
+  const [tempRating, setTempRating] = useState(4);
+
 
   const handleMouseover = (rating) => {
     setRating(tempRating);
@@ -29,9 +30,9 @@ const ChatSurvey = () => {
   };
 
   const stars = [];
-  for (let i = 0; i < 5; i++) {
-    const star =
-      rating >= i && rating !== null ? "ion-ios-star" : "ion-ios-star-outline";
+  const defaultStars = 5;
+  for (let i = 0; i < defaultStars; i++) {
+    const star = "ion-ios-star";
     stars.push(
       <FaStar
         key={i}

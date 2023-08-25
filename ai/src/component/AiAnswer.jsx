@@ -177,7 +177,7 @@ function AiAnswer(props) {
 
   return (
     <>
-      <div ref={ref}>
+      <ChattingInfoCapture ref={ref}>
         {showCheckAnswerRecoil && (
           <ChattingInfo>
             {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -196,11 +196,16 @@ function AiAnswer(props) {
             )}
           </ChattingInfo>
         )}
-      </div>
+      </ChattingInfoCapture>
     </>
   );
 }
 export default AiAnswer;
+
+const ChattingInfoCapture = styled.div`
+  margin: auto;
+  margin-top: 20px;
+`
 
 const ChattingInfo = styled.div`
   border: solid 1px #005a82;
@@ -211,9 +216,6 @@ const ChattingInfo = styled.div`
   padding: 20px;
   line-height: 1.8;
   text-align: center;
-  margin: auto;
-  margin-top: 20px;
-  margin-left: 23px;
 
   @media (max-width: 673px) {
     width: 80%;
