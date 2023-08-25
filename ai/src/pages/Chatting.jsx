@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "styled-components";
 import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
@@ -7,6 +7,7 @@ import ChattingInfoGage from "../component/ChattingInfoGage";
 import SearchInput from "../component/SearchInput";
 
 const Chatting = () => {
+
   return (
     <Background>
       <Header />

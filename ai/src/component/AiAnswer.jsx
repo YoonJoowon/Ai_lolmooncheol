@@ -45,15 +45,10 @@ function AiAnswer(props) {
   const bucket = firestore.collection("chat-bucket");
 
   const saveFilteredStringToFirebase = () => {
-    if (filteredString) {
+    if ((filteredString, formattedMessage)) {
       bucket
-        .add({ filteredString })
-        .then(() => {
-          console.log(
-            "filteredString successfully saved to Firebase!",
-            filteredString
-          );
-        })
+        .add({ filteredString, formattedMessage })
+        .then(() => {})
         .catch((error) => {
           console.error("Error saving filteredString to Firebase:", error);
         });
@@ -80,16 +75,16 @@ function AiAnswer(props) {
           `${aChamp}의 당시 상황 지표분석:\n` +
           `체력:${aChampHp}\n` +
           `골드:${aChampGold}\n` +
-          `레벨:${aChampLevel}\n\n` +
+          `레벨:${aChampLevel}\n` +
           `위치:${aChampLocation}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
           `체력:${bChampHp}\n` +
           `골드:${bChampGold}\n` +
-          `레벨:${bChampLevel}\n\n` +
+          `레벨:${bChampLevel}\n` +
           `위치:${bChampLocation}\n\n` +
           `우리 팀 지표분석:\n` +
           `평균 레벨:${teamLevel}\n` +
-          `총 골드:${teamGold}\n` +
+          `총 골드:${teamGold}\n\n` +
           `상대 팀 지표분석:\n` +
           `평균 레벨:${enemyLevel}\n` +
           `총 골드:${enemyGold}\n` +
@@ -107,12 +102,12 @@ function AiAnswer(props) {
           `${aChamp}의 당시 상황 지표분석:\n` +
           `체력:${aChampHp}\n` +
           `골드:${aChampGold}\n` +
-          `레벨:${aChampLevel}\n\n` +
+          `레벨:${aChampLevel}\n` +
           `위치:${aChampLocation}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
           `체력:${bChampHp}\n` +
           `골드:${bChampGold}\n` +
-          `레벨:${bChampLevel}\n\n` +
+          `레벨:${bChampLevel}\n` +
           `위치:${bChampLocation}\n\n` +
           `우리 팀 지표분석:\n` +
           `평균 레벨:${teamLevel}\n` +
@@ -137,7 +132,7 @@ function AiAnswer(props) {
 
     const data = {
       model: "gpt-3.5-turbo",
-      temperature: 0.5,
+      temperature: 0.7,
       n: 1,
       messages: messages,
     };
