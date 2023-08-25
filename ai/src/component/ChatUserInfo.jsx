@@ -121,7 +121,7 @@ const ChatUserInfo = () => {
           {showUserData ? (
             <UserMatchingData>
               <UserMatchingDataGuide>
-                <TypingAnimation text="판결을 원하는 게임을 선택해주세요." />
+                <TypingAnimation text="판결을 원하는 게임을 선택해주세요. (최근 4게임 정보를 불러옵니다) " />
               </UserMatchingDataGuide>
               {matchData &&
                 matchData.matchDetails.map((champion, index) => (
@@ -157,7 +157,7 @@ const ChatUserInfo = () => {
       {showTeamData && (
         <UserMatchingData>
           <UserMatchingDataGuide>
-            <TypingAnimation text="분쟁이 일어났던 아군을 선택해주세요. (최근 4게임 정보를 불러옵니다) " />
+            <TypingAnimation text="분쟁이 일어났던 아군을 선택해주세요. " />
           </UserMatchingDataGuide>
           {lolTeamMemberData.map(
             (champion, index) =>
