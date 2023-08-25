@@ -46,7 +46,7 @@ const EnterSituationTime = () => {
 
   const postTimelineData = () => {
     axios
-      .post("http://43.200.177.135:8080/fetchMatchTimeline", matchTimelineData)
+      .post("https://43.200.177.135:8080/fetchMatchTimeline", matchTimelineData)
       .then((response) => {
         setPromptData((prevData) => ({
           ...prevData,
