@@ -148,7 +148,7 @@ const ChatUserInfo = () => {
             </UserMatchingData>
           ) : (
             <UserMatchingDataFale>
-              <TypingAnimation text="찾는 중입니다..." />
+              <TypingAnimation text="찾는 중입니다... (소환사 이름이 정확한지 확인해주세요)" />
             </UserMatchingDataFale>
           )}
         </>
