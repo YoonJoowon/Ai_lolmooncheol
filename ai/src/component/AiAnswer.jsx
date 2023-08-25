@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { promptDataState } from "../store/Recoil";
 import axios from "axios";
 import ChatSurvey from "./ChatSurvey";
 import { showCheckAnswerState } from "../store/Recoil";
 import html2canvas from "html2canvas";
+import firebase from "../Firebase";
 
 function AiAnswer(props) {
   //chatGPT
@@ -39,9 +40,30 @@ function AiAnswer(props) {
   const enemyLevel = promptData.enemyTeamLevel;
   const enemyGold = promptData.enemyTeamGold;
 
+  // firebase
+  const firestore = firebase.firestore();
+  const bucket = firestore.collection("chat-bucket");
+
+  const saveFilteredStringToFirebase = () => {
+    if (filteredString) {
+      bucket
+        .add({ filteredString })
+        .then(() => {
+          console.log(
+            "filteredString successfully saved to Firebase!",
+            filteredString
+          );
+        })
+        .catch((error) => {
+          console.error("Error saving filteredString to Firebase:", error);
+        });
+    }
+  };
+
   useEffect(() => {
     if (showCheckAnswerRecoil) {
       handleSubmit();
+      saveFilteredStringToFirebase();
     }
   }, [showCheckAnswerRecoil]);
 
@@ -109,7 +131,7 @@ function AiAnswer(props) {
         role: "user",
         content:
           filteredString +
-          "당시 상황을 토대로 누구의 주장이 맞는지 판단해주세요. 만약 롤 관련된 질문이 아니면 답변을 하지 못한다고 안내해주세요.",
+          "당시 상황을 토대로 누구의 주장이 맞는지 판단해주세요.",
       },
     ];
 
@@ -205,7 +227,7 @@ export default AiAnswer;
 const ChattingInfoCapture = styled.div`
   margin: auto;
   margin-top: 20px;
-`
+`;
 
 const ChattingInfo = styled.div`
   border: solid 1px #005a82;
