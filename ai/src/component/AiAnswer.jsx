@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { useRecoilValue } from "recoil";
-import { promptDataState } from "../store/Recoil";
+import { chatUserAnswerState, promptDataState } from "../store/Recoil";
 import axios from "axios";
 import ChatSurvey from "./ChatSurvey";
 import { showCheckAnswerState } from "../store/Recoil";
@@ -17,7 +17,7 @@ function AiAnswer(props) {
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
   const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
   const promptData = useRecoilValue(promptDataState);
-  const storedKeywords = JSON.parse(sessionStorage.getItem("inputValues"));
+  const storedKeywords = useRecoilValue(chatUserAnswerState);
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
@@ -70,24 +70,24 @@ function AiAnswer(props) {
         content:
           `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 한 의견을 선택하여 이유와 함께 답해주세요. 
           아래의 형식을 사용하고, 주어진 골드, 레벨 등 각각 의 지표들을 하나씩 근거로 들면서 결론을 말해주세요.` +
-          "다음 형식을 사용합니다:" +
+          "다음 대화의 형식을 무조건 사용합니다" +
           "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
           `${aChamp}의 당시 상황 지표분석:\n` +
-          `체력:${aChampHp}\n` +
-          `골드:${aChampGold}\n` +
-          `레벨:${aChampLevel}\n` +
-          `위치:${aChampPosition}\n\n` +
+          `체력: ${aChampHp}\n` +
+          `골드: ${aChampGold}\n` +
+          `레벨: ${aChampLevel}\n` +
+          `위치: X: ${aChampPosition.x} Y: ${aChampPosition.y}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
-          `체력:${bChampHp}\n` +
-          `골드:${bChampGold}\n` +
-          `레벨:${bChampLevel}\n` +
-          `위치:${bChampPosition}\n\n` +
+          `체력: ${bChampHp}\n` +
+          `골드: ${bChampGold}\n` +
+          `레벨: ${bChampLevel}\n` +
+          `위치: X: ${bChampPosition.x} Y: ${bChampPosition.y}\n\n` +
           `우리 팀 지표분석:\n` +
-          `평균 레벨:${teamLevel}\n` +
-          `총 골드:${teamGold}\n\n` +
+          `평균 레벨: ${teamLevel}\n` +
+          `총 골드: ${teamGold}\n\n` +
           `상대 팀 지표분석:\n` +
-          `평균 레벨:${enemyLevel}\n` +
-          `총 골드:${enemyGold}\n\n` +
+          `평균 레벨: ${enemyLevel}\n` +
+          `총 골드: ${enemyGold}\n\n` +
           `${aChamp}의 주장:\n` +
           "```\n\n" +
           `${bChamp}의 주장:\n` +
@@ -95,44 +95,22 @@ function AiAnswer(props) {
           "결론:\n" +
           "```",
       },
-      {
-        role: "assistant",
-        content:
-          "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
-          `${aChamp}의 당시 상황 지표분석:\n` +
-          `체력:${aChampHp}\n` +
-          `골드:${aChampGold}\n` +
-          `레벨:${aChampLevel}\n\n` +
-          `위치:${aChampPosition}\n\n` +
-          `${bChamp}의 당시 상황 지표분석:\n` +
-          `체력:${bChampHp}\n` +
-          `골드:${bChampGold}\n` +
-          `레벨:${bChampLevel}\n\n` +
-          `위치:${bChampPosition}\n\n` +
-          `우리 팀 지표분석:\n` +
-          `평균 레벨:${teamLevel}\n` +
-          `총 골드:${teamGold}\n\n` +
-          `상대 팀 지표분석:\n` +
-          `평균 레벨:${enemyLevel}\n` +
-          `총 골드:${enemyGold}\n\n` +
-          `${aChamp}의 주장:\n` +
-          "```\n\n" +
-          `${bChamp}의 주장:\n` +
-          "```\n\n" +
-          "결론:\n" +
-          "```",
-      },
+      // {
+      //   role: "assistant",
+      //   content:
+
+      // },
       {
         role: "user",
         content:
           filteredString +
-          "당시 상황을 토대로 누구의 주장이 맞는지 판단해주세요.",
+          "당시 상황 지표들을 토대로 누구의 주장이 맞는지 판단해주세요.",
       },
     ];
 
     const data = {
       model: "gpt-3.5-turbo",
-      temperature: 0.7,
+      temperature: 0.5,
       n: 1,
       messages: messages,
     };

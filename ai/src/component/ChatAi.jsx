@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   StartAskingNextState,
+  chatUserAnswerState,
   inputValueState,
   showCheckAnswerState,
 } from "../store/Recoil";
@@ -21,6 +22,8 @@ const ChatAi = () => {
     useRecoilState(showCheckAnswerState);
   const askStart = useRecoilValue(StartAskingNextState);
   const inputValue = useRecoilValue(inputValueState);
+  const [chatUserAnswer, setChatUserAnswer] =
+    useRecoilState(chatUserAnswerState);
 
   // 결과보기 버튼
   const handleButtonClick = () => {
@@ -51,7 +54,7 @@ const ChatAi = () => {
 
   // session 에 추가
   useEffect(() => {
-    sessionStorage.setItem("inputValues", JSON.stringify(inputValues));
+    setChatUserAnswer(inputValues);
   }, [inputValues]);
 
   // 다음 질문시작

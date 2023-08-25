@@ -82,3 +82,8 @@ export const promptDataState = atom({
     enemyTeamLevel: "",
   },
 });
+
+export const chatUserAnswerState = atom({
+  key: "chatUserAnswerState",
+  default: "",
+});

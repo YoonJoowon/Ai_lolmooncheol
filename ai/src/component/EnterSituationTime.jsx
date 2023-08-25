@@ -73,7 +73,7 @@ const EnterSituationTime = () => {
           enemyTeamGold: response.data.yourTeamInfo.totalGold,
           enemyTeamLevel: response.data.yourTeamInfo.AvgLevel,
         }));
-        console.log(promptData);
+        // console.log(promptData);
       })
       .catch((error) => {
         console.log(error);
