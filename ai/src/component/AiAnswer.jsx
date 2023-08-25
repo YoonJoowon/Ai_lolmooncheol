@@ -77,13 +77,11 @@ function AiAnswer(props) {
           `${aChamp}의 당시 상황 지표분석:\n` +
           `체력: ${aChampHp}\n` +
           `골드: ${aChampGold}\n` +
-          `레벨: ${aChampLevel}\n` +
-          `위치: ${aChampPosition}\n\n` +
+          `레벨: ${aChampLevel}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
           `체력: ${bChampHp}\n` +
           `골드: ${bChampGold}\n` +
-          `레벨: ${bChampLevel}\n` +
-          `위치: ${bChampPosition}\n\n` +
+          `레벨: ${bChampLevel}\n\n` +
           `우리 팀 지표분석:\n` +
           `평균 레벨: ${teamLevel}\n` +
           `총 골드: ${teamGold}\n\n` +
@@ -100,16 +98,15 @@ function AiAnswer(props) {
       {
         role: "user",
         content:
+          filteredString +
           `${aChamp}의 당시 상황 지표분석:\n` +
           `체력: ${aChampHp}\n` +
           `골드: ${aChampGold}\n` +
-          `레벨: ${aChampLevel}\n` +
-          `위치: ${aChampPosition}\n\n` +
+          `레벨: ${aChampLevel}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
           `체력: ${bChampHp}\n` +
           `골드: ${bChampGold}\n` +
-          `레벨: ${bChampLevel}\n` +
-          `위치: ${bChampPosition}\n\n` +
+          `레벨: ${bChampLevel}\n\n` +
           `우리 팀 지표분석:\n` +
           `평균 레벨: ${teamLevel}\n` +
           `총 골드: ${teamGold}\n\n` +
@@ -117,8 +114,7 @@ function AiAnswer(props) {
           `평균 레벨: ${enemyLevel}\n` +
           `총 골드: ${enemyGold}\n\n` +
           "이 지표들을 기반해서 3가지 이유와 함께 누가 판단을 잘못했는지 결론을 말 해주세요." +
-          `참고로 ${aChamp}와 ${bChamp}는 같은 팀입니다.` +
-          filteredString,
+          `참고로 ${aChamp}와 ${bChamp}는 같은 팀입니다.`,
       },
     ];
 

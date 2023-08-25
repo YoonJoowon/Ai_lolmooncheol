@@ -3,19 +3,33 @@ import { styled } from "styled-components";
 import { StartAskingNextState, nickNameInputState } from "../store/Recoil";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-// 첫 정보 받는 input
 const SearchInput = () => {
+  // 첫 정보 받는 input
   const [nickNameInput, setNickNameInput] = useRecoilState(nickNameInputState);
   const [inputNickNameBuffer, setNickNameInputBuffer] = useState("");
   const [isInputLocked, setIsInputLocked] = useState(false);
   const reMoveInputFirst = useRecoilValue(StartAskingNextState);
 
-  const handleKeyPress = (e) => {
-    if (!isInputLocked && e.key === "Enter") {
+  // 입력 처리 로직
+  const handleInput = () => {
+    if (!isInputLocked) {
       setNickNameInput(inputNickNameBuffer.toLowerCase());
       setNickNameInputBuffer("");
       lockInputForDelay(2500);
     }
+  };
+
+  // 채팅 입력
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleInput();
+    }
+  };
+
+  // 입력 버튼 클릭
+  const handleButtonClicked = () => {
+    handleInput();
+    console.log('asd');
   };
 
   const getnickNameValue = (e) => {
@@ -32,7 +46,7 @@ const SearchInput = () => {
 
   useEffect(() => {
     const keyDownListener = (e) => {
-      if (isInputLocked) {
+      if (isInputLocked && e.key === "Enter") {
         e.preventDefault();
       }
     };
@@ -47,13 +61,18 @@ const SearchInput = () => {
   return (
     <>
       {!reMoveInputFirst && (
-        <SearchInputStyle
-          placeholder="여기에 답변을 해주세요!"
-          id="searchInput"
-          value={inputNickNameBuffer}
-          onChange={getnickNameValue}
-          onKeyDown={handleKeyPress}
-        />
+        <SearchInputStyleBox>
+          <SearchInputStyle
+            placeholder="여기에 답변을 해주세요!"
+            id="searchInput"
+            value={inputNickNameBuffer}
+            onChange={getnickNameValue}
+            onKeyDown={handleKeyPress}
+          ></SearchInputStyle>
+          <SpendInputTextBtn onClick={handleButtonClicked}>
+            전송
+          </SpendInputTextBtn>
+        </SearchInputStyleBox>
       )}
     </>
   );
@@ -61,25 +80,54 @@ const SearchInput = () => {
 
 export default SearchInput;
 
-export const SearchInputStyle = styled.textarea`
+export const SearchInputStyleBox = styled.div`
   color: white;
   white-space: pre-wrap;
   word-wrap: break-word;
-  display: block;
-  width: 620px;
-  min-height: 5%;
-  max-height: 5%;
+  display: flex;
+  position: absolute;
+  border-radius: 20px;
+  outline: none;
+  bottom: 20px;
+  z-index: 1;
+
+  @media (max-width: 660px) {
+    width: 95%;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+
+export const SearchInputStyle = styled.textarea`
+  color: white;
+  width: 550px;
+  height: 80px;
   border-radius: 20px;
   outline: none;
   padding: 20px 20px;
   background-color: #1e1e1e;
   border: solid 1px #c89b3c;
   bottom: 70px;
-  position: fixed;
-  z-index: 1;
 
   @media (max-width: 660px) {
-    width: 93%;
-    bottom: 10px;
+    width: 100%;
+    height: 50px;
+  }
+`;
+
+export const SpendInputTextBtn = styled.button`
+  width: 60px;
+  height: 120px;
+  border-radius: 20px;
+  color: white;
+  background-color: #1e1e1e;
+  border: solid 1px #c89b3c;
+  cursor: pointer;
+  margin-left: 10px;
+  right: 0;
+
+  @media (max-width: 660px) {
+    height: 90px;
   }
 `;
