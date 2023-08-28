@@ -42,7 +42,7 @@ const ChatUserInfo = () => {
       // 서버로 요청 보내는 부분
       const data = { name: nickNameInput };
       axios
-        .post("/api/summoner", data)
+        .post("http://43.200.177.135:8080/summoner", data)
         .then((response) => {
           if (Array.isArray(response.data) && response.data.length === 0) {
             setShowUserData(false);
