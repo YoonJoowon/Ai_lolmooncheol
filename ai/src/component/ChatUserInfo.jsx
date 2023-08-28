@@ -44,7 +44,7 @@ const ChatUserInfo = () => {
       // 서버로 요청 보내는 부분
       const data = { name: nickNameInput };
       axios
-        .post("http://43.200.177.135:8080/summoner", data, {
+        .post("http://localhost:8080/summoner", data, {
           "X-Riot-Token": API_KEY,
         })
         .then((response) => {
