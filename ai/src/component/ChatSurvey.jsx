@@ -55,7 +55,7 @@ const ChatSurvey = () => {
         .then(() => {
           setSurveySubmitted(true);
         })
-        .catch((error) => {});
+        .catch((error) => {console.log(error)});
     }
   };
 

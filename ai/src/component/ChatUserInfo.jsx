@@ -30,8 +30,6 @@ const ChatUserInfo = () => {
   );
   const [promptData, setPromptData] = useRecoilState(promptDataState);
   const eventTime = useRecoilValue(timeState);
-  const API_KEY = process.env.REACT_APP_LOL_API_KEY;
-
   // 첫 화면 들어와서 렌더링 되면 값 초기화
   useEffect(() => {
     setNickNameInput("");
