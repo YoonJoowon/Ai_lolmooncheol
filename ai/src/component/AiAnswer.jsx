@@ -198,8 +198,6 @@ function AiAnswer(props) {
                   <br />
                   {`레벨: ${aChampLevel}`}
                   <br />
-                  {`위치: X: ${aChampPosition.x} Y: ${aChampPosition.y}`}
-                  <br />
                   <br />
                   {`${bChamp}의 당시 상황 지표분석:`}
                   <br />
@@ -208,8 +206,6 @@ function AiAnswer(props) {
                   {`골드: ${bChampGold}`}
                   <br />
                   {`레벨: ${bChampLevel}`}
-                  <br />
-                  {`위치: X: ${bChampPosition.x} Y: ${bChampPosition.y}`}
                   <br />
                   <br />
                   {`우리 팀 지표분석:`}
@@ -227,12 +223,12 @@ function AiAnswer(props) {
                   <br />
                   <br /> {formattedMessage}
                 </AiFeedbackAnswer>
-                <ReplayBtnStyle onClick={urlCopy}>
+                {/* <ReplayBtnStyle onClick={urlCopy}>
                   사이트 공유하기
                 </ReplayBtnStyle>
                 <ReplayBtnStyle onClick={clipboardHandler}>
                   결과 공유하기
-                </ReplayBtnStyle>
+                </ReplayBtnStyle> */}
                 <ChatSurvey />
               </>
             )}
