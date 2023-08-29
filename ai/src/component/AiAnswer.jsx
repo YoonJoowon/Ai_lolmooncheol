@@ -288,13 +288,13 @@ function AiAnswer(props) {
                   <br />
                   <br /> {formattedMessage}
                 </AiFeedbackAnswer>
-                <ReplayBtnStyle onClick={copyToClipboard}>
-                  사이트 공유하기
-                </ReplayBtnStyle>
                 {/* <ReplayBtnStyle onClick={clipboardHandler}>
                   결과 공유하기
                 </ReplayBtnStyle> */}
                 <ChatSurvey />
+                <ReplayBtnStyle onClick={copyToClipboard}>
+                  사이트 공유하기
+                </ReplayBtnStyle>
                 <RestartWrapper onClick={handleRestartButton}>
                   다시하기
                 </RestartWrapper>
@@ -350,7 +350,7 @@ const ReplayBtnStyle = styled.button`
   cursor: pointer;
   background-color: #0a1428;
   border: solid 1px #005a82;
-  margin: 0px 10px 0px 10px;
+  margin: 10px 10px 0px 10px;
 
   @media (max-width: 550px) {
     margin-top: 10px;
@@ -365,7 +365,7 @@ const SecondBtnStyle = styled.button`
   cursor: pointer;
   background-color: #0a1428;
   border: solid 1px #005a82;
-  margin: 0px 10px 0px 10px;
+  margin: 30px 10px 10px 10px;
 `;
 
 const ErrorMessage = styled.p`
@@ -510,20 +510,17 @@ const UserMatchingDataInfo = styled.div`
   flex-direction: column;
 `;
 
-const RestartWrapper = styled.div`
+const RestartWrapper = styled.button`
   color: white;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
+  width: 200px;
+  height: 50px;
   border-radius: 20px;
-  padding: 20px 20px;
-  background-color: #0a1428;
-  width: 150px;
-  height: 10px;
-  border: solid 1px #005a82;
-  margin-top: 20px;
   cursor: pointer;
+  background-color: #0a1428;
+  border: solid 1px #005a82;
+  margin: 30px 10px 10px 10px;
+
+  @media (max-width: 550px) {
+    margin-top: 10px;
+  }
 `;
