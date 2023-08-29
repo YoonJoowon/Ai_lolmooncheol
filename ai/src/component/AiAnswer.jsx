@@ -185,7 +185,6 @@ function AiAnswer(props) {
   };
 
   const handleRestartButton = () => {
-    console.log("clicked");
     window.location.reload();
     // setShowCheckAnswerRecoil(false);
     // setStartAskingNext(false);
