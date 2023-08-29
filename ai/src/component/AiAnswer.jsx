@@ -1,14 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   chatUserAnswerState,
   promptDataState,
   timeState,
+  showCheckAnswerState,
+  // nickNameInputState,
+  // StartAskingNextState,
+  // inputValueState,
+  // conversationState,
+  // showUserDataState,
+  // showTeamDataState,
 } from "../store/Recoil";
 import axios from "axios";
 import ChatSurvey from "./ChatSurvey";
-import { showCheckAnswerState } from "../store/Recoil";
 import html2canvas from "html2canvas";
 import firebase from "../Firebase";
 
@@ -19,10 +25,22 @@ function AiAnswer(props) {
   const [error, setError] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
-  const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
+
+  const [showCheckAnswerRecoil, setShowCheckAnswerRecoil] =
+    useRecoilState(showCheckAnswerState);
+  // const [StartAskingNext, setStartAskingNext] =
+  //   useRecoilState(StartAskingNextState);
+  // const [nickNameInput, setNickNameInput] = useRecoilState(nickNameInputState);
+  // const [inputValue, setInputValue] = useRecoilState(inputValueState);
+  // const [conversation, setConversation] = useRecoilState(conversationState);
+  // const [chatUserAnswer, setChatUserAnswer] =
+  //   useRecoilState(chatUserAnswerState);
+  // const [showUserData, setShowUserData] = useRecoilState(showUserDataState);
+  // const [showTeamData, setShowTeamData] = useRecoilState(showTeamDataState);
+
   const promptData = useRecoilValue(promptDataState);
   const storedKeywords = useRecoilValue(chatUserAnswerState);
-  const time = useRecoilValue(timeState);
+  const [time, setTime] = useRecoilState(timeState);
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
@@ -52,24 +70,24 @@ function AiAnswer(props) {
   const enemyGold = promptData.enemyTeamGold;
 
   // firebase
-  const firestore = firebase.firestore();
-  const bucket = firestore.collection("chat-bucket2");
+  // const firestore = firebase.firestore();
+  // const bucket = firestore.collection("chat-bucket2");
 
-  const saveFilteredStringToFirebase = () => {
-    if ((filteredString, formattedMessage)) {
-      bucket
-        .add({ filteredString, formattedMessage })
-        .then(() => {})
-        .catch((error) => {
-          console.error("Error saving filteredString to Firebase:", error);
-        });
-    }
-  };
+  // const saveFilteredStringToFirebase = () => {
+  //   if ((filteredString, formattedMessage)) {
+  //     bucket
+  //       .add({ filteredString, formattedMessage })
+  //       .then(() => {})
+  //       .catch((error) => {
+  //         console.error("Error saving filteredString to Firebase:", error);
+  //       });
+  //   }
+  // };
 
   useEffect(() => {
     if (showCheckAnswerRecoil) {
       handleSubmit();
-      saveFilteredStringToFirebase();
+      // saveFilteredStringToFirebase();
     }
   }, [showCheckAnswerRecoil]);
 
@@ -166,6 +184,20 @@ function AiAnswer(props) {
     }
   };
 
+  const handleRestartButton = () => {
+    console.log("clicked");
+    window.location.reload();
+    // setShowCheckAnswerRecoil(false);
+    // setStartAskingNext(false);
+    // setNickNameInput("");
+    // setInputValue("");
+    // setConversation("");
+    // setChatUserAnswer("");
+    // setTime({ minute: 0, second: 0 });
+    // setShowUserData(false);
+    // setShowTeamData(false);
+  };
+
   return (
     <>
       <ChattingInfoCapture ref={ref}>
@@ -238,6 +270,9 @@ function AiAnswer(props) {
                   결과 공유하기
                 </ReplayBtnStyle> */}
                 <ChatSurvey />
+                <RestartWrapper onClick={handleRestartButton}>
+                  다시하기
+                </RestartWrapper>
               </>
             )}
           </ChattingInfo>
@@ -448,4 +483,22 @@ const UserMatchingDataName = styled.div`
 const UserMatchingDataInfo = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const RestartWrapper = styled.div`
+  color: white;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  border-radius: 20px;
+  padding: 20px 20px;
+  background-color: #0a1428;
+  width: 150px;
+  height: 10px;
+  border: solid 1px #005a82;
+  margin-top: 20px;
+  cursor: pointer;
 `;

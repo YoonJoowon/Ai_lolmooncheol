@@ -8,6 +8,8 @@ import {
   matchTimelineDataState,
   timeState,
   promptDataState,
+  showUserDataState,
+  showTeamDataState,
 } from "../store/Recoil";
 import { useRecoilValue, useRecoilState } from "recoil";
 import TypingAnimation from "./TypingAnimation";
@@ -16,8 +18,8 @@ import axios from "axios";
 const ChatUserInfo = () => {
   const [nickNameInput, setNickNameInput] = useRecoilState(nickNameInputState);
   const [showUserDataStart, setShowUserDataStart] = useState();
-  const [showUserData, setShowUserData] = useState(false);
-  const [showTeamData, setShowTeamData] = useState(false);
+  const [showUserData, setShowUserData] = useRecoilState(showUserDataState);
+  const [showTeamData, setShowTeamData] = useRecoilState(showTeamDataState);
   const [showTime, setShowTime] = useState(false);
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
   const [selectedTeamIndex, setSelectedTeamIndex] = useState(null);

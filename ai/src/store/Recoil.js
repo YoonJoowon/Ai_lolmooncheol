@@ -10,6 +10,16 @@ export const nickNameInputState = atom({
   default: "",
 });
 
+export const showUserDataState = atom({
+  key: "showUserDataState",
+  default: false,
+});
+
+export const showTeamDataState = atom({
+  key: "showTeamDataState",
+  default: false,
+});
+
 export const StartAskingNextState = atom({
   key: "StartAskingNextState",
   default: false,
