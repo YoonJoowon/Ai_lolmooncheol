@@ -51,7 +51,7 @@ function AiAnswer(props) {
 
   // firebase
   const firestore = firebase.firestore();
-  const bucket = firestore.collection("chat-bucket");
+  const bucket = firestore.collection("chat-bucket2");
 
   const saveFilteredStringToFirebase = () => {
     if ((filteredString, formattedMessage)) {
@@ -77,33 +77,8 @@ function AiAnswer(props) {
     const messages = [
       {
         role: "system", // 행동지정, 역할부여
-        content: `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요. 
-          아래의 형식을 사용하고, 지표들을 하나씩 근거로 들면서 결론을 말해주세요.`,
-      },
-      {
-        role: "assistant",
-        content:
-          "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
-          `${aChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${aChampCurrentHP}\n` +
-          `골드: ${aChampGold}\n` +
-          `레벨: ${aChampLevel}\n\n` +
-          `${bChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${bChampCurrentHP}\n` +
-          `골드: ${bChampGold}\n` +
-          `레벨: ${bChampLevel}\n\n` +
-          `우리 팀 지표분석:\n` +
-          `평균 레벨: ${teamLevel}\n` +
-          `총 골드: ${teamGold}\n\n` +
-          `상대 팀 지표분석:\n` +
-          `평균 레벨: ${enemyLevel}\n` +
-          `총 골드: ${enemyGold}\n\n` +
-          `${aChamp}의 상황:\n` +
-          "```\n\n" +
-          `${bChamp}의 상황:\n` +
-          "```\n\n" +
-          "결론:\n" +
-          "```",
+        content: `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요.`,
+
       },
       {
         role: "user",
@@ -287,6 +262,7 @@ const ChattingInfo = styled.div`
 
   @media (max-width: 673px) {
     width: 80%;
+    margin: auto;
   }
 `;
 

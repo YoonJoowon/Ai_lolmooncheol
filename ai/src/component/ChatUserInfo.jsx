@@ -29,8 +29,7 @@ const ChatUserInfo = () => {
     matchTimelineDataState
   );
   const [promptData, setPromptData] = useRecoilState(promptDataState);
-  const eventTime = useRecoilValue(timeState);
-  // 첫 화면 들어와서 렌더링 되면 값 초기화
+
   useEffect(() => {
     setNickNameInput("");
   }, []);
