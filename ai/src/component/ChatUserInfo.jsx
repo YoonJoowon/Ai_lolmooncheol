@@ -42,7 +42,7 @@ const ChatUserInfo = () => {
       // 서버로 요청 보내는 부분
       const data = { name: nickNameInput };
       axios
-        .post("/api/summoner", data)
+        .post("http://localhost:8080/summoner", data)
         .then((response) => {
           if (Array.isArray(response.data) && response.data.length === 0) {
             setShowUserData(false);
@@ -74,6 +74,7 @@ const ChatUserInfo = () => {
     setPromptData((prevState) => ({
       ...prevState,
       myChamp: matchData.matchDetails[index].championNameKR,
+      myChampImg: matchData.matchDetails[index].championImageUrl,
     }));
     setShowTeamData(true);
   };
@@ -89,6 +90,7 @@ const ChatUserInfo = () => {
     setPromptData((prevState) => ({
       ...prevState,
       yourChamp: lolTeamMemberData[index].championNameKR,
+      yourChampImg: lolTeamMemberData[index].championImageUrl,
     }));
   };
 

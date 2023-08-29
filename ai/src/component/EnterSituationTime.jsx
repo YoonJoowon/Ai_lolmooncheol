@@ -45,13 +45,14 @@ const EnterSituationTime = () => {
 
   const postTimelineData = () => {
     axios
-      .post("/api/fetchMatchTimeline", matchTimelineData)
+      .post("http://localhost:8080/fetchMatchTimeline", matchTimelineData)
       .then((response) => {
         setPromptData((prevData) => ({
           ...prevData,
           myCurrentGold: response.data.myData.currentGold,
           myLevel: response.data.myData.level,
           myHealth: response.data.myData.health,
+          myCurrentHealth: response.data.myData.maxHealth,
           myPosition: {
             x: response.data.myData.position.x,
             y: response.data.myData.position.y,
@@ -60,6 +61,7 @@ const EnterSituationTime = () => {
           yourCurrentGold: response.data.teamData.currentGold,
           yourLevel: response.data.teamData.level,
           yourHealth: response.data.teamData.health,
+          yourCurrentHealth: response.data.teamData.maxHealth,
           yourPosition: {
             x: response.data.teamData.position.x,
             y: response.data.teamData.position.y,

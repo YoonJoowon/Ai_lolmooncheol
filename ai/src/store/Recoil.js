@@ -68,12 +68,16 @@ export const promptDataState = atom({
     myLevel: "",
     myPosition: { x: "", y: "" },
     myHealth: "",
+    myCurrentHealth: "",
+    myChampImg: "",
     // 아군 분쟁 상대 정보
     yourChamp: "",
     yourCurrentGold: "",
     yourLevel: "",
     yourPosition: { x: "", y: "" },
     yourHealth: "",
+    yourCurrentHealth: "",
+    yourChampImg: "",
     // 내 팀 정보
     myTeamGold: "",
     myTeamLevel: "",

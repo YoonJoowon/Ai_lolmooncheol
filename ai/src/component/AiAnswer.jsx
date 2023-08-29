@@ -15,7 +15,8 @@ function AiAnswer(props) {
   const [error, setError] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
-  const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
+  // const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
+  const showCheckAnswerRecoil = true;
   const promptData = useRecoilValue(promptDataState);
   const storedKeywords = useRecoilValue(chatUserAnswerState);
   const filteredString = (storedKeywords || [])
@@ -23,16 +24,20 @@ function AiAnswer(props) {
     .join(" ");
 
   const aChamp = promptData.myChamp;
-  const aChampHp = promptData.myHealth;
+  const aChampHP = promptData.myHealth;
+  const aChampCurrentHP = promptData.myCurrentHealth;
   const aChampGold = promptData.myCurrentGold;
   const aChampLevel = promptData.myLevel;
   const aChampPosition = promptData.myPosition;
+  const aChampImg = promptData.myChampImg;
 
   const bChamp = promptData.yourChamp;
-  const bChampHp = promptData.yourHealth;
+  const bChampHP = promptData.yourHealth;
+  const bChampCurrentHP = promptData.yourCurrentHealth;
   const bChampGold = promptData.yourCurrentGold;
   const bChampLevel = promptData.yourLevel;
   const bChampPosition = promptData.yourPosition;
+  const bChampImg = promptData.yourChampImg;
 
   const teamLevel = promptData.myTeamLevel;
   const teamGold = promptData.myTeamGold;
@@ -75,11 +80,11 @@ function AiAnswer(props) {
         content:
           "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
           `${aChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${aChampHp}\n` +
+          `체력: ${aChampCurrentHP}\n` +
           `골드: ${aChampGold}\n` +
           `레벨: ${aChampLevel}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${bChampHp}\n` +
+          `체력: ${bChampCurrentHP}\n` +
           `골드: ${bChampGold}\n` +
           `레벨: ${bChampLevel}\n\n` +
           `우리 팀 지표분석:\n` +
@@ -100,11 +105,11 @@ function AiAnswer(props) {
         content:
           filteredString +
           `${aChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${aChampHp}\n` +
+          `체력: ${aChampCurrentHP}\n` +
           `골드: ${aChampGold}\n` +
           `레벨: ${aChampLevel}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${bChampHp}\n` +
+          `체력: ${bChampCurrentHP}\n` +
           `골드: ${bChampGold}\n` +
           `레벨: ${bChampLevel}\n\n` +
           `우리 팀 지표분석:\n` +
@@ -189,24 +194,37 @@ function AiAnswer(props) {
             {isLoading && <Loading />}
             {responseMessage && !isLoading && (
               <>
+                <ResultSummaryWrapper>
+                  <UserMatchingDataBox>
+                    <UserMatchingDataImg>
+                      <img
+                        src={aChampImg}
+                        alt={aChamp}
+                        style={{ width: "60px" }}
+                      />
+                    </UserMatchingDataImg>
+                    <UserMatchingDataName>{aChamp}</UserMatchingDataName>
+
+                    {`체력: ${aChampCurrentHP}`}
+                    {`골드: ${aChampGold}`}
+                    {`레벨: ${aChampLevel}`}
+                  </UserMatchingDataBox>
+                  vs
+                  <UserMatchingDataBox>
+                    <UserMatchingDataImg>
+                      <img
+                        src={bChampImg}
+                        alt={bChamp}
+                        style={{ width: "60px" }}
+                      />
+                    </UserMatchingDataImg>
+                    <UserMatchingDataName>{bChamp}</UserMatchingDataName>
+                    {`체력: ${bChampCurrentHP}`}
+                    {`골드: ${bChampGold}`}
+                    {`레벨: ${bChampLevel}`}
+                  </UserMatchingDataBox>
+                </ResultSummaryWrapper>
                 <AiFeedbackAnswer>
-                  {`${aChamp}의 당시 상황 지표분석:`}
-                  <br />
-                  {`체력: ${aChampHp}`}
-                  <br />
-                  {`골드: ${aChampGold}`}
-                  <br />
-                  {`레벨: ${aChampLevel}`}
-                  <br />
-                  <br />
-                  {`${bChamp}의 당시 상황 지표분석:`}
-                  <br />
-                  {`체력: ${bChampHp}`}
-                  <br />
-                  {`골드: ${bChampGold}`}
-                  <br />
-                  {`레벨: ${bChampLevel}`}
-                  <br />
                   <br />
                   {`우리 팀 지표분석:`}
                   <br />
@@ -381,4 +399,42 @@ const Loading = styled.div`
       transform: rotate(70deg);
     }
   }
+`;
+
+const ResultSummaryWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+`;
+
+const UserMatchingDataBox = styled.button`
+  width: 130px;
+  height: 170px;
+  border: solid 1px ${(index) => (index.isGameSelected ? "red" : "#a7a7a7")};
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+
+  @media (max-width: 673px) {
+    margin-top: 20px;
+  }
+`;
+
+const UserMatchingDataImg = styled.div`
+  width: 90px;
+  height: 90px;
+  border: solid 1px #a7a7a7;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+`;
+
+const UserMatchingDataName = styled.div`
+  margin: 5px;
+  text-align: center;
 `;
