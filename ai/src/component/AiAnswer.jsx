@@ -28,6 +28,7 @@ function AiAnswer(props) {
     .join(" ");
 
   const aChamp = promptData.myChamp;
+  const aChampLane = promptData.myLane;
   const aChampHP = promptData.myHealth;
   const aChampCurrentHP = promptData.myCurrentHealth;
   const aChampGold = promptData.myCurrentGold;
@@ -36,6 +37,7 @@ function AiAnswer(props) {
   const aChampImg = promptData.myChampImg;
 
   const bChamp = promptData.yourChamp;
+  const bChampLane = promptData.yourLane;
   const bChampHP = promptData.yourHealth;
   const bChampCurrentHP = promptData.yourCurrentHealth;
   const bChampGold = promptData.yourCurrentGold;
@@ -78,7 +80,6 @@ function AiAnswer(props) {
       {
         role: "system", // 행동지정, 역할부여
         content: `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요.`,
-
       },
       {
         role: "user",
@@ -188,6 +189,7 @@ function AiAnswer(props) {
                     </UserMatchingDataImg>
                     <UserMatchingDataName>{aChamp}</UserMatchingDataName>
                     <UserMatchingDataInfo>
+                      <div>{`라인: ${aChampLane}`}</div>
                       <div>{`체력: ${aChampCurrentHP}/${aChampHP}`}</div>
                       <div>{`골드: ${aChampGold}`}</div>
                       <div>{`레벨: ${aChampLevel}`}</div>
@@ -205,6 +207,7 @@ function AiAnswer(props) {
                     </UserMatchingDataImg>
                     <UserMatchingDataName>{bChamp}</UserMatchingDataName>
                     <UserMatchingDataInfo>
+                      <div>{`라인: ${bChampLane}`}</div>
                       <div>{`체력: ${bChampCurrentHP}/${bChampHP}`}</div>
                       <div>{`골드: ${bChampGold}`}</div>
                       <div>{`레벨: ${bChampLevel}`}</div>
@@ -412,7 +415,7 @@ const ResultVSWrapper = styled.div`
 
 const UserMatchingDataBox = styled.button`
   width: 150px;
-  height: 220px;
+  height: 240px;
   background-color: #3f3f3f;
   border: solid 1px ${(index) => (index.isGameSelected ? "red" : "#a7a7a7")};
   border-radius: 20px;
