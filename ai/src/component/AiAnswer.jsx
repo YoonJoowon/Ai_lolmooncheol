@@ -15,8 +15,7 @@ function AiAnswer(props) {
   const [error, setError] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
   const formattedMessage = responseMessage.replace(/\\n/g, "\n");
-  // const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
-  const showCheckAnswerRecoil = true;
+  const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
   const promptData = useRecoilValue(promptDataState);
   const storedKeywords = useRecoilValue(chatUserAnswerState);
   const filteredString = (storedKeywords || [])
@@ -68,8 +67,8 @@ function AiAnswer(props) {
   }, [showCheckAnswerRecoil]);
 
   const handleSubmit = () => {
-    // setIsLoading(true);
-    setIsLoading(false);
+    setIsLoading(true);
+
     const messages = [
       {
         role: "system", // 행동지정, 역할부여
@@ -131,21 +130,21 @@ function AiAnswer(props) {
       messages: messages,
     };
 
-    // axios
-    //   .post("https://api.openai.com/v1/chat/completions", data, {
-    //     headers: {
-    //       Authorization: "Bearer " + api_key,
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     setIsLoading(false);
-    //     setResponseMessage(response.data.choices[0].message.content);
-    //   })
-    //   .catch((error) => {
-    //     setIsLoading(false);
-    //     setError("이용 토큰이 만료되었습니다.");
-    //   });
+    axios
+      .post("https://api.openai.com/v1/chat/completions", data, {
+        headers: {
+          Authorization: "Bearer " + api_key,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setIsLoading(false);
+        setResponseMessage(response.data.choices[0].message.content);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError("이용 토큰이 만료되었습니다.");
+      });
   };
 
   // 사이트 공유
@@ -206,7 +205,7 @@ function AiAnswer(props) {
                     </UserMatchingDataImg>
                     <UserMatchingDataName>{aChamp}</UserMatchingDataName>
                     <UserMatchingDataInfo>
-                      <div>{`체력: ${aChampCurrentHP}`}</div>
+                      <div>{`체력: ${aChampCurrentHP}/${aChampHP}`}</div>
                       <div>{`골드: ${aChampGold}`}</div>
                       <div>{`레벨: ${aChampLevel}`}</div>
                     </UserMatchingDataInfo>
@@ -222,7 +221,7 @@ function AiAnswer(props) {
                     </UserMatchingDataImg>
                     <UserMatchingDataName>{bChamp}</UserMatchingDataName>
                     <UserMatchingDataInfo>
-                      <div>{`체력: ${bChampCurrentHP}`}</div>
+                      <div>{`체력: ${bChampCurrentHP}/${bChampHP}`}</div>
                       <div>{`골드: ${bChampGold}`}</div>
                       <div>{`레벨: ${bChampLevel}`}</div>
                     </UserMatchingDataInfo>
@@ -413,8 +412,9 @@ const ResultSummaryWrapper = styled.div`
 `;
 
 const UserMatchingDataBox = styled.button`
-  width: 130px;
-  height: 200px;
+  width: 150px;
+  height: 220px;
+  background-color: #3f3f3f;
   border: solid 1px ${(index) => (index.isGameSelected ? "red" : "#a7a7a7")};
   border-radius: 20px;
   justify-content: center;

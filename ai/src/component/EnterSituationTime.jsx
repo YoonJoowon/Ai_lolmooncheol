@@ -51,8 +51,8 @@ const EnterSituationTime = () => {
           ...prevData,
           myCurrentGold: response.data.myData.currentGold,
           myLevel: response.data.myData.level,
-          myHealth: response.data.myData.health,
-          myCurrentHealth: response.data.myData.maxHealth,
+          myHealth: response.data.myData.maxHealth,
+          myCurrentHealth: response.data.myData.health,
           myPosition: {
             x: response.data.myData.position.x,
             y: response.data.myData.position.y,
@@ -60,8 +60,8 @@ const EnterSituationTime = () => {
           // 아군 분쟁 상대 정보
           yourCurrentGold: response.data.teamData.currentGold,
           yourLevel: response.data.teamData.level,
-          yourHealth: response.data.teamData.health,
-          yourCurrentHealth: response.data.teamData.maxHealth,
+          yourHealth: response.data.teamData.maxHealth,
+          yourCurrentHealth: response.data.teamData.health,
           yourPosition: {
             x: response.data.teamData.position.x,
             y: response.data.teamData.position.y,
