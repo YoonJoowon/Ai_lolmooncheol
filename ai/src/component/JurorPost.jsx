@@ -67,4 +67,5 @@ const JurorPostJudgmentRate = styled.button`
   border: solid 1px #005a82;
   border-radius: 40px;
   margin-right: 20px;
+  cursor: pointer;
 `;
