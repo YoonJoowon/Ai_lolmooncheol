@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { useRecoilValue } from "recoil";
-import { chatUserAnswerState, promptDataState } from "../store/Recoil";
+import {
+  chatUserAnswerState,
+  promptDataState,
+  timeState,
+} from "../store/Recoil";
 import axios from "axios";
 import ChatSurvey from "./ChatSurvey";
 import { showCheckAnswerState } from "../store/Recoil";
@@ -18,6 +22,7 @@ function AiAnswer(props) {
   const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
   const promptData = useRecoilValue(promptDataState);
   const storedKeywords = useRecoilValue(chatUserAnswerState);
+  const time = useRecoilValue(timeState);
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
@@ -194,6 +199,9 @@ function AiAnswer(props) {
             {isLoading && <Loading />}
             {responseMessage && !isLoading && (
               <>
+                <ResultSummaryTime>
+                  분쟁시간 : {`${time.minute}분 ${time.second}초`}
+                </ResultSummaryTime>
                 <ResultSummaryWrapper>
                   <UserMatchingDataBox>
                     <UserMatchingDataImg>
@@ -210,7 +218,8 @@ function AiAnswer(props) {
                       <div>{`레벨: ${aChampLevel}`}</div>
                     </UserMatchingDataInfo>
                   </UserMatchingDataBox>
-                  vs
+                  <ResultVSWrapper>vs</ResultVSWrapper>
+
                   <UserMatchingDataBox>
                     <UserMatchingDataImg>
                       <img
@@ -409,6 +418,20 @@ const ResultSummaryWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
+`;
+
+const ResultSummaryTime = styled.div`
+  display: flex;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: #121212;
+  border: solid 1px #424242;
+`;
+
+const ResultVSWrapper = styled.div`
+  font-size: 30px;
 `;
 
 const UserMatchingDataBox = styled.button`
