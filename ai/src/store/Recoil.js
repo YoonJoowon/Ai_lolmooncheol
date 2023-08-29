@@ -64,6 +64,7 @@ export const promptDataState = atom({
   default: {
     // 내정보
     myChamp: "",
+    myLane: "",
     myCurrentGold: "",
     myLevel: "",
     myPosition: { x: "", y: "" },
@@ -72,6 +73,7 @@ export const promptDataState = atom({
     myChampImg: "",
     // 아군 분쟁 상대 정보
     yourChamp: "",
+    yourLane: "",
     yourCurrentGold: "",
     yourLevel: "",
     yourPosition: { x: "", y: "" },

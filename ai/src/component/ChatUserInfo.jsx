@@ -74,6 +74,7 @@ const ChatUserInfo = () => {
       ...prevState,
       myChamp: matchData.matchDetails[index].championNameKR,
       myChampImg: matchData.matchDetails[index].championImageUrl,
+      myLane: matchData.matchDetails[index].mylane,
     }));
     setShowTeamData(true);
   };
@@ -90,6 +91,7 @@ const ChatUserInfo = () => {
       ...prevState,
       yourChamp: lolTeamMemberData[index].championNameKR,
       yourChampImg: lolTeamMemberData[index].championImageUrl,
+      yourLane: lolTeamMemberData[index].lane,
     }));
   };
 
