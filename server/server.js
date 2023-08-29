@@ -11,6 +11,7 @@ const baseUrl2 = "https://asia.api.riotgames.com/lol";
 app.use(cors());
 app.use(bodyParser.json());
 
+
 app.listen(8080, function () {
   console.log("소환사의 협곡에 오신 것을 환영합니다");
 });
@@ -86,12 +87,20 @@ async function getMatchDetails(matchId, puuid) {
       return null; // Participant not found, handle this case
     }
 
+    const lineTranslation = {
+      TOP: "탑",
+      JUNGLE: "정글",
+      MIDDLE: "미드",
+      BOTTOM: "바텀"
+    };
+
     const kills = participant.kills;
     const deaths = participant.deaths;
     const assists = participant.assists;
     const championName = participant.championName;
     const win = participant.win;
     const lane = participant.lane;
+    const mylane = lineTranslation[participant.lane];
 
     // 챔피언 이미지
     const championImageUrl = `http://ddragon.leagueoflegends.com/cdn/13.16.1/img/champion/${championName}.png`;
@@ -270,6 +279,7 @@ async function getMatchDetails(matchId, puuid) {
       Zyra: "자이라",
     };
 
+
     // 팀원
     const teamId = participant.teamId;
 
@@ -291,7 +301,7 @@ async function getMatchDetails(matchId, puuid) {
           kills: teamMember.kills,
           deaths: teamMember.deaths,
           assists: teamMember.assists,
-          lane: teamMember.lane,
+          lane: lineTranslation[teamMember.lane],
           memberPuuid: teamMember.puuid,
         };
       });
@@ -304,7 +314,7 @@ async function getMatchDetails(matchId, puuid) {
       deaths,
       assists,
       win,
-      lane,
+      mylane,
       puuid,
       matchId,
       teamMembers,
@@ -381,17 +391,21 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
     const summoner1Info = {
       level: summoner1Data.level,
       health: summoner1Data.championStats.health,
+      healthMax: summoner1Data.championStats.healthMax,
       currentGold: summoner1Data.currentGold,
       totalGold: summoner1Data.totalGold,
       position: summoner1Data.position,
+      
     };
 
     const summoner2Info = {
       level: summoner2Data.level,
       health: summoner2Data.championStats.health,
+      healthMax: summoner2Data.championStats.healthMax,
       currentGold: summoner2Data.currentGold,
       totalGold: summoner2Data.totalGold,
       position: summoner2Data.position,
+      
     };
 
     // 팀 필요정보 추출
@@ -472,3 +486,4 @@ app.post("/fetchMatchTimeline", async (req, res) => {
       .json({ error: "매치 타임라인 데이터를 가져오는 중 오류 발생" });
   }
 });
+

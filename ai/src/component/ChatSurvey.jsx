@@ -79,6 +79,7 @@ const ChatSurvey = () => {
                   backgroundColor: "#005a82",
                 }}
                 onClick={saveRatingFirebase}
+                className="chat-survey"
               >
                 제출하기
               </div>
