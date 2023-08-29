@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { useRecoilValue } from "recoil";
-import { chatUserAnswerState, promptDataState } from "../store/Recoil";
+import {
+  chatUserAnswerState,
+  promptDataState,
+  timeState,
+} from "../store/Recoil";
 import axios from "axios";
 import ChatSurvey from "./ChatSurvey";
 import { showCheckAnswerState } from "../store/Recoil";
@@ -18,21 +22,26 @@ function AiAnswer(props) {
   const showCheckAnswerRecoil = useRecoilValue(showCheckAnswerState);
   const promptData = useRecoilValue(promptDataState);
   const storedKeywords = useRecoilValue(chatUserAnswerState);
+  const time = useRecoilValue(timeState);
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
 
   const aChamp = promptData.myChamp;
-  const aChampHp = promptData.myHealth;
+  const aChampHP = promptData.myHealth;
+  const aChampCurrentHP = promptData.myCurrentHealth;
   const aChampGold = promptData.myCurrentGold;
   const aChampLevel = promptData.myLevel;
   const aChampPosition = promptData.myPosition;
+  const aChampImg = promptData.myChampImg;
 
   const bChamp = promptData.yourChamp;
-  const bChampHp = promptData.yourHealth;
+  const bChampHP = promptData.yourHealth;
+  const bChampCurrentHP = promptData.yourCurrentHealth;
   const bChampGold = promptData.yourCurrentGold;
   const bChampLevel = promptData.yourLevel;
   const bChampPosition = promptData.yourPosition;
+  const bChampImg = promptData.yourChampImg;
 
   const teamLevel = promptData.myTeamLevel;
   const teamGold = promptData.myTeamGold;
@@ -64,47 +73,23 @@ function AiAnswer(props) {
 
   const handleSubmit = () => {
     setIsLoading(true);
+
     const messages = [
       {
         role: "system", // 행동지정, 역할부여
-        content: `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요. 
-          아래의 형식을 사용하고, 지표들을 하나씩 근거로 들면서 결론을 말해주세요.`,
-      },
-      {
-        role: "assistant",
-        content:
-          "안녕하세요! 주어진 상황에서 판결을 시작해볼게요! \n\n" +
-          `${aChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${aChampHp}\n` +
-          `골드: ${aChampGold}\n` +
-          `레벨: ${aChampLevel}\n\n` +
-          `${bChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${bChampHp}\n` +
-          `골드: ${bChampGold}\n` +
-          `레벨: ${bChampLevel}\n\n` +
-          `우리 팀 지표분석:\n` +
-          `평균 레벨: ${teamLevel}\n` +
-          `총 골드: ${teamGold}\n\n` +
-          `상대 팀 지표분석:\n` +
-          `평균 레벨: ${enemyLevel}\n` +
-          `총 골드: ${enemyGold}\n\n` +
-          `${aChamp}의 상황:\n` +
-          "```\n\n" +
-          `${bChamp}의 상황:\n` +
-          "```\n\n" +
-          "결론:\n" +
-          "```",
+        content: `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요.`,
+
       },
       {
         role: "user",
         content:
           filteredString +
           `${aChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${aChampHp}\n` +
+          `체력: ${aChampCurrentHP}\n` +
           `골드: ${aChampGold}\n` +
           `레벨: ${aChampLevel}\n\n` +
           `${bChamp}의 당시 상황 지표분석:\n` +
-          `체력: ${bChampHp}\n` +
+          `체력: ${bChampCurrentHP}\n` +
           `골드: ${bChampGold}\n` +
           `레벨: ${bChampLevel}\n\n` +
           `우리 팀 지표분석:\n` +
@@ -189,24 +174,44 @@ function AiAnswer(props) {
             {isLoading && <Loading />}
             {responseMessage && !isLoading && (
               <>
+                <ResultSummaryTime>
+                  분쟁시간 : {`${time.minute}분 ${time.second}초`}
+                </ResultSummaryTime>
+                <ResultSummaryWrapper>
+                  <UserMatchingDataBox>
+                    <UserMatchingDataImg>
+                      <img
+                        src={aChampImg}
+                        alt={aChamp}
+                        style={{ width: "60px" }}
+                      />
+                    </UserMatchingDataImg>
+                    <UserMatchingDataName>{aChamp}</UserMatchingDataName>
+                    <UserMatchingDataInfo>
+                      <div>{`체력: ${aChampCurrentHP}/${aChampHP}`}</div>
+                      <div>{`골드: ${aChampGold}`}</div>
+                      <div>{`레벨: ${aChampLevel}`}</div>
+                    </UserMatchingDataInfo>
+                  </UserMatchingDataBox>
+                  <ResultVSWrapper>vs</ResultVSWrapper>
+
+                  <UserMatchingDataBox>
+                    <UserMatchingDataImg>
+                      <img
+                        src={bChampImg}
+                        alt={bChamp}
+                        style={{ width: "60px" }}
+                      />
+                    </UserMatchingDataImg>
+                    <UserMatchingDataName>{bChamp}</UserMatchingDataName>
+                    <UserMatchingDataInfo>
+                      <div>{`체력: ${bChampCurrentHP}/${bChampHP}`}</div>
+                      <div>{`골드: ${bChampGold}`}</div>
+                      <div>{`레벨: ${bChampLevel}`}</div>
+                    </UserMatchingDataInfo>
+                  </UserMatchingDataBox>
+                </ResultSummaryWrapper>
                 <AiFeedbackAnswer>
-                  {`${aChamp}의 당시 상황 지표분석:`}
-                  <br />
-                  {`체력: ${aChampHp}`}
-                  <br />
-                  {`골드: ${aChampGold}`}
-                  <br />
-                  {`레벨: ${aChampLevel}`}
-                  <br />
-                  <br />
-                  {`${bChamp}의 당시 상황 지표분석:`}
-                  <br />
-                  {`체력: ${bChampHp}`}
-                  <br />
-                  {`골드: ${bChampGold}`}
-                  <br />
-                  {`레벨: ${bChampLevel}`}
-                  <br />
                   <br />
                   {`우리 팀 지표분석:`}
                   <br />
@@ -257,6 +262,7 @@ const ChattingInfo = styled.div`
 
   @media (max-width: 673px) {
     width: 80%;
+    margin: auto;
   }
 `;
 
@@ -381,4 +387,62 @@ const Loading = styled.div`
       transform: rotate(70deg);
     }
   }
+`;
+
+const ResultSummaryWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+`;
+
+const ResultSummaryTime = styled.div`
+  display: flex;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: #121212;
+  border: solid 1px #424242;
+`;
+
+const ResultVSWrapper = styled.div`
+  font-size: 30px;
+`;
+
+const UserMatchingDataBox = styled.button`
+  width: 150px;
+  height: 220px;
+  background-color: #3f3f3f;
+  border: solid 1px ${(index) => (index.isGameSelected ? "red" : "#a7a7a7")};
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+
+  @media (max-width: 673px) {
+    margin-top: 20px;
+  }
+`;
+
+const UserMatchingDataImg = styled.div`
+  width: 90px;
+  height: 90px;
+  border: solid 1px #a7a7a7;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+`;
+
+const UserMatchingDataName = styled.div`
+  margin: 5px;
+  text-align: center;
+`;
+
+const UserMatchingDataInfo = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
