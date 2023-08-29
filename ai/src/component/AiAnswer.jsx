@@ -147,14 +147,40 @@ function AiAnswer(props) {
   };
 
   // 사이트 공유
-  const urlToCopy = "https://aimoon-c9fa4.web.app/";
-  const urlCopy = async () => {
+  // const urlToCopy = "https://aimoon-c9fa4.web.app/";
+  // const urlCopy = async () => {
+  //   try {
+  //     await navigator.clipboard.writeText(urlToCopy);
+  //     alert("URL이 클립보드에 복사되었습니다.");
+  //   } catch (error) {
+  //     alert("URL 복사에 실패했습니다.");
+  //   }
+  // };
+  const urlToCopy = "http://aimoon.o-r.kr/";
+  const [copySuccess, setCopySuccess] = useState(false);
+
+  const copyToClipboard = () => {
+    const textArea = document.createElement("textarea");
+    textArea.value = urlToCopy;
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.select();
+
     try {
-      await navigator.clipboard.writeText(urlToCopy);
-      alert("URL이 클립보드에 복사되었습니다.");
+      const successful = document.execCommand("copy");
+      if (successful) {
+        alert("URL이 클립보드에 복사되었습니다.");
+        setCopySuccess(true);
+      } else {
+        alert("URL 복사에 실패했습니다.");
+        setCopySuccess(false);
+      }
     } catch (error) {
-      alert("URL 복사에 실패했습니다.");
+      console.log(error);
+      setCopySuccess(false);
     }
+
+    document.body.removeChild(textArea);
   };
 
   // 결과 공유
@@ -262,10 +288,10 @@ function AiAnswer(props) {
                   <br />
                   <br /> {formattedMessage}
                 </AiFeedbackAnswer>
-                {/* <ReplayBtnStyle onClick={urlCopy}>
+                <ReplayBtnStyle onClick={copyToClipboard}>
                   사이트 공유하기
                 </ReplayBtnStyle>
-                <ReplayBtnStyle onClick={clipboardHandler}>
+                {/* <ReplayBtnStyle onClick={clipboardHandler}>
                   결과 공유하기
                 </ReplayBtnStyle> */}
                 <ChatSurvey />
