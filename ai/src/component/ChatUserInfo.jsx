@@ -73,6 +73,7 @@ const ChatUserInfo = () => {
     setPromptData((prevState) => ({
       ...prevState,
       myChamp: matchData.matchDetails[index].championNameKR,
+      myChampImg: matchData.matchDetails[index].championImageUrl,
     }));
     setShowTeamData(true);
   };
@@ -88,6 +89,7 @@ const ChatUserInfo = () => {
     setPromptData((prevState) => ({
       ...prevState,
       yourChamp: lolTeamMemberData[index].championNameKR,
+      yourChampImg: lolTeamMemberData[index].championImageUrl,
     }));
   };
 
