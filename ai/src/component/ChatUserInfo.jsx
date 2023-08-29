@@ -6,7 +6,6 @@ import {
   matchDataState,
   lolTeamMemberDataState,
   matchTimelineDataState,
-  timeState,
   promptDataState,
   showUserDataState,
   showTeamDataState,

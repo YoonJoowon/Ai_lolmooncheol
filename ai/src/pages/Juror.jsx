@@ -11,12 +11,10 @@ const Juror = () => {
       <ChattingInfo>
         <ChatTemplete>
           <ChatTempleteTxt>
-            다른 플레이어들이 겪은 상황과 <br />
-            AI 판결문을 보고<span> 과실비율을 매겨주세요!</span>
+            다른 플레이어들이 겪은 상황과 AI 판결문을 보고 <br />
+            <span> 본인이 생각하는 과실비율을 매겨주세요!</span>
           </ChatTempleteTxt>
         </ChatTemplete>
-        <JurorPost />
-        <JurorPost />
         <JurorPost />
         <JurorPost />
       </ChattingInfo>
