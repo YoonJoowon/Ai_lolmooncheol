@@ -45,7 +45,7 @@ const EnterSituationTime = () => {
 
   const postTimelineData = () => {
     axios
-      .post("/api/fetchMatchTimeline", matchTimelineData)
+      .post("http://localhost:8080/fetchMatchTimeline", matchTimelineData)
       .then((response) => {
         setPromptData((prevData) => ({
           ...prevData,

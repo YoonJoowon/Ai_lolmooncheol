@@ -30,7 +30,6 @@ const ChatUserInfo = () => {
   );
   const [promptData, setPromptData] = useRecoilState(promptDataState);
 
-  // 첫 화면 들어와서 렌더링 되면 값 초기화
   useEffect(() => {
     setNickNameInput("");
   }, []);
@@ -42,7 +41,7 @@ const ChatUserInfo = () => {
       // 서버로 요청 보내는 부분
       const data = { name: nickNameInput };
       axios
-        .post("http://43.200.177.135:8080/summoner", data)
+        .post("http://localhost:8080/summoner", data)
         .then((response) => {
           if (Array.isArray(response.data) && response.data.length === 0) {
             setShowUserData(false);

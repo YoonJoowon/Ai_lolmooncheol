@@ -261,6 +261,7 @@ const ChattingInfo = styled.div`
 
   @media (max-width: 673px) {
     width: 80%;
+    margin: auto;
   }
 `;
 
