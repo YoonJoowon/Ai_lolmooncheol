@@ -7,7 +7,7 @@ import { FaStar } from "react-icons/fa";
 const ChatSurvey = () => {
   // 서버에 보내졌는지 확인하는 상태
   const firestore = firebase.firestore();
-  const bucket = firestore.collection("surbey-bucket");
+  const bucket = firestore.collection("surbey-bucket2");
   const [surveySubmitted, setSurveySubmitted] = useState(false);
   const [hoverRating, setHoverRating] = useState(0); // 마우스 호버 시 표시되는 별점
 
@@ -79,6 +79,7 @@ const ChatSurvey = () => {
                   backgroundColor: "#005a82",
                 }}
                 onClick={saveRatingFirebase}
+                className="chat-survey"
               >
                 제출하기
               </div>
