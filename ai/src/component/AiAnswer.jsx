@@ -68,7 +68,8 @@ function AiAnswer(props) {
   }, [showCheckAnswerRecoil]);
 
   const handleSubmit = () => {
-    setIsLoading(true);
+    // setIsLoading(true);
+    setIsLoading(false);
     const messages = [
       {
         role: "system", // 행동지정, 역할부여
@@ -130,21 +131,21 @@ function AiAnswer(props) {
       messages: messages,
     };
 
-    axios
-      .post("https://api.openai.com/v1/chat/completions", data, {
-        headers: {
-          Authorization: "Bearer " + api_key,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        setIsLoading(false);
-        setResponseMessage(response.data.choices[0].message.content);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setError("이용 토큰이 만료되었습니다.");
-      });
+    // axios
+    //   .post("https://api.openai.com/v1/chat/completions", data, {
+    //     headers: {
+    //       Authorization: "Bearer " + api_key,
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     setIsLoading(false);
+    //     setResponseMessage(response.data.choices[0].message.content);
+    //   })
+    //   .catch((error) => {
+    //     setIsLoading(false);
+    //     setError("이용 토큰이 만료되었습니다.");
+    //   });
   };
 
   // 사이트 공유
@@ -204,10 +205,11 @@ function AiAnswer(props) {
                       />
                     </UserMatchingDataImg>
                     <UserMatchingDataName>{aChamp}</UserMatchingDataName>
-
-                    {`체력: ${aChampCurrentHP}`}
-                    {`골드: ${aChampGold}`}
-                    {`레벨: ${aChampLevel}`}
+                    <UserMatchingDataInfo>
+                      <div>{`체력: ${aChampCurrentHP}`}</div>
+                      <div>{`골드: ${aChampGold}`}</div>
+                      <div>{`레벨: ${aChampLevel}`}</div>
+                    </UserMatchingDataInfo>
                   </UserMatchingDataBox>
                   vs
                   <UserMatchingDataBox>
@@ -219,9 +221,11 @@ function AiAnswer(props) {
                       />
                     </UserMatchingDataImg>
                     <UserMatchingDataName>{bChamp}</UserMatchingDataName>
-                    {`체력: ${bChampCurrentHP}`}
-                    {`골드: ${bChampGold}`}
-                    {`레벨: ${bChampLevel}`}
+                    <UserMatchingDataInfo>
+                      <div>{`체력: ${bChampCurrentHP}`}</div>
+                      <div>{`골드: ${bChampGold}`}</div>
+                      <div>{`레벨: ${bChampLevel}`}</div>
+                    </UserMatchingDataInfo>
                   </UserMatchingDataBox>
                 </ResultSummaryWrapper>
                 <AiFeedbackAnswer>
@@ -410,7 +414,7 @@ const ResultSummaryWrapper = styled.div`
 
 const UserMatchingDataBox = styled.button`
   width: 130px;
-  height: 170px;
+  height: 200px;
   border: solid 1px ${(index) => (index.isGameSelected ? "red" : "#a7a7a7")};
   border-radius: 20px;
   justify-content: center;
@@ -437,4 +441,9 @@ const UserMatchingDataImg = styled.div`
 const UserMatchingDataName = styled.div`
   margin: 5px;
   text-align: center;
+`;
+
+const UserMatchingDataInfo = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
