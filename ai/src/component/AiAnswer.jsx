@@ -223,6 +223,8 @@ function AiAnswer(props) {
     // setShowTeamData(false);
   };
 
+  console.log(formattedMessage);
+
   return (
     <>
       <ChattingInfoCapture ref={ref}>

@@ -19,7 +19,7 @@ const JurorPost = () => {
   };
 
   return (
-    <div>
+    <>
       {jurorPostData.map((post) => (
         <JurorPostStyle key={post.id}>
           <JurorPostOpinionBox>
@@ -48,7 +48,7 @@ const JurorPost = () => {
           {expandedState[post.id] && <JurorPostJudgment />}
         </JurorPostStyle>
       ))}
-    </div>
+    </>
   );
 };
 
