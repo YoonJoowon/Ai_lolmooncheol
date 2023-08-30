@@ -103,3 +103,32 @@ export const chatUserAnswerState = atom({
   key: "chatUserAnswerState",
   default: "",
 });
+
+// 판결문 전체를 저장
+export const judgedContentState = atom({
+  key: "judgedContentState",
+  default: {
+    judgedMyChamp: "",
+    judgedMyChampImg: "",
+    judgedMyChampLane: "",
+    judgedMyChampCurrentHP: "",
+    judgedMyChampHP: "",
+    judgedMyChampGold: "",
+    judgedMyChampLevel: "",
+
+    judgedYourChamp: "",
+    judgedYourChampImg: "",
+    judgedYourChampLane: "",
+    judgedYourChampCurrentHP: "",
+    judgedYourChampHP: "",
+    judgedYourChampGold: "",
+    judgedYourChampLevel: "",
+
+    judgedTeamLevel: "",
+    judgedTeamGold: "",
+    judgedEnemyLevel: "",
+    judgedEnemyGold: "",
+
+    judgedByAI: "",
+  },
+});

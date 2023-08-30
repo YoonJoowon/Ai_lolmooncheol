@@ -6,6 +6,7 @@ import {
   promptDataState,
   timeState,
   showCheckAnswerState,
+  judgedContentState,
   // nickNameInputState,
   // StartAskingNextState,
   // inputValueState,
@@ -21,6 +22,7 @@ import firebase from "../Firebase";
 function AiAnswer(props) {
   //chatGPT
   const api_key = process.env.REACT_APP_OPENAI_API_KEY;
+  const judgeContentRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
@@ -68,6 +70,8 @@ function AiAnswer(props) {
 
   const enemyLevel = promptData.enemyTeamLevel;
   const enemyGold = promptData.enemyTeamGold;
+
+  const [judgedContent, setJudgedContent] = useRecoilState(judgedContentState);
 
   // firebase
   // const firestore = firebase.firestore();
@@ -139,12 +143,48 @@ function AiAnswer(props) {
       .then((response) => {
         setIsLoading(false);
         setResponseMessage(response.data.choices[0].message.content);
+        setJudgedContent((prevState) => ({
+          ...prevState,
+          judgedMyChamp: aChamp,
+          judgedMyChampImg: aChampImg,
+          judgedMyChampLane: aChampLane,
+          judgedMyChampCurrentHP: aChampCurrentHP,
+          judgedMyChampHP: aChampHP,
+          judgedMyChampGold: aChampGold,
+          judgedMyChampLevel: aChampLevel,
+
+          judgedYourChamp: bChamp,
+          judgedYourChampImg: bChampImg,
+          judgedYourChampLane: bChampLane,
+          judgedYourChampCurrentHP: bChampCurrentHP,
+          judgedYourChampHP: bChampHP,
+          judgedYourChampGold: bChampGold,
+          judgedYourChampLevel: bChampLevel,
+
+          judgedTeamLevel: teamLevel,
+          judgedTeamGold: teamGold,
+          judgedEnemyLevel: enemyLevel,
+          judgedEnemyGold: enemyGold,
+          judgedByAI: response.data.choices[0].message.content,
+        }));
       })
       .catch((error) => {
         setIsLoading(false);
         setError("이용 토큰이 만료되었습니다.");
       });
   };
+
+  useEffect(() => {
+    if (judgedContent.judgedByAI != "") {
+      const data = judgedContent;
+      axios
+        .post("http://localhost:8080/judgedContent", data)
+        .catch((error) => {
+          console.error(error);
+        });
+      console.log(data);
+    }
+  });
 
   // 사이트 공유
   // const urlToCopy = "https://aimoon-c9fa4.web.app/";
@@ -255,7 +295,6 @@ function AiAnswer(props) {
                     </UserMatchingDataInfo>
                   </UserMatchingDataBox>
                   <ResultVSWrapper>vs</ResultVSWrapper>
-
                   <UserMatchingDataBox>
                     <UserMatchingDataImg>
                       <img
@@ -273,7 +312,7 @@ function AiAnswer(props) {
                     </UserMatchingDataInfo>
                   </UserMatchingDataBox>
                 </ResultSummaryWrapper>
-                <AiFeedbackAnswer>
+                <AiFeedbackAnswer ref={judgeContentRef}>
                   <br />
                   {`우리 팀 지표분석:`}
                   <br />
