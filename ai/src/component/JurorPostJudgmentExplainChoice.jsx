@@ -52,9 +52,10 @@ const JurorPostJudgmentRate = styled.button`
   }
 `;
 
-const JurorPostJudgmentChampName = styled.button`
+const JurorPostJudgmentChampName = styled.div`
   p {
     font-size: 12px;
+    text-align: center;
     margin-top: 10px;
   }
 `;
