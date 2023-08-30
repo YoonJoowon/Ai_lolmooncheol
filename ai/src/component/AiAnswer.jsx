@@ -177,14 +177,12 @@ function AiAnswer(props) {
   useEffect(() => {
     if (judgedContent.judgedByAI != "") {
       const data = judgedContent;
-      axios
-        .post("http://localhost:8080/judgedContent", data)
-        .catch((error) => {
-          console.error(error);
-        });
+      axios.post("http://localhost:8080/judgedContent", data).catch((error) => {
+        console.error(error);
+      });
       console.log(data);
     }
-  });
+  }, [judgedContent]);
 
   // 사이트 공유
   // const urlToCopy = "https://aimoon-c9fa4.web.app/";
