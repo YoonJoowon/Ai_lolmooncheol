@@ -17,7 +17,6 @@ import {
 import axios from "axios";
 import ChatSurvey from "./ChatSurvey";
 import html2canvas from "html2canvas";
-import firebase from "../Firebase";
 
 function AiAnswer(props) {
   //chatGPT
@@ -72,21 +71,6 @@ function AiAnswer(props) {
   const enemyGold = promptData.enemyTeamGold;
 
   const [judgedContent, setJudgedContent] = useRecoilState(judgedContentState);
-
-  // firebase
-  // const firestore = firebase.firestore();
-  // const bucket = firestore.collection("chat-bucket2");
-
-  // const saveFilteredStringToFirebase = () => {
-  //   if ((filteredString, formattedMessage)) {
-  //     bucket
-  //       .add({ filteredString, formattedMessage })
-  //       .then(() => {})
-  //       .catch((error) => {
-  //         console.error("Error saving filteredString to Firebase:", error);
-  //       });
-  //   }
-  // };
 
   useEffect(() => {
     if (showCheckAnswerRecoil) {
@@ -186,16 +170,6 @@ function AiAnswer(props) {
     }
   });
 
-  // 사이트 공유
-  // const urlToCopy = "https://aimoon-c9fa4.web.app/";
-  // const urlCopy = async () => {
-  //   try {
-  //     await navigator.clipboard.writeText(urlToCopy);
-  //     alert("URL이 클립보드에 복사되었습니다.");
-  //   } catch (error) {
-  //     alert("URL 복사에 실패했습니다.");
-  //   }
-  // };
   const urlToCopy = "http://aimoon.o-r.kr/";
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -263,8 +237,6 @@ function AiAnswer(props) {
     // setShowTeamData(false);
   };
 
-  console.log(formattedMessage);
-
   return (
     <>
       <ChattingInfoCapture ref={ref}>
@@ -275,7 +247,7 @@ function AiAnswer(props) {
             {responseMessage && !isLoading && (
               <>
                 <ResultSummaryTime>
-                  분쟁시간 : {`${time.minute}분 ${time.second}초`}
+                  분쟁 시간 : {`${time.minute}분 ${time.second}초`}
                 </ResultSummaryTime>
                 <ResultSummaryWrapper>
                   <UserMatchingDataBox>
