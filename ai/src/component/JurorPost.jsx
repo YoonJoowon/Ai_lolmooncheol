@@ -23,15 +23,17 @@ const JurorPost = () => {
       {jurorPostData.map((post) => (
         <JurorPostStyle key={post.id}>
           <JurorPostOpinionBox>
-            <JurorPostOpinion expanded={expandedState[post.id]}>
+            <JurorPostOpinion
+              expanded={expandedState[post.id] ? "true" : "false"}
+            >
               {post.opinion}
             </JurorPostOpinion>
             {!expandedState[post.id] && (
               <JurorPostJudgmentBox>
-                <JurorPostOpinion expanded={expandedState[post.id]}>
+                <JurorPostOpinionAi>
                   <p>Ai 롤문철의 판결 </p>
                   {post.Aiopinion}
-                </JurorPostOpinion>
+                </JurorPostOpinionAi>
                 <JurorPostJudgmentExplain>
                   어떤 플레이어의 판단이 아쉬웠나요?
                 </JurorPostJudgmentExplain>
@@ -77,11 +79,20 @@ const JurorPostOpinion = styled.div`
   font-size: 15px;
   margin: 10px;
   display: -webkit-box;
-  -webkit-line-clamp: ${({ expanded }) => (expanded ? "2" : "unset")};
-  -webkit-box-orient: vertical;
+  -webkit-line-clamp: ${({ expanded }) =>
+    expanded === "true" ? "2" : "unset"};
+  -webkit-box-orient: ${({ expanded }) =>
+    expanded === "true" ? "vertical" : "unset"};
   overflow: hidden;
-  white-space: normal;
+  white-space: ${({ expanded }) => (expanded === "true" ? "unset" : "normal")};
   text-overflow: ellipsis;
+`;
+
+const JurorPostOpinionAi = styled.div`
+  color: white;
+  line-height: 1.8;
+  font-size: 15px;
+  margin: 10px;
 
   p {
     color: #c89b3c;
