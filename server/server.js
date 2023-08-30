@@ -7,6 +7,22 @@ const bodyParser = require("body-parser");
 const axios = require("axios");
 const baseUrl = "https://KR.api.riotgames.com/lol";
 const baseUrl2 = "https://asia.api.riotgames.com/lol";
+const MongoClient = require('mongodb').MongoClient;
+const MongoConnect = process.env.MONGO_DB_CONNECT;
+
+app.use(express.urlencoded({ extended: true}));
+
+let db;
+MongoClient.connect(MongoConnect,
+  { useUnifiedTopology: true }, function(error, client) {
+    if (error) return console.log(error)
+
+    db = client.db('aimoon');
+
+    app.post("/judgedContent", function (req, res) {
+      db.collection('post').insertOne( req.body )
+    })
+  }) 
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -19,7 +35,7 @@ app.listen(8080, function () {
 // matchId 추출
 app.post("/summoner", async function (req, res) {
   const summonerName = req.body.name;
-  // console.log(summonerName)
+  
 
   try {
     // Get summoner information
@@ -33,7 +49,7 @@ app.post("/summoner", async function (req, res) {
     );
 
     const puuid = summonerResponse.data.puuid;
-    console.log(puuid);
+    
 
     try {
       // 최근 4개 경기
@@ -47,7 +63,7 @@ app.post("/summoner", async function (req, res) {
       );
 
       const matchIds = matchResponse.data.slice(0, 4);
-      console.log(matchIds);
+      
 
       // Retrieve details for each match
       const matchDetails = await Promise.all(
@@ -333,7 +349,7 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
     // 특정 시간에 대한 타임스탬프를 계산합니다. (밀리초 단위)
     const timestamp = (specificTime.minute * 60 + specificTime.second) * 1000;
 
-    console.log(timestamp);
+    
 
     // 매치 타임라인 데이터를 가져옵니다.
     const response = await axios.get(
@@ -432,7 +448,7 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
       team2AvgLevel += frames[frameIndex].participantFrames[n].level;
     }
 
-    console.log(team1TotalGold);
+    
 
     const myTeamInfo = {
       totalGold: team1TotalGold,
@@ -443,13 +459,7 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
       totalGold: team2TotalGold,
       AvgLevel: team2AvgLevel / 5,
     };
-    console.log({
-      time: time,
-      myData: summoner1Info,
-      teamData: summoner2Info,
-      myTeamInfo: myTeamInfo,
-      yourTeamInfo: yourTeamInfo,
-    });
+    
     return {
       time: time,
       myData: summoner1Info,
@@ -486,4 +496,3 @@ app.post("/fetchMatchTimeline", async (req, res) => {
       .json({ error: "매치 타임라인 데이터를 가져오는 중 오류 발생" });
   }
 });
-

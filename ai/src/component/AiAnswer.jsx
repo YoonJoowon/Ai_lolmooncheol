@@ -178,7 +178,7 @@ function AiAnswer(props) {
     if (judgedContent.judgedByAI != "") {
       const data = judgedContent;
       axios
-        .post("http://localholst:8080/judgedcontent", data)
+        .post("http://localhost:8080/judgedContent", data)
         .catch((error) => {
           console.error(error);
         });
