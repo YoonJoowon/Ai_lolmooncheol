@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import JurorPostJudgment from "./JurorPostJudgment";
 import jurorPostData from "../dummy/jurorPostData.json";
+import JurorPostJudgmentExplainChoice from "./JurorPostJudgmentExplainChoice";
 
 const JurorPost = () => {
   const initialExpandedState = {};
@@ -20,11 +21,24 @@ const JurorPost = () => {
   return (
     <div>
       {jurorPostData.map((post) => (
-        <JurorPostStyle key={post.id}>e
+        <JurorPostStyle key={post.id}>
           <JurorPostOpinionBox>
             <JurorPostOpinion expanded={expandedState[post.id]}>
               {post.opinion}
             </JurorPostOpinion>
+            {!expandedState[post.id] && (
+              <JurorPostJudgmentBox>
+                <JurorPostOpinion expanded={expandedState[post.id]}>
+                  <p>Ai 롤문철의 판결 </p>
+                  {post.Aiopinion}
+                </JurorPostOpinion>
+                <JurorPostJudgmentExplain>
+                  어떤 플레이어의 판단이 아쉬웠나요?
+                </JurorPostJudgmentExplain>
+                <JurorPostJudgmentExplainChoice />
+              </JurorPostJudgmentBox>
+            )}
+
             <JurorPostDropdownBtn onClick={() => togglePostExpansion(post.id)}>
               {expandedState[post.id] ? "더보기" : "줄이기"}
             </JurorPostDropdownBtn>
@@ -50,7 +64,7 @@ const JurorPostStyle = styled.div`
   padding: 20px 10px 20px 10px;
   margin-top: 20px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
 
 const JurorPostOpinionBox = styled.div`
@@ -68,6 +82,14 @@ const JurorPostOpinion = styled.div`
   overflow: hidden;
   white-space: normal;
   text-overflow: ellipsis;
+
+  p {
+    color: #c89b3c;
+  }
+`;
+
+const JurorPostJudgmentBox = styled.div`
+  width: 100%;
 `;
 
 const JurorPostDropdownBtn = styled.button`
@@ -76,7 +98,18 @@ const JurorPostDropdownBtn = styled.button`
   background-color: #0a1428;
   border-radius: 20px;
   padding: 10px 10px;
-  z-index: 1;
   cursor: pointer;
   margin-left: 10px;
+`;
+
+const JurorPostJudgmentExplain = styled.div`
+  width: 500px;
+  color: #ffffff;
+  border: solid 1px #424242;
+  background-color: #121212;
+  border-radius: 20px;
+  padding: 10px 10px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
 `;

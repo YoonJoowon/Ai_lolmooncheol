@@ -1,23 +1,31 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const JurorPostJudgment = () => {
+const JurorPostJudgmentExplainChoice = () => {
+  const alertJudgementBtnClick = () => {
+    alert("투표가 완료되었습니다!");
+  };
+
   return (
     <JurorPostJudgmentStyle>
       <JurorPostJudgmentChampName>
-        <JurorPostJudgmentRate>3</JurorPostJudgmentRate>
+        <JurorPostJudgmentRate onClick={alertJudgementBtnClick}>
+          3
+        </JurorPostJudgmentRate>
         <p> 다리우스</p>
       </JurorPostJudgmentChampName>
       vs
       <JurorPostJudgmentChampName>
-        <JurorPostJudgmentRate>7</JurorPostJudgmentRate>
+        <JurorPostJudgmentRate onClick={alertJudgementBtnClick}>
+          7
+        </JurorPostJudgmentRate>
         <p>케인</p>
       </JurorPostJudgmentChampName>
     </JurorPostJudgmentStyle>
   );
 };
 
-export default JurorPostJudgment;
+export default JurorPostJudgmentExplainChoice;
 
 const JurorPostJudgmentStyle = styled.div`
   color: white;
@@ -37,6 +45,11 @@ const JurorPostJudgmentRate = styled.button`
   border-radius: 40px;
   margin: 0px 15px 0px 15px;
   font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0ac8b897;
+  }
 `;
 
 const JurorPostJudgmentChampName = styled.button`
