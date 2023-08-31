@@ -12,7 +12,7 @@ const Juror = () => {
         <ChatTemplete>
           <ChatTempleteTxt>
             다른 플레이어들이 겪은 상황과 AI 판결문을 보고 <br />
-            <span> 본인이 생각하는 옳바른 판단을 선택해주세요!</span>
+            <span> 본인이 생각하는 올바른 판단을 선택해주세요!</span>
           </ChatTempleteTxt>
         </ChatTemplete>
         <JurorPost />
