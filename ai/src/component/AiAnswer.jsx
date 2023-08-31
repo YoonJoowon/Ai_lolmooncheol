@@ -338,7 +338,7 @@ function AiAnswer(props) {
                   다시하기
                 </RestartWrapper>
                 <OtherWrapper>
-                  <Link to="/Juror" style={{ texDecoration: "none" }}>
+                  <Link to="/Juror" style={{ textDecoration: "none" }}>
                     다른 사람 판결 보기
                   </Link>
                 </OtherWrapper>
