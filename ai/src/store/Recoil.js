@@ -129,6 +129,7 @@ export const judgedContentState = atom({
     judgedEnemyLevel: "",
     judgedEnemyGold: "",
 
+    judgedUserOpinion: "",
     judgedByAI: "",
   },
 });
