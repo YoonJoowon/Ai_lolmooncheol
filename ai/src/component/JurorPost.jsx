@@ -8,7 +8,7 @@ import axios from "axios";
 const JurorPost = () => {
   const initialExpandedState = {};
   const [expandedState, setExpandedState] = useState(initialExpandedState);
-  const [judgedContent, setJudgedContent] = useState({});
+  const [judgedContent, setJudgedContent] = useState();
 
   jurorPostData.forEach((post) => {
     initialExpandedState[post.id] = true;
@@ -22,19 +22,15 @@ const JurorPost = () => {
   };
 
   useEffect(() => {
-    const data = judgedContent;
     axios
-      .post("http://localhost:8080/judgedContent", data)
+      .get("http://localhost:8080/judgedContent")
       .then((response) => {
-        setJudgedContent((prevState) => ({
-          ...prevState,
-        }));
         console.log(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
-  });
+  }, []);
 
   return (
     <>
