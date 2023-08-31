@@ -23,7 +23,7 @@ const JurorPost = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/judgedContent")
+      .get("http://localhost:8080/jurorContent")
       .then((response) => {
         console.log(response.data);
       })

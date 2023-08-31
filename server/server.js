@@ -40,6 +40,7 @@ app.use(express.urlencoded({ extended: true }));
         await db.collection("test").insertOne(req.body);
         // 컬렉션에서 모든 데이터를 검색합니다.
         const result = await db.collection("test").find({}).toArray();
+        console.log(result);
         res.json(result);
         console.log("헤으응");
       } catch (error) {
