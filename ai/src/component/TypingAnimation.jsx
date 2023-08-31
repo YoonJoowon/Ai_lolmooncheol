@@ -9,7 +9,7 @@ const TypingAnimation = ({ text }) => {
       const timer = setTimeout(() => {
         setTypedText((prevTypedText) => prevTypedText + text[currentIndex]);
         setCurrentIndex(currentIndex + 1);
-      }, 80);
+      }, 70);
 
       return () => clearTimeout(timer);
     }
