@@ -115,6 +115,7 @@ export const judgedContentState = atom({
     judgedMyChampHP: "",
     judgedMyChampGold: "",
     judgedMyChampLevel: "",
+    judgedMyChampClicked: 1,
 
     judgedYourChamp: "",
     judgedYourChampImg: "",
@@ -123,6 +124,7 @@ export const judgedContentState = atom({
     judgedYourChampHP: "",
     judgedYourChampGold: "",
     judgedYourChampLevel: "",
+    judgedYourChampClicked: 1,
 
     judgedTeamLevel: "",
     judgedTeamGold: "",

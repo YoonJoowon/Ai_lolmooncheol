@@ -1,17 +1,30 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const JurorPostJudgment = () => {
+const JurorPostJudgment = ({
+  judgedMyChamp,
+  judgedMyChampImg,
+  judgedMyChampClicked,
+  judgedYourChamp,
+  judgedYourChampImg,
+  judgedYourChampClicked,
+}) => {
   return (
     <JurorPostJudgmentStyle>
       <JurorPostJudgmentChampName>
-        <JurorPostJudgmentRate>3</JurorPostJudgmentRate>
-        <p> 다리우스</p>
+        <JurorPostJudgmentRate>{judgedMyChampClicked}</JurorPostJudgmentRate>
+        <JurorPostJudgementImg>
+          <img src={judgedMyChampImg} alt="judgedMyChampImg" />
+          <p> {judgedMyChamp}</p>
+        </JurorPostJudgementImg>
       </JurorPostJudgmentChampName>
       vs
       <JurorPostJudgmentChampName>
-        <JurorPostJudgmentRate>7</JurorPostJudgmentRate>
-        <p>케인</p>
+        <JurorPostJudgmentRate>{judgedYourChampClicked}</JurorPostJudgmentRate>
+        <JurorPostJudgementImg>
+          <img src={judgedYourChampImg} alt="judgedYourChampImg" />
+          <p>{judgedYourChamp}</p>
+        </JurorPostJudgementImg>
       </JurorPostJudgmentChampName>
     </JurorPostJudgmentStyle>
   );
@@ -42,6 +55,18 @@ const JurorPostJudgmentChampName = styled.div`
   p {
     font-size: 12px;
     text-align: center;
-    margin-top: 10px;
+  }
+`;
+
+const JurorPostJudgementImg = styled.div`
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+  img {
+    width: 25px;
+    border-radius: 60%;
   }
 `;

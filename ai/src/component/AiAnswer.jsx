@@ -46,7 +46,6 @@ function AiAnswer(props) {
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
-
   const aChamp = promptData.myChamp;
   const aChampLane = promptData.myLane;
   const aChampHP = promptData.myHealth;
@@ -152,6 +151,7 @@ function AiAnswer(props) {
           judgedMyChampHP: aChampHP,
           judgedMyChampGold: aChampGold,
           judgedMyChampLevel: aChampLevel,
+          judgedMyChampClicked: 1,
 
           judgedYourChamp: bChamp,
           judgedYourChampImg: bChampImg,
@@ -160,12 +160,13 @@ function AiAnswer(props) {
           judgedYourChampHP: bChampHP,
           judgedYourChampGold: bChampGold,
           judgedYourChampLevel: bChampLevel,
+          judgedYourChampClicked: 1,
 
           judgedTeamLevel: teamLevel,
           judgedTeamGold: teamGold,
           judgedEnemyLevel: enemyLevel,
           judgedEnemyGold: enemyGold,
-          judgedUserOpinion: filteredString,
+          judgedUserOpinion: storedKeywords[2],
           judgedByAI: response.data.choices[0].message.content,
         }));
       })

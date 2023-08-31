@@ -19,32 +19,27 @@ const JurorPost = () => {
       });
   }, []);
 
-  useEffect(() => {
-    const newExpandedState = {};
-    judgedContent.forEach((post) => {
-      newExpandedState[post.id] = true;
-    });
-    setExpandedState(newExpandedState);
-  }, []);
-
   const togglePostExpansion = (post) => {
     setExpandedState((prevState) => ({
       ...prevState,
-      [post._id]: !prevState[post._Id],
+      [post._id]: !prevState[post._id],
     }));
   };
 
   return (
     <>
       {judgedContent.map((post) => (
-        <JurorPostStyle key={post.id}>
+        <JurorPostStyle key={post._id}>
           <JurorPostOpinionBox>
             <JurorPostOpinion
-              expanded={expandedState[post.id] ? "true" : "false"}
+              expanded={expandedState[post._id] ? "true" : "false"}
             >
               {post.judgedUserOpinion}
             </JurorPostOpinion>
-            {!expandedState[post.id] && (
+            <JurorPostDropdownBtn onClick={() => togglePostExpansion(post)}>
+              {expandedState[post._id] ? "더보기" : "줄이기"}
+            </JurorPostDropdownBtn>
+            {!expandedState[post._id] && (
               <JurorPostJudgmentBox>
                 <JurorPostOpinionAi>
                   <p>Ai 롤문철의 판결 </p>
@@ -116,17 +111,24 @@ const JurorPost = () => {
                 <JurorPostJudgmentExplainChoice
                   judgedMyChamp={post.judgedMyChamp}
                   judgedMyChampImg={post.judgedMyChampImg}
+                  judgedMyChampClicked={post.judgedMyChampClicked}
                   judgedYourChamp={post.judgedYourChamp}
                   judgedYourChampImg={post.judgedYourChampImg}
+                  judgedYourChampClicked={post.judgedYourChampClicked}
                 />
               </JurorPostJudgmentBox>
             )}
-
-            <JurorPostDropdownBtn onClick={() => togglePostExpansion(post._id)}>
-              {expandedState[post._id] ? "더보기" : "줄이기"}
-            </JurorPostDropdownBtn>
           </JurorPostOpinionBox>
-          {expandedState[post._id] && <JurorPostJudgment />}
+          {expandedState[post._id] && (
+            <JurorPostJudgment
+              judgedMyChamp={post.judgedMyChamp}
+              judgedMyChampImg={post.judgedMyChampImg}
+              judgedMyChampClicked={post.judgedMyChampClicked}
+              judgedYourChamp={post.judgedYourChamp}
+              judgedYourChampImg={post.judgedYourChampImg}
+              judgedYourChampClicked={post.judgedYourChampClicked}
+            />
+          )}
         </JurorPostStyle>
       ))}
     </>
