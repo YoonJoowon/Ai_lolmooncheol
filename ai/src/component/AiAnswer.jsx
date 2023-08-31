@@ -180,7 +180,6 @@ function AiAnswer(props) {
       axios.post("http://localhost:8080/judgedContent", data).catch((error) => {
         console.error(error);
       });
-      console.log(data);
     }
   }, [judgedContent]);
 

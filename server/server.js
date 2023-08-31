@@ -7,10 +7,10 @@ const bodyParser = require("body-parser");
 const axios = require("axios");
 const baseUrl = "https://KR.api.riotgames.com/lol";
 const baseUrl2 = "https://asia.api.riotgames.com/lol";
-const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require("mongodb").MongoClient;
 const MongoConnect = process.env.MONGO_DB_CONNECT;
 
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 // let db;
 // MongoClient.connect(MongoConnect,
@@ -32,17 +32,19 @@ app.use(express.urlencoded({ extended: true}));
     const client = await MongoClient.connect(MongoConnect, {
       useUnifiedTopology: true,
     });
-    const db = client.db('aimoon');
+    const db = client.db("aimoon");
 
-    app.post('/judgedContent', async (req, res) => {
+    app.post("/judgedContent", async (req, res) => {
       try {
         // insertOne 작업이 완료될 때까지 기다립니다.
+
         await db.collection('testPost').insertOne(req.body);
        
         res.redirect(301, '/jurorContent');
+
       } catch (error) {
         console.error(error);
-        res.status(500).send('내부 서버 오류');
+        res.status(500).send("내부 서버 오류");
       }
     });
 
@@ -66,7 +68,6 @@ app.use(express.urlencoded({ extended: true}));
 app.use(cors());
 app.use(bodyParser.json());
 
-
 app.listen(8080, function () {
   console.log("소환사의 협곡에 오신 것을 환영합니다");
 });
@@ -74,7 +75,6 @@ app.listen(8080, function () {
 // matchId 추출
 app.post("/summoner", async function (req, res) {
   const summonerName = req.body.name;
-  
 
   try {
     // Get summoner information
@@ -88,7 +88,6 @@ app.post("/summoner", async function (req, res) {
     );
 
     const puuid = summonerResponse.data.puuid;
-    
 
     try {
       // 최근 4개 경기
@@ -102,7 +101,6 @@ app.post("/summoner", async function (req, res) {
       );
 
       const matchIds = matchResponse.data.slice(0, 4);
-      
 
       // Retrieve details for each match
       const matchDetails = await Promise.all(
@@ -146,7 +144,7 @@ async function getMatchDetails(matchId, puuid) {
       TOP: "탑",
       JUNGLE: "정글",
       MIDDLE: "미드",
-      BOTTOM: "바텀"
+      BOTTOM: "바텀",
     };
 
     const kills = participant.kills;
@@ -334,7 +332,6 @@ async function getMatchDetails(matchId, puuid) {
       Zyra: "자이라",
     };
 
-
     // 팀원
     const teamId = participant.teamId;
 
@@ -387,8 +384,6 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
   try {
     // 특정 시간에 대한 타임스탬프를 계산합니다. (밀리초 단위)
     const timestamp = (specificTime.minute * 60 + specificTime.second) * 1000;
-
-    
 
     // 매치 타임라인 데이터를 가져옵니다.
     const response = await axios.get(
@@ -450,7 +445,6 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
       currentGold: summoner1Data.currentGold,
       totalGold: summoner1Data.totalGold,
       position: summoner1Data.position,
-      
     };
 
     const summoner2Info = {
@@ -460,7 +454,6 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
       currentGold: summoner2Data.currentGold,
       totalGold: summoner2Data.totalGold,
       position: summoner2Data.position,
-      
     };
 
     // 팀 필요정보 추출
@@ -487,8 +480,6 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
       team2AvgLevel += frames[frameIndex].participantFrames[n].level;
     }
 
-    
-
     const myTeamInfo = {
       totalGold: team1TotalGold,
       AvgLevel: team1AvgLevel / 5,
@@ -498,7 +489,7 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
       totalGold: team2TotalGold,
       AvgLevel: team2AvgLevel / 5,
     };
-    
+
     return {
       time: time,
       myData: summoner1Info,
