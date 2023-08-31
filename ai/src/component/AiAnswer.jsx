@@ -85,7 +85,7 @@ function AiAnswer(props) {
     const messages = [
       {
         role: "system", // 행동지정, 역할부여
-        content: `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요.`,
+        content: `당신의 직업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요.`,
       },
       {
         role: "user",

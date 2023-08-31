@@ -23,13 +23,18 @@ const JurorPost = () => {
 
   useEffect(() => {
     const data = judgedContent;
-    axios.post("http://localhost:8080/judgedContent", data).catch((error) => {
-      console.error(error);
-    });
+    axios
+      .post("http://localhost:8080/judgedContent", data)
+      .then((response) => {
+        setJudgedContent((prevState) => ({
+          ...prevState,
+        }));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     console.log(data);
   });
-
-  console.log(judgedContent);
 
   return (
     <>
