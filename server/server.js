@@ -12,23 +12,45 @@ const MongoConnect = process.env.MONGO_DB_CONNECT;
 
 app.use(express.urlencoded({ extended: true }));
 
-let db;
-MongoClient.connect(
-  MongoConnect,
-  { useUnifiedTopology: true },
-  function (error, client) {
-    if (error) return console.log(error);
+// let db;
+// MongoClient.connect(MongoConnect,
+//   { useUnifiedTopology: true }, function(error, client) {
+//     if (error) return console.log(error)
 
-    db = client.db("aimoon");
+//     db = client.db('aimoon');
 
-    app.post("/judgedContent", function (req, res) {
-      db.collection("test").insertOne(req.body);
+//     app.post("/judgedContent", function (req, res) {
+//       db.collection('post').insertOne( req.body )
 
-      const result = db.collection("test").find({}).toArray();
-      res.json(result);
+//       const result = db.collection('post').find({}).toArray();
+//       res.json(result);
+//     })
+//   })
+
+(async () => {
+  try {
+    const client = await MongoClient.connect(MongoConnect, {
+      useUnifiedTopology: true,
     });
+    const db = client.db("aimoon");
+
+    app.post("/judgedContent", async (req, res) => {
+      try {
+        // insertOne 작업이 완료될 때까지 기다립니다.
+        await db.collection("test").insertOne(req.body);
+        // 컬렉션에서 모든 데이터를 검색합니다.
+        const result = await db.collection("test").find({}).toArray();
+        res.json(result);
+        console.log("헤으응");
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("내부 서버 오류");
+      }
+    });
+  } catch (error) {
+    console.error(error);
   }
-);
+})();
 
 app.use(cors());
 app.use(bodyParser.json());
