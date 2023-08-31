@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import JurorPostJudgment from "./JurorPostJudgment";
-import jurorPostData from "../dummy/jurorPostData.json";
 import JurorPostJudgmentExplainChoice from "./JurorPostJudgmentExplainChoice";
 import axios from "axios";
 
@@ -20,32 +19,27 @@ const JurorPost = () => {
       });
   }, []);
 
-  useEffect(() => {
-    const newExpandedState = {};
-    judgedContent.forEach((post) => {
-      newExpandedState[post.id] = true;
-    });
-    setExpandedState(newExpandedState);
-  }, []);
-
-  const togglePostExpansion = (postId) => {
+  const togglePostExpansion = (post) => {
     setExpandedState((prevState) => ({
       ...prevState,
-      [postId]: !prevState[postId],
+      [post._id]: !prevState[post._id],
     }));
   };
 
   return (
     <>
       {judgedContent.map((post) => (
-        <JurorPostStyle key={post.id}>
+        <JurorPostStyle key={post._id}>
           <JurorPostOpinionBox>
             <JurorPostOpinion
-              expanded={expandedState[post.id] ? "true" : "false"}
+              expanded={expandedState[post._id] ? "true" : "false"}
             >
               {post.judgedUserOpinion}
             </JurorPostOpinion>
-            {!expandedState[post.id] && (
+            <JurorPostDropdownBtn onClick={() => togglePostExpansion(post)}>
+              {expandedState[post._id] ? "더보기" : "줄이기"}
+            </JurorPostDropdownBtn>
+            {!expandedState[post._id] && (
               <JurorPostJudgmentBox>
                 <JurorPostOpinionAi>
                   <p>Ai 롤문철의 판결 </p>
@@ -111,7 +105,8 @@ const JurorPost = () => {
                   {post.judgedByAI}
                 </JurorPostOpinionAi>
                 <JurorPostJudgmentExplain>
-                  어떤 플레이어의 판단이 아쉬웠나요?
+                  어떤 플레이어의 판단이 아쉬웠나요? <br />
+                  (한 번의 투표만 가능합니다!)
                 </JurorPostJudgmentExplain>
                 <JurorPostJudgmentExplainChoice
                   judgedMyChamp={post.judgedMyChamp}
@@ -123,12 +118,8 @@ const JurorPost = () => {
                 />
               </JurorPostJudgmentBox>
             )}
-
-            <JurorPostDropdownBtn onClick={() => togglePostExpansion(post.id)}>
-              {expandedState[post.id] ? "더보기" : "줄이기"}
-            </JurorPostDropdownBtn>
           </JurorPostOpinionBox>
-          {expandedState[post.id] && (
+          {expandedState[post._id] && (
             <JurorPostJudgment
               judgedMyChamp={post.judgedMyChamp}
               judgedMyChampImg={post.judgedMyChampImg}
@@ -162,6 +153,7 @@ const JurorPostStyle = styled.div`
 
 const JurorPostOpinionBox = styled.div`
   overflow: hidden;
+  width: 100%;
 `;
 
 const JurorPostOpinion = styled.div`
@@ -188,6 +180,7 @@ const JurorPostOpinionAi = styled.div`
 
   p {
     color: #c89b3c;
+    margin-bottom: 20px;
   }
 `;
 
@@ -215,6 +208,8 @@ const JurorPostJudgmentExplain = styled.div`
   text-align: center;
   margin: auto;
   margin-bottom: 20px;
+  line-height: 1.6;
+  font-size: 14px;
 `;
 
 const ResultSummaryWrapper = styled.div`
@@ -224,17 +219,7 @@ const ResultSummaryWrapper = styled.div`
   gap: 30px;
 `;
 
-const AiFeedbackAnswer = styled.div`
-  margin: auto;
-  border-radius: 20px;
-  color: white;
-  padding: 20px;
-  line-height: 1.8;
-  display: flex;
-  text-align: justify;
-  white-space: pre-wrap;
-  align-items: center;
-`;
+const AiFeedbackAnswer = styled.div``;
 
 const ResultSummaryTime = styled.div`
   display: flex;

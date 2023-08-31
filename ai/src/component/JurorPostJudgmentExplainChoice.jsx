@@ -81,6 +81,7 @@ const JurorPostJudgementImg = styled.div`
   gap: 5px;
   img {
     width: 25px;
-    border-radius: 60%;
+    border-radius: 100%;
+    border: solid 1px #0ac8b897;
   }
 `;
