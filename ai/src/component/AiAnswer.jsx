@@ -46,7 +46,6 @@ function AiAnswer(props) {
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
-
   const aChamp = promptData.myChamp;
   const aChampLane = promptData.myLane;
   const aChampHP = promptData.myHealth;
@@ -167,7 +166,7 @@ function AiAnswer(props) {
           judgedTeamGold: teamGold,
           judgedEnemyLevel: enemyLevel,
           judgedEnemyGold: enemyGold,
-          judgedUserOpinion: filteredString,
+          judgedUserOpinion: storedKeywords[2],
           judgedByAI: response.data.choices[0].message.content,
         }));
       })
