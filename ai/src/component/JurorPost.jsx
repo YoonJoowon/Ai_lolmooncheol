@@ -34,8 +34,7 @@ const JurorPost = () => {
       [postId]: !prevState[postId],
     }));
   };
-
-  console.log(judgedContent)
+  console.log(judgedContent);
 
   return (
     <>
@@ -51,12 +50,76 @@ const JurorPost = () => {
               <JurorPostJudgmentBox>
                 <JurorPostOpinionAi>
                   <p>Ai 롤문철의 판결 </p>
+                  {/* <ResultSummaryTime>
+                    분쟁시간 : {`${time.minute}분 ${time.second}초`}
+                  </ResultSummaryTime> */}
+                  <ResultSummaryWrapper>
+                    <UserMatchingDataBox>
+                      <UserMatchingDataImg>
+                        <img
+                          src={post.judgedMyChampImg}
+                          alt={post}
+                          style={{ width: "60px" }}
+                        />
+                      </UserMatchingDataImg>
+                      <UserMatchingDataName>
+                        {post.judgedMyChamp}
+                      </UserMatchingDataName>
+                      <UserMatchingDataInfo>
+                        <div>{`라인: ${post.judgedMyChampLane}`}</div>
+                        <div>{`체력: ${post.judgedMyChampCurrentHP}/${post.judgedMyChampHP}`}</div>
+                        <div>{`골드: ${post.judgedMyChampGold}`}</div>
+                        <div>{`레벨: ${post.judgedMyChampLevel}`}</div>
+                      </UserMatchingDataInfo>
+                    </UserMatchingDataBox>
+                    <ResultVSWrapper>vs</ResultVSWrapper>
+                    <UserMatchingDataBox>
+                      <UserMatchingDataImg>
+                        <img
+                          src={post.judgedYourChampImg}
+                          alt={post}
+                          style={{ width: "60px" }}
+                        />
+                      </UserMatchingDataImg>
+                      <UserMatchingDataName>
+                        {post.judgedYourChamp}
+                      </UserMatchingDataName>
+                      <UserMatchingDataInfo>
+                        <div>{`라인: ${post.judgedYourChampLane}`}</div>
+                        <div>{`체력: ${post.judgedYourChampCurrentHP}/${post.judgedYourChampHP}`}</div>
+                        <div>{`골드: ${post.judgedYourChampGold}`}</div>
+                        <div>{`레벨: ${post.judgedYourChampLevel}`}</div>
+                      </UserMatchingDataInfo>
+                    </UserMatchingDataBox>
+                  </ResultSummaryWrapper>
+                  <AiFeedbackAnswer>
+                    <br />
+                    {`우리 팀 지표분석  :`}
+                    <br />
+                    {`평균 레벨: ${post.judgedTeamLevel}`}
+                    <br />
+                    {`총 골드: ${post.judgedTeamGold}`}
+                    <br />
+                    <br />
+                    {`상대 팀 지표분석  :`}
+                    <br />
+                    {`평균 레벨: ${post.judgedEnemyLevel}`}
+                    <br />
+                    {`총 골드: ${post.judgedEnemyGold}`}
+                    <br />
+                    <br />
+                  </AiFeedbackAnswer>
                   {post.judgedByAI}
                 </JurorPostOpinionAi>
                 <JurorPostJudgmentExplain>
                   어떤 플레이어의 판단이 아쉬웠나요?
                 </JurorPostJudgmentExplain>
-                <JurorPostJudgmentExplainChoice />
+                <JurorPostJudgmentExplainChoice
+                  judgedMyChamp={post.judgedMyChamp}
+                  judgedMyChampImg={post.judgedMyChampImg}
+                  judgedYourChamp={post.judgedYourChamp}
+                  judgedYourChampImg={post.judgedYourChampImg}
+                />
               </JurorPostJudgmentBox>
             )}
 
@@ -111,6 +174,7 @@ const JurorPostOpinionAi = styled.div`
   line-height: 1.8;
   font-size: 15px;
   margin: 10px;
+  white-space: pre-wrap;
 
   p {
     color: #c89b3c;
@@ -141,4 +205,74 @@ const JurorPostJudgmentExplain = styled.div`
   text-align: center;
   margin: auto;
   margin-bottom: 20px;
+`;
+
+const ResultSummaryWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+`;
+
+const AiFeedbackAnswer = styled.div`
+  margin: auto;
+  border-radius: 20px;
+  color: white;
+  padding: 20px;
+  line-height: 1.8;
+  display: flex;
+  text-align: justify;
+  white-space: pre-wrap;
+  align-items: center;
+`;
+
+const ResultSummaryTime = styled.div`
+  display: flex;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: #121212;
+  border: solid 1px #424242;
+`;
+
+const ResultVSWrapper = styled.div`
+  font-size: 30px;
+`;
+
+const UserMatchingDataBox = styled.button`
+  width: 150px;
+  height: 240px;
+  background-color: #3f3f3f;
+  border: solid 1px ${(index) => (index.isGameSelected ? "red" : "#a7a7a7")};
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+
+  @media (max-width: 673px) {
+    margin-top: 20px;
+  }
+`;
+
+const UserMatchingDataImg = styled.div`
+  width: 90px;
+  height: 90px;
+  border: solid 1px #a7a7a7;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+`;
+
+const UserMatchingDataName = styled.div`
+  margin: 5px;
+  text-align: center;
+`;
+
+const UserMatchingDataInfo = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
