@@ -6,8 +6,7 @@ import JurorPostJudgmentExplainChoice from "./JurorPostJudgmentExplainChoice";
 import axios from "axios";
 
 const JurorPost = () => {
-  const initialExpandedState = {};
-  const [expandedState, setExpandedState] = useState(initialExpandedState);
+  const [expandedState, setExpandedState] = useState({});
   const [judgedContent, setJudgedContent] = useState([]);
 
   useEffect(() => {
@@ -16,15 +15,18 @@ const JurorPost = () => {
       .then((response) => {
         setJudgedContent(response.data);
       })
-
       .catch((error) => {
         console.log(error);
       });
   }, []);
-  judgedContent.forEach((post) => {
-    initialExpandedState[post.id] = true;
-  });
-  console.log(judgedContent);
+
+  useEffect(() => {
+    const newExpandedState = {};
+    judgedContent.forEach((post) => {
+      newExpandedState[post.id] = true;
+    });
+    setExpandedState(newExpandedState);
+  }, []);
 
   const togglePostExpansion = (postId) => {
     setExpandedState((prevState) => ({
@@ -32,6 +34,8 @@ const JurorPost = () => {
       [postId]: !prevState[postId],
     }));
   };
+
+  console.log(judgedContent)
 
   return (
     <>
@@ -81,7 +85,6 @@ const JurorPostStyle = styled.div`
   padding: 20px 10px 20px 10px;
   margin-top: 20px;
   display: flex;
-  /* justify-content: space-between; */
 `;
 
 const JurorPostOpinionBox = styled.div`

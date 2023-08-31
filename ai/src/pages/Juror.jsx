@@ -16,7 +16,6 @@ const Juror = () => {
           </ChatTempleteTxt>
         </ChatTemplete>
         <JurorPost />
-        <JurorPost />
       </ChattingInfo>
     </Background>
   );
