@@ -23,7 +23,6 @@ const JurorPostJudgmentStyle = styled.div`
   color: white;
   display: flex;
   width: 240px;
-  right: 0;
   justify-content: flex-end;
   align-items: center;
   margin: auto;

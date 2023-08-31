@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import JurorPostJudgment from "./JurorPostJudgment";
-import jurorPostData from "../dummy/jurorPostData.json";
 import JurorPostJudgmentExplainChoice from "./JurorPostJudgmentExplainChoice";
 import axios from "axios";
 
@@ -34,8 +33,6 @@ const JurorPost = () => {
       [postId]: !prevState[postId],
     }));
   };
-
-  console.log(judgedContent)
 
   return (
     <>
@@ -89,6 +86,7 @@ const JurorPostStyle = styled.div`
 
 const JurorPostOpinionBox = styled.div`
   overflow: hidden;
+  width: 100%;
 `;
 
 const JurorPostOpinion = styled.div`
