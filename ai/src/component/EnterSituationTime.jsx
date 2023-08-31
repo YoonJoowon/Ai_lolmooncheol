@@ -81,6 +81,8 @@ const EnterSituationTime = () => {
       });
   };
 
+  console.log()
+
   return (
     <>
       <EnterSituationTimeStyle>
