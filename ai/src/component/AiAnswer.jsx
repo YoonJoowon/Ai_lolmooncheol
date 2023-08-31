@@ -152,6 +152,7 @@ function AiAnswer(props) {
           judgedMyChampHP: aChampHP,
           judgedMyChampGold: aChampGold,
           judgedMyChampLevel: aChampLevel,
+          judgedMyChampClicked: 1,
 
           judgedYourChamp: bChamp,
           judgedYourChampImg: bChampImg,
@@ -160,6 +161,7 @@ function AiAnswer(props) {
           judgedYourChampHP: bChampHP,
           judgedYourChampGold: bChampGold,
           judgedYourChampLevel: bChampLevel,
+          judgedYourChampClicked: 1,
 
           judgedTeamLevel: teamLevel,
           judgedTeamGold: teamGold,

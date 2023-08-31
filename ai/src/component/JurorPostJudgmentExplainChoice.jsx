@@ -4,8 +4,10 @@ import { styled } from "styled-components";
 const JurorPostJudgmentExplainChoice = ({
   judgedMyChamp,
   judgedMyChampImg,
+  judgedMyChampClicked,
   judgedYourChamp,
   judgedYourChampImg,
+  judgedYourChampClicked,
 }) => {
   const alertJudgementBtnClick = () => {
     alert("투표가 완료되었습니다!");
@@ -15,7 +17,7 @@ const JurorPostJudgmentExplainChoice = ({
     <JurorPostJudgmentStyle>
       <JurorPostJudgmentChampName>
         <JurorPostJudgmentRate onClick={alertJudgementBtnClick}>
-          3
+          {judgedMyChampClicked}
         </JurorPostJudgmentRate>
         <JurorPostJudgementImg>
           <img src={judgedMyChampImg} alt="judgedMyChampImg" />
@@ -25,7 +27,7 @@ const JurorPostJudgmentExplainChoice = ({
       vs
       <JurorPostJudgmentChampName>
         <JurorPostJudgmentRate onClick={alertJudgementBtnClick}>
-          7
+          {judgedYourChampClicked}
         </JurorPostJudgmentRate>
         <JurorPostJudgementImg>
           <img src={judgedYourChampImg} alt="judgedYourChampImg" />
