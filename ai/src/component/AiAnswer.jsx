@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { Link } from "react-router-dom";
 import {
   chatUserAnswerState,
   promptDataState,
@@ -46,7 +47,6 @@ function AiAnswer(props) {
   const filteredString = (storedKeywords || [])
     .map((item) => String(item))
     .join(" ");
-
   const aChamp = promptData.myChamp;
   const aChampLane = promptData.myLane;
   const aChampHP = promptData.myHealth;
@@ -167,7 +167,7 @@ function AiAnswer(props) {
           judgedTeamGold: teamGold,
           judgedEnemyLevel: enemyLevel,
           judgedEnemyGold: enemyGold,
-          judgedUserOpinion: filteredString,
+          judgedUserOpinion: storedKeywords[2],
           judgedByAI: response.data.choices[0].message.content,
         }));
       })
@@ -337,6 +337,11 @@ function AiAnswer(props) {
                 <RestartWrapper onClick={handleRestartButton}>
                   다시하기
                 </RestartWrapper>
+                <OtherWrapper>
+                  <Link to="/Juror" style={{ textDecoration: "none" }}>
+                    다른 사람 판결 보기
+                  </Link>
+                </OtherWrapper>
               </>
             )}
           </ChattingInfo>
@@ -550,6 +555,21 @@ const UserMatchingDataInfo = styled.div`
 `;
 
 const RestartWrapper = styled.button`
+  color: white;
+  width: 200px;
+  height: 50px;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: #0a1428;
+  border: solid 1px #005a82;
+  margin: 30px 10px 10px 10px;
+
+  @media (max-width: 550px) {
+    margin-top: 10px;
+  }
+`;
+
+const OtherWrapper = styled.button`
   color: white;
   width: 200px;
   height: 50px;
