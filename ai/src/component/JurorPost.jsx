@@ -34,7 +34,6 @@ const JurorPost = () => {
       [postId]: !prevState[postId],
     }));
   };
-  console.log(judgedContent);
 
   return (
     <>
