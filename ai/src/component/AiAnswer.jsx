@@ -17,7 +17,6 @@ import {
 import axios from "axios";
 import ChatSurvey from "./ChatSurvey";
 import html2canvas from "html2canvas";
-import firebase from "../Firebase";
 
 function AiAnswer(props) {
   //chatGPT
@@ -73,21 +72,6 @@ function AiAnswer(props) {
 
   const [judgedContent, setJudgedContent] = useRecoilState(judgedContentState);
 
-  // firebase
-  // const firestore = firebase.firestore();
-  // const bucket = firestore.collection("chat-bucket2");
-
-  // const saveFilteredStringToFirebase = () => {
-  //   if ((filteredString, formattedMessage)) {
-  //     bucket
-  //       .add({ filteredString, formattedMessage })
-  //       .then(() => {})
-  //       .catch((error) => {
-  //         console.error("Error saving filteredString to Firebase:", error);
-  //       });
-  //   }
-  // };
-
   useEffect(() => {
     if (showCheckAnswerRecoil) {
       handleSubmit();
@@ -101,7 +85,7 @@ function AiAnswer(props) {
     const messages = [
       {
         role: "system", // 행동지정, 역할부여
-        content: `당신의 작업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요.`,
+        content: `당신의 직업은 롤 게임 관련해서 옳은 판단을 말해주는 것입니다. 같은 팀인 ${aChamp}의 의견과 ${bChamp}의 의견 중 중립적인 문구없이 옳은 판단을 이유와 함께 답해주세요.`,
       },
       {
         role: "user",
@@ -184,16 +168,6 @@ function AiAnswer(props) {
     }
   }, [judgedContent]);
 
-  // 사이트 공유
-  // const urlToCopy = "https://aimoon-c9fa4.web.app/";
-  // const urlCopy = async () => {
-  //   try {
-  //     await navigator.clipboard.writeText(urlToCopy);
-  //     alert("URL이 클립보드에 복사되었습니다.");
-  //   } catch (error) {
-  //     alert("URL 복사에 실패했습니다.");
-  //   }
-  // };
   const urlToCopy = "http://aimoon.o-r.kr/";
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -271,7 +245,7 @@ function AiAnswer(props) {
             {responseMessage && !isLoading && (
               <>
                 <ResultSummaryTime>
-                  분쟁시간 : {`${time.minute}분 ${time.second}초`}
+                  분쟁 시간 : {`${time.minute}분 ${time.second}초`}
                 </ResultSummaryTime>
                 <ResultSummaryWrapper>
                   <UserMatchingDataBox>
