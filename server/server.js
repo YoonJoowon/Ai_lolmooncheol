@@ -37,16 +37,26 @@ app.use(express.urlencoded({ extended: true}));
     app.post('/judgedContent', async (req, res) => {
       try {
         // insertOne 작업이 완료될 때까지 기다립니다.
-        await db.collection('test').insertOne(req.body);
-        // 컬렉션에서 모든 데이터를 검색합니다.
-        const result = await db.collection('test').find({}).toArray();
-        res.json(result);
-        console.log("헤으응")
+        await db.collection('testPost').insertOne(req.body);
+       
+        res.redirect(301, '/jurorContent');
       } catch (error) {
         console.error(error);
         res.status(500).send('내부 서버 오류');
       }
     });
+
+    app.get('/jurorContent', async (req, res) => {
+      try {
+        // 컬렉션에서 모든 데이터를 검색합니다.
+        const result = await db.collection('testPost').find({}).toArray();
+    
+        res.json(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('DB 조회 오류');
+      }
+    })
 
   } catch (error) {
     console.error(error);
