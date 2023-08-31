@@ -21,9 +21,14 @@ const Landing = () => {
             즉각적인 상황을 분석 하여 이로부터 유도되는 <br />
             <span>전략적 타당한 선택의 판단</span>을 도와줍니다.
           </LandingExplain>
-          <ChatStartLink to="/Chatting">
-            <ChatStartBtn>시작하기</ChatStartBtn>
-          </ChatStartLink>
+          <ChatStartBtnWrapper>
+            <ChatStartLink to="/Chatting">
+              <ChatStartBtn>시작하기</ChatStartBtn>
+            </ChatStartLink>
+            <ChatStartLink to="/Juror">
+              <ChatStartBtn>다른 사람 판결 보기</ChatStartBtn>
+            </ChatStartLink>
+          </ChatStartBtnWrapper>
         </LandingExplainBox>
         <LandingImageBox>
           <LandingImage1 />
@@ -128,7 +133,9 @@ const ChatStartBtn = styled.button`
   box-shadow: 4px 4px 8px rgba(38, 69, 223, 0.786);
 `;
 
-const ChatStartLink = styled(Link)``;
+const ChatStartLink = styled(Link)`
+  width: 200px;
+`;
 
 const LandingImageBox = styled.div`
   width: 800px;
@@ -191,4 +198,9 @@ const LandingImageInfoTxt = styled.div`
   position: absolute;
   bottom: 40px;
   right: 100px;
+`;
+
+const ChatStartBtnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
