@@ -12,20 +12,6 @@ const MongoConnect = process.env.MONGO_DB_CONNECT;
 
 app.use(express.urlencoded({ extended: true }));
 
-// let db;
-// MongoClient.connect(MongoConnect,
-//   { useUnifiedTopology: true }, function(error, client) {
-//     if (error) return console.log(error)
-
-//     db = client.db('aimoon');
-
-//     app.post("/judgedContent", function (req, res) {
-//       db.collection('post').insertOne( req.body )
-
-//       const result = db.collection('post').find({}).toArray();
-//       res.json(result);
-//     })
-//   })
 
 (async () => {
   try {
@@ -34,18 +20,64 @@ app.use(express.urlencoded({ extended: true }));
     });
     const db = client.db("aimoon");
 
+    // 다음 시퀀스 값을 가져오는 함수를 생성합니다
+    async function getNextSequenceValue(sequenceName) {
+      const result = await db.collection("seq").findOneAndUpdate(
+        { _id: sequenceName },
+        { $inc: { seq_value: 1 } },
+        { upsert: true, returnOriginal: false }
+      );
+      return result.value.seq_value;
+    }
+
     app.post("/judgedContent", async (req, res) => {
       try {
-        // insertOne 작업이 완료될 때까지 기다립니다.
+        // _id의 다음 시퀀스 값을 가져옵니다
+        const nextId = await getNextSequenceValue("seq_no");
+        
+        // 시퀀스가 증가된 _id를 사용하여 새 문서를 생성합니다
+        const newDocument = {
+          _id: nextId,
+          result: req.body,
+        };
 
-        await db.collection("testPost").insertOne(req.body);
+        // 문서를 컬렉션에 삽입합니다
+        await db.collection("testPost").insertOne(newDocument);
 
         res.redirect(301, "/jurorContent");
       } catch (error) {
         console.error(error);
-        res.status(500).send("내부 서버 오류");
+        res.status(500).send("DB 저장 오류");
       }
     });
+
+
+
+    // function autoIncObjectId(seqName) {
+    //   const autoInc = db.collection("seq").findOneAndUpdate(
+    //     { _id: seqName },
+    //     { $inc: { seq_value: 1 } },
+    //     { new: true }
+    //   );
+    //   return autoInc.seq_value;
+    // }
+
+
+    // app.post("/judgedContent", async (req, res) => {
+    //   try {
+
+    //     await db.collection("testPost").insertOne({
+    //       "_id": autoIncObjectId(seq_no),
+    //       "result": req.body
+    //     });
+
+        
+    //     res.redirect(301, "/jurorContent");
+    //   } catch (error) {
+    //     console.error(error);
+    //     res.status(500).send("내부 서버 오류");
+    //   }
+    // });
 
     app.get("/jurorContent", async (req, res) => {
       try {
@@ -61,7 +93,7 @@ app.use(express.urlencoded({ extended: true }));
   } catch (error) {
     console.error(error);
   }
-})();
+});
 
 app.use(cors());
 app.use(bodyParser.json());
