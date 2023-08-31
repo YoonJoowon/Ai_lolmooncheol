@@ -20,9 +20,9 @@ MongoClient.connect(MongoConnect,
     db = client.db('aimoon');
 
     app.post("/judgedContent", function (req, res) {
-      db.collection('post2').insertOne( req.body )
+      db.collection('post').insertOne( req.body )
 
-      return res.body
+      return db.collection('post').find();
     })
   }) 
 
