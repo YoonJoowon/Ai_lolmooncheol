@@ -165,6 +165,7 @@ function AiAnswer(props) {
           judgedTeamGold: teamGold,
           judgedEnemyLevel: enemyLevel,
           judgedEnemyGold: enemyGold,
+          judgedUserOpinion: filteredString,
           judgedByAI: response.data.choices[0].message.content,
         }));
       })

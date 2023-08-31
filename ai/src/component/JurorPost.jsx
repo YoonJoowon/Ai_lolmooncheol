@@ -8,11 +8,23 @@ import axios from "axios";
 const JurorPost = () => {
   const initialExpandedState = {};
   const [expandedState, setExpandedState] = useState(initialExpandedState);
-  const [judgedContent, setJudgedContent] = useState();
+  const [judgedContent, setJudgedContent] = useState([]);
 
-  jurorPostData.forEach((post) => {
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/jurorContent")
+      .then((response) => {
+        setJudgedContent(response.data);
+      })
+
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  judgedContent.forEach((post) => {
     initialExpandedState[post.id] = true;
   });
+  console.log(judgedContent);
 
   const togglePostExpansion = (postId) => {
     setExpandedState((prevState) => ({
@@ -21,32 +33,21 @@ const JurorPost = () => {
     }));
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/jurorContent")
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   return (
     <>
-      {jurorPostData.map((post) => (
+      {judgedContent.map((post) => (
         <JurorPostStyle key={post.id}>
           <JurorPostOpinionBox>
             <JurorPostOpinion
               expanded={expandedState[post.id] ? "true" : "false"}
             >
-              {post.opinion}
+              {post.judgedUserOpinion}
             </JurorPostOpinion>
             {!expandedState[post.id] && (
               <JurorPostJudgmentBox>
                 <JurorPostOpinionAi>
                   <p>Ai 롤문철의 판결 </p>
-                  {post.Aiopinion}
+                  {post.judgedByAI}
                 </JurorPostOpinionAi>
                 <JurorPostJudgmentExplain>
                   어떤 플레이어의 판단이 아쉬웠나요?
