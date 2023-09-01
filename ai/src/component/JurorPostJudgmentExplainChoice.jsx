@@ -50,8 +50,6 @@ const JurorPostJudgmentExplainChoice = ({
     }));
   };
 
-  console.log(voteChamp);
-
   return (
     <JurorPostJudgmentStyle>
       <JurorPostJudgmentChampName>
