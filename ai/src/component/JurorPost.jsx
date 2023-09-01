@@ -37,9 +37,9 @@ const JurorPost = () => {
               {post.judgedUserOpinion}
             </JurorPostOpinion>
             <JurorPostDropdownBtn onClick={() => togglePostExpansion(post)}>
-              {expandedState[post._id] ? "더보기" : "줄이기"}
+              {!expandedState[post._id] ? "더보기" : "줄이기"}
             </JurorPostDropdownBtn>
-            {!expandedState[post._id] && (
+            {expandedState[post._id] && (
               <JurorPostJudgmentBox>
                 <JurorPostOpinionAi>
                   <p>Ai 롤문철의 판결 </p>
@@ -119,7 +119,7 @@ const JurorPost = () => {
               </JurorPostJudgmentBox>
             )}
           </JurorPostOpinionBox>
-          {expandedState[post._id] && (
+          {!expandedState[post._id] && (
             <JurorPostJudgment
               judgedMyChamp={post.judgedMyChamp}
               judgedMyChampImg={post.judgedMyChampImg}
