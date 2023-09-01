@@ -7,7 +7,6 @@ import ChattingInfoGage from "../component/ChattingInfoGage";
 import SearchInput from "../component/SearchInput";
 
 const Chatting = () => {
-
   return (
     <Background>
       <Header />
@@ -19,8 +18,7 @@ const Chatting = () => {
             늘어납니다!
           </ChatTempleteTxt>
         </ChatTemplete>
-        <ChatAi></ChatAi>
-
+        <ChatAi />
         <SearchInput />
         <ChatInput />
         <ChattingInfoGagebox>

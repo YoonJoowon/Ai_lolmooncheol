@@ -3,17 +3,21 @@ import { styled } from "styled-components";
 import Header from "../component/Header";
 import JurorPost from "../component/JurorPost";
 import background from "../imges/back6.jpg";
+import { Link } from "react-router-dom";
 
 const Juror = () => {
   return (
     <Background>
-      <Header></Header>
+      <Header />
       <ChattingInfo>
         <ChatTemplete>
           <ChatTempleteTxt>
             다른 플레이어들이 겪은 상황과 AI 판결문을 보고 <br />
             <span> 본인이 생각하는 아쉬운 판단을 선택해주세요!</span>
           </ChatTempleteTxt>
+          <ChatStartLink to="/Chatting">
+            <ChatWithAi>Ai 판결 받아보기</ChatWithAi>
+          </ChatStartLink>
         </ChatTemplete>
         <JurorPost />
       </ChattingInfo>
@@ -35,31 +39,29 @@ const Background = styled.div`
 `;
 
 const ChatTemplete = styled.div`
-  border: solid 1px #005a82;
+  display: flex;
+  max-width: 600px;
   margin: auto;
   margin-top: 20px;
-  max-width: 570px;
+
+  @media (max-width: 767px) {
+    width: 88%;
+  }
+`;
+
+const ChatTempleteTxt = styled.div`
+  border: solid 1px #005a82;
   height: 55px;
+  width: 100%;
   border-radius: 20px;
   background-color: #0a1428;
   color: white;
   padding: 20px;
   line-height: 1.8;
-  display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 767px) {
-    width: 88%;
-  }
-
-  @media (max-width: 467px) {
-    height: 80px;
-  }
-`;
-
-const ChatTempleteTxt = styled.span`
   span {
     color: #c89b3c;
   }
@@ -67,7 +69,32 @@ const ChatTempleteTxt = styled.span`
   @media (max-width: 767px) {
     width: 90%;
   }
+
+  @media (max-width: 660px) {
+    display: none;
+  }
 `;
+
+const ChatStartLink = styled(Link)``;
+
+const ChatWithAi = styled.button`
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+  color: white;
+  background-color: #1e1e1e;
+  border: solid 1px #c89b3c;
+  cursor: pointer;
+  margin-left: 10px;
+  line-height: 1.6;
+
+  @media (max-width: 660px) {
+    height: 40px;
+    width: 200px;
+    margin: 0px;
+  }
+`;
+
 const ChattingInfo = styled.div`
   background-color: #131313;
   border: solid 1px #c89b3c;
