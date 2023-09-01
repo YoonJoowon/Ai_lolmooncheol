@@ -58,10 +58,45 @@ app.use(express.urlencoded({ extended: true }));
         res.status(500).send("DB 조회 오류");
       }
     });
+
+    app.post("/votedChamp", async (req, res) => {
+      const id = req.body._id;
+      const myChamp = req.body.votedMyChamp;
+      const yourChamp = req.body.votedYourChamp;
+
+      const myClicked = await db.collection("testPost").findOne({_id : id}, {judgedMyChampClicked: 1, _id: 0});
+      const yourClicked = await db.collection("testPost").findOne({_id : id}, {judgedYourChampClicked: 1, _id: 0});;
+
+      let myCount = myClicked.judgedMyChampClicked + myChamp;
+      let yourCount = yourClicked.judgedYourChampClicked + yourChamp;
+      
+
+      const filter = { _id: id }; // 검색
+      const update = { $set: {
+        "judgedMyChampClicked": myCount,
+        "judgedYourChampClicked": yourCount
+      }} // 업데이트
+
+      db.collection('testPost').findOneAndUpdate(filter, update, (err, result) => {
+        if (err) {
+          console.error('findOneAndUpdate 오류:' , err);
+          res.status(500).send('서버 오류');
+        } else {
+          console.log('업데이트된 문서:', result.value);
+          res.status(200).send('과실 비율 업데이트 완료')
+        }
+      })
+    })
+
+
+
   } catch (error) {
     console.error(error);
   }
 })();
+
+
+
 
 app.use(cors());
 app.use(bodyParser.json());
