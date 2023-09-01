@@ -13,39 +13,41 @@ const JurorPostJudgmentExplainChoice = ({
   judgedYourChampClicked,
   judgedContentID,
 }) => {
-  const [isMyVoteBtnClicked, setMyIsvoteBtnClicked] = useState(false);
-  const [isYourVoteBtnClicked, setYourIsvoteBtnClicked] = useState(false);
+  const [isMyVoteBtnClicked, setMyIsVoteBtnClicked] = useState(false);
+  const [isYourVoteBtnClicked, setYourIsVoteBtnClicked] = useState(false);
   const [voteChamp, setVoteChamp] = useRecoilState(votedChampState);
 
   const myVoteBtnClick = () => {
-    setMyIsvoteBtnClicked(true);
-    setYourIsvoteBtnClicked(true);
+    setMyIsVoteBtnClicked(true);
+    setYourIsVoteBtnClicked(true);
     alert("투표가 완료되었습니다!");
-    setVoteChamp((prevState) => ({
-      ...prevState,
+    const updatedVoteChamp = {
+      ...voteChamp,
       _id: judgedContentID,
       votedMyChamp: 1,
       votedYourChamp: 0,
-    }));
+    };
+    axios
+      .post("http://localhost:8080/votedChamp", updatedVoteChamp)
+      .catch((error) => console.log(error));
+    setVoteChamp(updatedVoteChamp); // 상태 업데이트
   };
 
   const yourVoteBtnClick = () => {
-    setYourIsvoteBtnClicked(true);
-    setMyIsvoteBtnClicked(true);
+    setMyIsVoteBtnClicked(true);
+    setYourIsVoteBtnClicked(true);
     alert("투표가 완료되었습니다!");
-    setVoteChamp((prevState) => ({
-      ...prevState,
+    const updatedVoteChamp = {
+      ...voteChamp,
       _id: judgedContentID,
       votedMyChamp: 0,
       votedYourChamp: 1,
-    }));
-  };
-
-  useEffect(() => {
+    };
     axios
-      .post("http://localhost:8080/votedChamp", voteChamp)
+      .post("http://localhost:8080/votedChamp", updatedVoteChamp)
       .catch((error) => console.log(error));
-  }, [voteChamp]);
+    setVoteChamp(updatedVoteChamp); // 상태 업데이트
+  };
 
   return (
     <JurorPostJudgmentStyle>
@@ -77,7 +79,6 @@ const JurorPostJudgmentExplainChoice = ({
     </JurorPostJudgmentStyle>
   );
 };
-
 export default JurorPostJudgmentExplainChoice;
 
 const JurorPostJudgmentStyle = styled.div`

@@ -58,10 +58,51 @@ app.use(express.urlencoded({ extended: true }));
         res.status(500).send("DB 조회 오류");
       }
     });
+
+    app.post("/votedChamp", async (req, res) => {
+      try {
+        const id = req.body._id;
+        console.log("id:" + id);
+        const myChamp = req.body.votedMyChamp;
+        const yourChamp = req.body.votedYourChamp;
+
+        console.log("myChamp:" + myChamp)
+        console.log("yourChamp:" + yourChamp)
+        const myClicked = await db.collection("testPost").find({_id : id}, {judgedMyChampClicked: 1, _id: 0});
+        const yourClicked = await db.collection("testPost").find({_id : id}, {judgedYourChampClicked: 1, _id: 0});;
+
+        let myCount = myClicked.cmd.judgedMyChampClicked + myChamp;
+        let yourCount = yourClicked.cmd.judgedYourChampClicked + yourChamp;
+        console.log("myCount :" + myCount)
+        console.log("yourCount :" + yourCount)
+
+        let filter = { _id: id }; // 검색
+        let update = { $set: {
+          judgedMyChampClicked: myCount,
+          judgedYourChampClicked: yourCount
+        }}; // 업데이트
+        // console.log(filter)
+        console.log(update)
+
+        const result2 = await db.collection('testPost').findOneAndUpdate( {_id : id}, update
+        )
+        
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("투표 기능 오류");
+      }
+    }); 
+
+
+
+
   } catch (error) {
     console.error(error);
   }
 })();
+
+
+
 
 app.use(cors());
 app.use(bodyParser.json());
