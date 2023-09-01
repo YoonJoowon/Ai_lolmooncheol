@@ -15,21 +15,11 @@ const JurorPostJudgmentExplainChoice = ({
 }) => {
   const [isMyVoteBtnClicked, setMyIsvoteBtnClicked] = useState(false);
   const [isYourVoteBtnClicked, setYourIsvoteBtnClicked] = useState(false);
-  const [myVoteBtnColor, setMyVoteBtnColor] = useState(false);
-  const [yourVoteBtnColor, setYourVoteBtnColor] = useState(false);
   const [voteChamp, setVoteChamp] = useRecoilState(votedChampState);
-
-  useEffect(() => {
-    axios
-      .post("http://localhost:8080/votedChamp", voteChamp)
-      .catch((error) => console.log(error));
-  }, [voteChamp]);
 
   const myVoteBtnClick = () => {
     setMyIsvoteBtnClicked(true);
     setYourIsvoteBtnClicked(true);
-    setMyVoteBtnColor(true);
-    setYourVoteBtnColor(false);
     alert("투표가 완료되었습니다!");
     setVoteChamp((prevState) => ({
       ...prevState,
@@ -42,8 +32,6 @@ const JurorPostJudgmentExplainChoice = ({
   const yourVoteBtnClick = () => {
     setYourIsvoteBtnClicked(true);
     setMyIsvoteBtnClicked(true);
-    setYourVoteBtnColor(true);
-    setMyVoteBtnColor(false);
     alert("투표가 완료되었습니다!");
     setVoteChamp((prevState) => ({
       ...prevState,
@@ -53,13 +41,18 @@ const JurorPostJudgmentExplainChoice = ({
     }));
   };
 
+  useEffect(() => {
+    axios
+      .post("http://localhost:8080/votedChamp", voteChamp)
+      .catch((error) => console.log(error));
+  }, [voteChamp]);
+
   return (
     <JurorPostJudgmentStyle>
       <JurorPostJudgmentChampName>
         <JurorPostJudgmentMyRate
           onClick={myVoteBtnClick}
           disabled={isMyVoteBtnClicked}
-          myVoteBtnColor={myVoteBtnColor}
         >
           {judgedMyChampClicked}
         </JurorPostJudgmentMyRate>
@@ -73,7 +66,6 @@ const JurorPostJudgmentExplainChoice = ({
         <JurorPostJudgmentYourRate
           onClick={yourVoteBtnClick}
           disabled={isYourVoteBtnClicked}
-          yourVoteBtnColor={yourVoteBtnColor}
         >
           {judgedYourChampClicked}
         </JurorPostJudgmentYourRate>
@@ -102,7 +94,7 @@ const JurorPostJudgmentStyle = styled.div`
   }
 `;
 
-const JurorPostJudgmentMyRate = styled.button`
+const baseButtonStyles = css`
   color: white;
   width: 70px;
   height: 70px;
@@ -115,44 +107,37 @@ const JurorPostJudgmentMyRate = styled.button`
   &:hover {
     background-color: #0ac8b897;
   }
+`;
+
+const JurorPostJudgmentMyRate = styled.button`
+  ${baseButtonStyles}
   ${(props) =>
     props.myVoteBtnColor &&
     css`
-      background-color: #0ac8b897; /* Set the disabled background color */
-      border-color: #0ac8b897; /* Set the disabled border color */
-      cursor: not-allowed; /* Change cursor to "not allowed" */
+      background-color: #0ac8b897;
+      border-color: #0ac8b897;
+      cursor: not-allowed;
     `}
   ${(props) =>
     props.disabled &&
     css`
-      cursor: not-allowed; /* Change cursor to "not allowed" */
+      cursor: not-allowed;
     `}
 `;
 
 const JurorPostJudgmentYourRate = styled.button`
-  color: white;
-  width: 70px;
-  height: 70px;
-  border: solid 2px #0ac8b897;
-  border-radius: 40px;
-  margin: 0px 15px 0px 15px;
-  font-size: 20px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0ac8b897;
-  }
+  ${baseButtonStyles}
   ${(props) =>
     props.yourVoteBtnColor &&
     css`
-      background-color: #0ac8b897; /* Set the disabled background color */
-      border-color: #0ac8b897; /* Set the disabled border color */
-      cursor: not-allowed; /* Change cursor to "not allowed" */
+      background-color: #0ac8b897;
+      border-color: #0ac8b897;
+      cursor: not-allowed;
     `}
   ${(props) =>
     props.disabled &&
     css`
-      cursor: not-allowed; /* Change cursor to "not allowed" */
+      cursor: not-allowed;
     `}
 `;
 
