@@ -60,33 +60,39 @@ app.use(express.urlencoded({ extended: true }));
     });
 
     app.post("/votedChamp", async (req, res) => {
-      const id = req.body._id;
-      const myChamp = req.body.votedMyChamp;
-      const yourChamp = req.body.votedYourChamp;
+      try {
+        const id = req.body._id;
+        console.log("id:" + id);
+        const myChamp = req.body.votedMyChamp;
+        const yourChamp = req.body.votedYourChamp;
 
-      const myClicked = await db.collection("testPost").findOne({_id : id}, {judgedMyChampClicked: 1, _id: 0});
-      const yourClicked = await db.collection("testPost").findOne({_id : id}, {judgedYourChampClicked: 1, _id: 0});;
+        console.log("myChamp:" + myChamp)
+        console.log("yourChamp:" + yourChamp)
+        const myClicked = await db.collection("testPost").find({_id : id}, {judgedMyChampClicked: 1, _id: 0});
+        const yourClicked = await db.collection("testPost").find({_id : id}, {judgedYourChampClicked: 1, _id: 0});;
 
-      let myCount = myClicked.judgedMyChampClicked + myChamp;
-      let yourCount = yourClicked.judgedYourChampClicked + yourChamp;
-      
+        let myCount = myClicked.cmd.judgedMyChampClicked + myChamp;
+        let yourCount = yourClicked.cmd.judgedYourChampClicked + yourChamp;
+        console.log("myCount :" + myCount)
+        console.log("yourCount :" + yourCount)
 
-      const filter = { _id: id }; // 검색
-      const update = { $set: {
-        "judgedMyChampClicked": myCount,
-        "judgedYourChampClicked": yourCount
-      }} // 업데이트
+        let filter = { _id: id }; // 검색
+        let update = { $set: {
+          judgedMyChampClicked: myCount,
+          judgedYourChampClicked: yourCount
+        }}; // 업데이트
+        // console.log(filter)
+        console.log(update)
 
-      db.collection('testPost').findOneAndUpdate(filter, update, (err, result) => {
-        if (err) {
-          console.error('findOneAndUpdate 오류:' , err);
-          res.status(500).send('서버 오류');
-        } else {
-          console.log('업데이트된 문서:', result.value);
-          res.status(200).send('과실 비율 업데이트 완료')
-        }
-      })
-    })
+        const result2 = await db.collection('testPost').findOneAndUpdate( {_id : id}, update
+        )
+        
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("투표 기능 오류");
+      }
+    }); 
+
 
 
 
