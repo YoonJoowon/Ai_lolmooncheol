@@ -48,9 +48,10 @@ const JurorPostJudgmentExplainChoice = ({
       votedMyChamp: 0,
       votedYourChamp: 1,
     }));
+    axios
+      .post("http://localhost:8080/votedChamp", voteChamp)
+      .catch((error) => console.log(error));
   };
-
-  console.log(voteChamp);
 
   return (
     <JurorPostJudgmentStyle>
