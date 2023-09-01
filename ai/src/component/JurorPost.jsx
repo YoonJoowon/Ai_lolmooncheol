@@ -149,6 +149,10 @@ const JurorPostStyle = styled.div`
   padding: 20px 10px 20px 10px;
   margin-top: 20px;
   display: flex;
+
+  @media (max-width: 767px) {
+    width: 90%;
+  }
 `;
 
 const JurorPostOpinionBox = styled.div`
@@ -210,6 +214,10 @@ const JurorPostJudgmentExplain = styled.div`
   margin-bottom: 20px;
   line-height: 1.6;
   font-size: 14px;
+
+  @media (max-width: 767px) {
+    width: 90%;
+  }
 `;
 
 const ResultSummaryWrapper = styled.div`
@@ -217,6 +225,10 @@ const ResultSummaryWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
+
+  @media (max-width: 767px) {
+    gap: 10px;
+  }
 `;
 
 const AiFeedbackAnswer = styled.div``;
@@ -245,10 +257,6 @@ const UserMatchingDataBox = styled.button`
   align-items: center;
   font-size: 14px;
   cursor: pointer;
-
-  @media (max-width: 673px) {
-    margin-top: 20px;
-  }
 `;
 
 const UserMatchingDataImg = styled.div`

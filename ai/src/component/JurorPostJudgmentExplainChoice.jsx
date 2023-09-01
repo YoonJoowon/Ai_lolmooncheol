@@ -48,6 +48,10 @@ const JurorPostJudgmentStyle = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin: auto;
+
+  @media (max-width: 767px) {
+    justify-content: center;
+  }
 `;
 
 const JurorPostJudgmentRate = styled.button`
