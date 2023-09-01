@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled, { css } from "styled-components";
 import { votedChampState } from "../store/Recoil";
@@ -18,6 +18,13 @@ const JurorPostJudgmentExplainChoice = ({
   const [myVoteBtnColor, setMyVoteBtnColor] = useState(false);
   const [yourVoteBtnColor, setYourVoteBtnColor] = useState(false);
   const [voteChamp, setVoteChamp] = useRecoilState(votedChampState);
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:8080/votedChamp", voteChamp)
+      .catch((error) => console.log(error));
+  }, [voteChamp]);
+
   const myVoteBtnClick = () => {
     setMyIsvoteBtnClicked(true);
     setYourIsvoteBtnClicked(true);
@@ -30,10 +37,6 @@ const JurorPostJudgmentExplainChoice = ({
       votedMyChamp: 1,
       votedYourChamp: 0,
     }));
-
-    axios
-      .post("http://localhost:8080/votedChamp", voteChamp)
-      .catch((error) => console.log(error));
   };
 
   const yourVoteBtnClick = () => {
@@ -48,9 +51,6 @@ const JurorPostJudgmentExplainChoice = ({
       votedMyChamp: 0,
       votedYourChamp: 1,
     }));
-    axios
-      .post("http://localhost:8080/votedChamp", voteChamp)
-      .catch((error) => console.log(error));
   };
 
   return (
