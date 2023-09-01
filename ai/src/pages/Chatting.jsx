@@ -7,20 +7,18 @@ import ChattingInfoGage from "../component/ChattingInfoGage";
 import SearchInput from "../component/SearchInput";
 
 const Chatting = () => {
-
   return (
     <Background>
       <Header />
       <ChattingInfo>
         <ChatTemplete>
           <ChatTempleteTxt>
-            질문에 대하여 최대한 자세히 정보를 제공해주세요. <br />
-            자세히 설명 할 수록 <span>최하단의 판결 정확도 게이지</span>가
-            늘어납니다!
+            자세히 설명을 제공 할 수록, <span>최하단의 판결 정확도 게이지</span>
+            가 증가합니다! <br /> 판결문과 상황 정보를 토대로 투표 진행이
+            예정되어 있습니다.
           </ChatTempleteTxt>
         </ChatTemplete>
-        <ChatAi></ChatAi>
-
+        <ChatAi />
         <SearchInput />
         <ChatInput />
         <ChattingInfoGagebox>

@@ -32,7 +32,7 @@ const JurorPost = () => {
         <JurorPostStyle key={post._id}>
           <JurorPostOpinionBox>
             <JurorPostOpinion
-              expanded={expandedState[post._id] ? "true" : "false"}
+              expanded={expandedState[post._id] ? "false" : "true"}
             >
               {post.judgedUserOpinion}
             </JurorPostOpinion>
