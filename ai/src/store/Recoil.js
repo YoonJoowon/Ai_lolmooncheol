@@ -135,3 +135,8 @@ export const judgedContentState = atom({
     judgedByAI: "",
   },
 });
+
+export const votedChampState = atom({
+  key: "votedChampState",
+  default: { _id: "", votedMyChamp: 0, votedYourChamp: 0 },
+});

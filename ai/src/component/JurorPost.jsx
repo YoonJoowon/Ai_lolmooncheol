@@ -115,6 +115,7 @@ const JurorPost = () => {
                   judgedYourChamp={post.judgedYourChamp}
                   judgedYourChampImg={post.judgedYourChampImg}
                   judgedYourChampClicked={post.judgedYourChampClicked}
+                  judgedContentID={post._id}
                 />
               </JurorPostJudgmentBox>
             )}
