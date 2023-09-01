@@ -1,5 +1,8 @@
-import React from "react";
-import { styled } from "styled-components";
+import axios from "axios";
+import React, { useState } from "react";
+import { useRecoilState } from "recoil";
+import styled, { css } from "styled-components";
+import { votedChampState } from "../store/Recoil";
 
 const JurorPostJudgmentExplainChoice = ({
   judgedMyChamp,
@@ -8,17 +11,57 @@ const JurorPostJudgmentExplainChoice = ({
   judgedYourChamp,
   judgedYourChampImg,
   judgedYourChampClicked,
+  judgedContentID,
 }) => {
-  const alertJudgementBtnClick = () => {
+  const [isMyVoteBtnClicked, setMyIsvoteBtnClicked] = useState(false);
+  const [isYourVoteBtnClicked, setYourIsvoteBtnClicked] = useState(false);
+  const [myVoteBtnColor, setMyVoteBtnColor] = useState(false);
+  const [yourVoteBtnColor, setYourVoteBtnColor] = useState(false);
+  const [voteChamp, setVoteChamp] = useRecoilState(votedChampState);
+  const myVoteBtnClick = () => {
+    setMyIsvoteBtnClicked(true);
+    setYourIsvoteBtnClicked(true);
+    setMyVoteBtnColor(true);
+    setYourVoteBtnColor(false);
     alert("투표가 완료되었습니다!");
+    setVoteChamp((prevState) => ({
+      ...prevState,
+      _id: judgedContentID,
+      votedMyChamp: 1,
+      votedYourChamp: 0,
+    }));
+
+    axios
+      .post("http://localhost:8080/votedChamp", voteChamp)
+      .catch((error) => console.log(error));
   };
+
+  const yourVoteBtnClick = () => {
+    setYourIsvoteBtnClicked(true);
+    setMyIsvoteBtnClicked(true);
+    setYourVoteBtnColor(true);
+    setMyVoteBtnColor(false);
+    alert("투표가 완료되었습니다!");
+    setVoteChamp((prevState) => ({
+      ...prevState,
+      _id: judgedContentID,
+      votedMyChamp: 0,
+      votedYourChamp: 1,
+    }));
+  };
+
+  console.log(voteChamp);
 
   return (
     <JurorPostJudgmentStyle>
       <JurorPostJudgmentChampName>
-        <JurorPostJudgmentRate onClick={alertJudgementBtnClick}>
+        <JurorPostJudgmentMyRate
+          onClick={myVoteBtnClick}
+          disabled={isMyVoteBtnClicked}
+          myVoteBtnColor={myVoteBtnColor}
+        >
           {judgedMyChampClicked}
-        </JurorPostJudgmentRate>
+        </JurorPostJudgmentMyRate>
         <JurorPostJudgementImg>
           <img src={judgedMyChampImg} alt="judgedMyChampImg" />
           <p> {judgedMyChamp}</p>
@@ -26,9 +69,13 @@ const JurorPostJudgmentExplainChoice = ({
       </JurorPostJudgmentChampName>
       vs
       <JurorPostJudgmentChampName>
-        <JurorPostJudgmentRate onClick={alertJudgementBtnClick}>
+        <JurorPostJudgmentYourRate
+          onClick={yourVoteBtnClick}
+          disabled={isYourVoteBtnClicked}
+          yourVoteBtnColor={yourVoteBtnColor}
+        >
           {judgedYourChampClicked}
-        </JurorPostJudgmentRate>
+        </JurorPostJudgmentYourRate>
         <JurorPostJudgementImg>
           <img src={judgedYourChampImg} alt="judgedYourChampImg" />
           <p>{judgedYourChamp}</p>
@@ -54,7 +101,7 @@ const JurorPostJudgmentStyle = styled.div`
   }
 `;
 
-const JurorPostJudgmentRate = styled.button`
+const JurorPostJudgmentMyRate = styled.button`
   color: white;
   width: 70px;
   height: 70px;
@@ -67,6 +114,45 @@ const JurorPostJudgmentRate = styled.button`
   &:hover {
     background-color: #0ac8b897;
   }
+  ${(props) =>
+    props.myVoteBtnColor &&
+    css`
+      background-color: #0ac8b897; /* Set the disabled background color */
+      border-color: #0ac8b897; /* Set the disabled border color */
+      cursor: not-allowed; /* Change cursor to "not allowed" */
+    `}
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed; /* Change cursor to "not allowed" */
+    `}
+`;
+
+const JurorPostJudgmentYourRate = styled.button`
+  color: white;
+  width: 70px;
+  height: 70px;
+  border: solid 2px #0ac8b897;
+  border-radius: 40px;
+  margin: 0px 15px 0px 15px;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0ac8b897;
+  }
+  ${(props) =>
+    props.yourVoteBtnColor &&
+    css`
+      background-color: #0ac8b897; /* Set the disabled background color */
+      border-color: #0ac8b897; /* Set the disabled border color */
+      cursor: not-allowed; /* Change cursor to "not allowed" */
+    `}
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed; /* Change cursor to "not allowed" */
+    `}
 `;
 
 const JurorPostJudgmentChampName = styled.div`
