@@ -18,7 +18,6 @@ import {
 import axios from "axios";
 import ChatSurvey from "./ChatSurvey";
 import html2canvas from "html2canvas";
-import firebase from "../Firebase";
 
 function AiAnswer(props) {
   //chatGPT
