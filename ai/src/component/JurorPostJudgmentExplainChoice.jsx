@@ -11,7 +11,7 @@ const JurorPostJudgmentExplainChoice = ({
   judgedYourChamp,
   judgedYourChampImg,
   judgedYourChampClicked,
-  judgedContentID,
+  judgedPostContentID,
 }) => {
   const [isMyVoteBtnClicked, setMyIsVoteBtnClicked] = useState(false);
   const [isYourVoteBtnClicked, setYourIsVoteBtnClicked] = useState(false);
@@ -27,7 +27,7 @@ const JurorPostJudgmentExplainChoice = ({
     alert("투표가 완료되었습니다!");
     const updatedVoteChamp = {
       ...voteChamp,
-      _id: judgedContentID,
+      _id: judgedPostContentID,
       votedMyChamp: 1,
       votedYourChamp: 0,
     };
@@ -45,7 +45,7 @@ const JurorPostJudgmentExplainChoice = ({
     alert("투표가 완료되었습니다!");
     const updatedVoteChamp = {
       ...voteChamp,
-      _id: judgedContentID,
+      _id: judgedPostContentID,
       votedMyChamp: 0,
       votedYourChamp: 1,
     };
