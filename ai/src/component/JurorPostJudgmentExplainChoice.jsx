@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled, { css } from "styled-components";
 import { votedChampState } from "../store/Recoil";
@@ -13,44 +13,47 @@ const JurorPostJudgmentExplainChoice = ({
   judgedYourChampClicked,
   judgedContentID,
 }) => {
-  const [isMyVoteBtnClicked, setMyIsvoteBtnClicked] = useState(false);
-  const [isYourVoteBtnClicked, setYourIsvoteBtnClicked] = useState(false);
+  const [isMyVoteBtnClicked, setMyIsVoteBtnClicked] = useState(false);
+  const [isYourVoteBtnClicked, setYourIsVoteBtnClicked] = useState(false);
   const [myVoteBtnColor, setMyVoteBtnColor] = useState(false);
   const [yourVoteBtnColor, setYourVoteBtnColor] = useState(false);
   const [voteChamp, setVoteChamp] = useRecoilState(votedChampState);
+
   const myVoteBtnClick = () => {
-    setMyIsvoteBtnClicked(true);
-    setYourIsvoteBtnClicked(true);
+    setMyIsVoteBtnClicked(true);
+    setYourIsVoteBtnClicked(true);
     setMyVoteBtnColor(true);
     setYourVoteBtnColor(false);
     alert("투표가 완료되었습니다!");
-    setVoteChamp((prevState) => ({
-      ...prevState,
+    const updatedVoteChamp = {
+      ...voteChamp,
       _id: judgedContentID,
       votedMyChamp: 1,
       votedYourChamp: 0,
-    }));
-
+    };
     axios
-      .post("http://localhost:8080/votedChamp", voteChamp)
+      .post("http://localhost:8080/votedChamp", updatedVoteChamp)
       .catch((error) => console.log(error));
+    setVoteChamp(updatedVoteChamp); // 상태 업데이트
   };
 
   const yourVoteBtnClick = () => {
-    setYourIsvoteBtnClicked(true);
-    setMyIsvoteBtnClicked(true);
+    setMyIsVoteBtnClicked(true);
+    setYourIsVoteBtnClicked(true);
     setYourVoteBtnColor(true);
     setMyVoteBtnColor(false);
     alert("투표가 완료되었습니다!");
-    setVoteChamp((prevState) => ({
-      ...prevState,
+    const updatedVoteChamp = {
+      ...voteChamp,
       _id: judgedContentID,
       votedMyChamp: 0,
       votedYourChamp: 1,
-    }));
+    };
+    axios
+      .post("http://localhost:8080/votedChamp", updatedVoteChamp)
+      .catch((error) => console.log(error));
+    setVoteChamp(updatedVoteChamp); // 상태 업데이트
   };
-
-  console.log(voteChamp);
 
   return (
     <JurorPostJudgmentStyle>
@@ -84,7 +87,6 @@ const JurorPostJudgmentExplainChoice = ({
     </JurorPostJudgmentStyle>
   );
 };
-
 export default JurorPostJudgmentExplainChoice;
 
 const JurorPostJudgmentStyle = styled.div`

@@ -6,13 +6,13 @@ import axios from "axios";
 
 const JurorPost = () => {
   const [expandedState, setExpandedState] = useState({});
-  const [judgedContent, setJudgedContent] = useState([]);
+  const [judgedPostContent, setJudgedPostContent] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:8080/jurorContent")
       .then((response) => {
-        setJudgedContent(response.data);
+        setJudgedPostContent(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -28,7 +28,7 @@ const JurorPost = () => {
 
   return (
     <>
-      {judgedContent.map((post) => (
+      {judgedPostContent.map((post) => (
         <JurorPostStyle key={post._id}>
           <JurorPostOpinionBox>
             <JurorPostOpinion
@@ -115,7 +115,7 @@ const JurorPost = () => {
                   judgedYourChamp={post.judgedYourChamp}
                   judgedYourChampImg={post.judgedYourChampImg}
                   judgedYourChampClicked={post.judgedYourChampClicked}
-                  judgedContentID={post._id}
+                  judgedPostContentID={post._id}
                 />
               </JurorPostJudgmentBox>
             )}
