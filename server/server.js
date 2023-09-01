@@ -12,26 +12,10 @@ const MongoConnect = process.env.MONGO_DB_CONNECT;
 
 app.use(express.urlencoded({ extended: true }));
 
-// let db;
-// MongoClient.connect(MongoConnect,
-//   { useUnifiedTopology: true }, function(error, client) {
-//     if (error) return console.log(error)
-
-//     db = client.db('aimoon');
-
-//     app.post("/judgedContent", function (req, res) {
-//       db.collection('post').insertOne( req.body )
-
-//       const result = db.collection('post').find({}).toArray();
-//       res.json(result);
-//     })
-//   })
 
 (async () => {
   try {
-    const client = await MongoClient.connect(MongoConnect, {
-      useUnifiedTopology: true,
-    });
+    const client = await MongoClient.connect(MongoConnect, {useUnifiedTopology: true});
     const db = client.db("aimoon");
 
     app.post("/judgedContent", async (req, res) => {
@@ -62,30 +46,41 @@ app.use(express.urlencoded({ extended: true }));
     app.post("/votedChamp", async (req, res) => {
       try {
         const id = req.body._id;
-        console.log("id:" + id);
+        // console.log("id:" + id);
         const myChamp = req.body.votedMyChamp;
         const yourChamp = req.body.votedYourChamp;
 
-        console.log("myChamp:" + myChamp)
-        console.log("yourChamp:" + yourChamp)
-        const myClicked = await db.collection("testPost").find({_id : id}, {judgedMyChampClicked: 1, _id: 0});
-        const yourClicked = await db.collection("testPost").find({_id : id}, {judgedYourChampClicked: 1, _id: 0});;
+        // console.log("myChamp:" + myChamp)
+        // console.log("yourChamp:" + yourChamp)
 
-        let myCount = myClicked.cmd.judgedMyChampClicked + myChamp;
-        let yourCount = yourClicked.cmd.judgedYourChampClicked + yourChamp;
+        var ObjectId = require('mongodb').ObjectId;
+
+        const myClicked = await db.collection("testPost").find({_id : ObjectId(id)}).toArray()
+        const yourClicked = await db.collection("testPost").find({_id : ObjectId(id)}).toArray()
+        const myClickedData = myClicked[0]['judgedMyChampClicked']
+        const yourClickedData = yourClicked[0]['judgedYourChampClicked']
+
+        let myCount = myClickedData + myChamp;
+        let yourCount = yourClickedData + yourChamp;
         console.log("myCount :" + myCount)
         console.log("yourCount :" + yourCount)
 
-        let filter = { _id: id }; // 검색
+        
+        let filter = { test1: id }; // 검색
         let update = { $set: {
           judgedMyChampClicked: myCount,
           judgedYourChampClicked: yourCount
         }}; // 업데이트
-        // console.log(filter)
+        console.log(filter)
         console.log(update)
 
-        const result2 = await db.collection('testPost').findOneAndUpdate( {_id : id}, update
-        )
+        // const testPost11 = await db.colletcion('testPost').cmd.query._id;
+        const res = await db.collection('testPost').updateMany( {_id : ObjectId(id)}, update);
+        // const myClicked22 = await db.collection("testPost").find({_id : id}, {judgedMyChampClicked: 1, _id: 0}).toArray();
+        
+        
+        console.log(res.result.n)
+        console.log(res.result.nModified)
         
       } catch (error) {
         console.error(error);
