@@ -1,26 +1,35 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { inputValueState, showCheckAnswerState } from "../store/Recoil";
+import {
+  StartAskingNextState,
+  chatUserAnswerState,
+  inputValueState,
+  showCheckAnswerState,
+} from "../store/Recoil";
 import { styled } from "styled-components";
 import questionsData from "../dummy/questionData.json";
 import AiAnswer from "./AiAnswer";
 import TypingAnimation from "./TypingAnimation";
+import ChatUserInfo from "./ChatUserInfo";
 
 const ChatAi = () => {
   const [questionIndex, setQuestionIndex] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(questionsData[1]);
   const [conversation, setConversation] = useState([]);
   const [inputValues, setInputValues] = useState([]);
-  const [showCheckAnswer, setShowCheckAnswer] =
+  const [showCheckAnswer, setShowCheckAnswer] = useState(false);
+  const [showCheckAnswerRecoil, setShowCheckAnswerRecoil] =
     useRecoilState(showCheckAnswerState);
+  const askStart = useRecoilValue(StartAskingNextState);
+  const inputValue = useRecoilValue(inputValueState);
+  const [chatUserAnswer, setChatUserAnswer] =
+    useRecoilState(chatUserAnswerState);
 
-  // 버튼을 누를 때 이벤트 핸들러
+  // 결과보기 버튼
   const handleButtonClick = () => {
     setShowCheckAnswer(true);
-    // setTriggerAiAnswer(true);
+    setShowCheckAnswerRecoil(true);
   };
-
-  const inputValue = useRecoilValue(inputValueState);
 
   const pickNextQuestion = () => {
     const newIndex = questionIndex + 1;
@@ -34,26 +43,28 @@ const ChatAi = () => {
   };
 
   useEffect(() => {
-    if (inputValue) {
+    if (inputValue || askStart) {
       const cleanedInputValue = inputValue.replace(/\n/g, "");
       setInputValues((prevInputValues) => [
         ...prevInputValues,
         cleanedInputValue,
       ]);
     }
-  }, [inputValue]);
+  }, [inputValue, askStart]);
 
+  // session 에 추가
+  useEffect(() => {
+    setChatUserAnswer(inputValues);
+  }, [inputValues]);
+
+  // 다음 질문시작
   useEffect(() => {
     if (inputValues.length > 0) {
       pickNextQuestion();
     }
   }, [inputValues]);
 
-  useEffect(() => {
-    sessionStorage.setItem("inputValues", JSON.stringify(inputValues));
-  }, [inputValues]);
-
-  // scroll
+  // auto scroll
   const scrollContainerRef = useRef(null);
 
   const handleScroll = () => {
@@ -71,6 +82,7 @@ const ChatAi = () => {
       <ChatAiStyle>
         <p>{questionsData[0].question}</p>
       </ChatAiStyle>
+      <ChatUserInfo></ChatUserInfo>
 
       {conversation.map((item, index) => (
         <React.Fragment key={index}>
@@ -94,13 +106,13 @@ const ChatAi = () => {
       )}
 
       {showCheckAnswer && (
-        <>
-          <CheckAnswer>
-            판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
-          </CheckAnswer>
-          <AiAnswer></AiAnswer>
-        </>
+        <CheckAnswer>
+          판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
+        </CheckAnswer>
       )}
+
+      <AiAnswer></AiAnswer>
+
       <div ref={scrollContainerRef}></div>
     </ChatWrapper>
   );
@@ -110,6 +122,7 @@ const ChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
 `;
 
 const ChatAiStyle = styled.div`
@@ -120,18 +133,20 @@ const ChatAiStyle = styled.div`
   margin-top: 20px;
   width: 300px;
   max-width: 500px;
-  min-height: 30px;
   max-height: 100%;
   border-radius: 20px;
   line-height: 1.6;
   background-color: #3f3f3f;
+
+  @media (max-width: 673px) {
+    width: 40%;
+  }
 `;
 
 const ChatUserStyle = styled.div`
   border: solid 1px #0ac8b9;
   padding: 20px;
   color: white;
-  margin-left: 300px;
   margin-top: 20px;
   width: 300px;
   max-width: 500px;
@@ -141,23 +156,13 @@ const ChatUserStyle = styled.div`
   line-height: 1.6;
   background-color: #0a323c;
   white-space: pre-line;
-`;
+  align-self: flex-end;
+  margin-right: 20px;
 
-const CheckAnswer = styled.div`
-  border: solid 1px #424242;
-  margin: auto;
-  margin-top: 20px;
-  width: 570px;
-  height: 25px;
-  border-radius: 20px;
-  background-color: #121212;
-  color: white;
-  padding: 20px;
-  line-height: 1.8;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
+  @media (max-width: 673px) {
+    width: 40%;
+    margin-right: 20px;
+  }
 `;
 
 const ChatChecking = styled.button`
@@ -175,6 +180,31 @@ const ChatChecking = styled.button`
   border: solid 1px #005a82;
   margin-top: 20px;
   cursor: pointer;
+
+  @media (max-width: 673px) {
+    width: 90%;
+  }
+`;
+
+const CheckAnswer = styled.div`
+  border: solid 1px #424242;
+  margin: auto;
+  margin-top: 20px;
+  width: 570px;
+  height: 25px;
+  border-radius: 20px;
+  background-color: #121212;
+  color: white;
+  padding: 20px;
+  line-height: 1.8;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 673px) {
+    width: 80%;
+  }
 `;
 
 export default ChatAi;

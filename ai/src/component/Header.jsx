@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import Logo from "./Logo";
 
 const Header = () => {
-  const TitleText = "1심 : AI판결";
+  const TitleText = "AI 롤문철";
   return (
     <Wrapper>
       <Logo />
@@ -23,6 +23,10 @@ const Wrapper = styled.div`
   position: absolute;
   top: 20px;
   align-items: center;
+
+  @media (max-width: 660px) {
+    top: 10px;
+  }
 `;
 
 const HeaderStyle = styled.div`
@@ -41,8 +45,13 @@ const HeaderStyle = styled.div`
 const HeaderText = styled.p`
   color: white;
   width: auto;
-  padding: 10px;
+  font-size: 17px;
+  padding: 12px;
   margin: auto;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 660px) {
+    font-size: 14px;
+  }
 `;

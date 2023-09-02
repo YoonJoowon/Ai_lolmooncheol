@@ -11,6 +11,9 @@ const Juror = () => {
         <JurorPostLayout>
           <JurorPost></JurorPost>
         </JurorPostLayout>
+        <JurorPostLayout>
+          <JurorPost></JurorPost>
+        </JurorPostLayout>
       </ChattingInfo>
     </Background>
   );
@@ -29,7 +32,6 @@ const Background = styled.div`
 `;
 
 const ChattingInfo = styled.div`
-  display: flex;
   background-color: #131313;
   border: solid 1px #c89b3c;
   width: 658px;
@@ -41,4 +43,11 @@ const ChattingInfo = styled.div`
   overflow-x: hidden;
 `;
 
-const JurorPostLayout = styled.div``;
+const JurorPostLayout = styled.div`
+  margin: auto;
+  width: 600px;
+  height: 600px;
+  border: solid 1px #c89b3c;
+  padding: 20px 0px 20px 0px;
+  margin-bottom: 20px;
+`;
