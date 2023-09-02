@@ -21,9 +21,14 @@ const Landing = () => {
             즉각적인 상황을 분석 하여 이로부터 유도되는 <br />
             <span>전략적 타당한 선택의 판단</span>을 도와줍니다.
           </LandingExplain>
-          <ChatStartLink to="/Chatting">
-            <ChatStartBtn>시작하기</ChatStartBtn>
-          </ChatStartLink>
+          <ChatStartBtnWrapper>
+            <ChatStartLink to="/Chatting">
+              <ChatStartBtn>시작하기</ChatStartBtn>
+            </ChatStartLink>
+            <ChatStartLink to="/Juror">
+              <ChatStartBtn>다른 사람 판결 보기</ChatStartBtn>
+            </ChatStartLink>
+          </ChatStartBtnWrapper>
         </LandingExplainBox>
         <LandingImageBox>
           <LandingImage1 />
@@ -76,6 +81,10 @@ const LandingExplainBox = styled.div`
   margin-right: 200px;
   margin-left: 200px;
 
+  @media (max-width: 1200px) {
+    margin-right: 100px;
+  }
+
   @media (max-width: 610px) {
     text-align: center;
     margin: auto;
@@ -88,6 +97,12 @@ const LandingTitle = styled.p`
   line-height: 16px;
   margin-bottom: 32px;
   font-family: "Noto Sans KR", sans-serif;
+
+  @media (max-width: 850px) {
+    margin: auto;
+    margin-bottom: 32px;
+    text-align: center;
+  }
 `;
 
 const LandingSubTitle = styled.p`
@@ -96,6 +111,17 @@ const LandingSubTitle = styled.p`
   font-size: 24px;
   margin-bottom: 32px;
   font-family: "Noto Sans KR", sans-serif;
+
+  @media (max-width: 850px) {
+    margin: auto;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  @media (max-width: 550px) {
+    width: 80%;
+    margin: auto;
+  }
 `;
 
 const LandingExplain = styled.div`
@@ -106,10 +132,37 @@ const LandingExplain = styled.div`
   font-weight: 450;
   letter-spacing: 2px;
 
+  @media (max-width: 850px) {
+    margin: auto;
+    text-align: center;
+  }
+
+  @media (max-width: 550px) {
+    width: 70%;
+    margin: auto;
+  }
+
   span {
     font-size: 20px;
     color: #3054c2;
+
+    @media (max-width: 550px) {
+      width: 70%;
+      margin: auto;
+    }
   }
+`;
+
+const ChatStartBtnWrapper = styled.div`
+  display: flex;
+  margin: 20px 30px 20px 30px;
+`;
+
+const ChatStartLink = styled(Link)`
+  width: 200px;
+  display: flex;
+  text-decoration: none;
+  margin: auto;
 `;
 
 const ChatStartBtn = styled.button`
@@ -117,18 +170,23 @@ const ChatStartBtn = styled.button`
   background-color: #3054c2;
   text-decoration: none;
   width: 200px;
-  padding: 10px 30px 10px 30px;
   height: 50px;
   border-radius: 25px;
-  justify-content: center;
-  align-items: center;
   font-size: 16px;
   margin-top: 20px;
-  cursor: pointer;
+  margin-right: 20px;
   box-shadow: 4px 4px 8px rgba(38, 69, 223, 0.786);
-`;
+  cursor: pointer;
 
-const ChatStartLink = styled(Link)``;
+  @media (max-width: 610px) {
+    margin: auto;
+  }
+
+  @media (max-width: 550px) {
+    width: 80%;
+    margin: auto;
+  }
+`;
 
 const LandingImageBox = styled.div`
   width: 800px;
@@ -136,7 +194,7 @@ const LandingImageBox = styled.div`
   position: relative;
   margin-right: 200px;
 
-  @media (max-width: 610px) {
+  @media (max-width: 850px) {
     display: none;
   }
 `;
@@ -156,8 +214,7 @@ const LandingImage1 = styled.div`
   }
 
   @media (max-width: 850px) {
-    width: 200px;
-    background-size: 400% auto;
+    display: none;
   }
 `;
 

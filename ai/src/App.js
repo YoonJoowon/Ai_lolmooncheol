@@ -4,6 +4,7 @@ import Chatting from "./pages/Chatting";
 import UserSearch from "./pages/Juror";
 import Chatting_copy from "./pages/Chatting_copy"
 import Landing from "./pages/Landing";
+import Juror from "./pages/Juror";
 
 function App() {
   return (
@@ -11,8 +12,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
-          {/* <Route path="/Juror" element={<Juror />} /> */}
-          <Route path="/Chattingcopy" element={<Chatting_copy />} />
+          <Route path="/Juror" element={<Juror />} />
+          {/* <Route path="/Chattingcopy" element={<Chatting_copy />} /> */}
           <Route path="/Chatting" element={<Chatting />} />
           {/* <Route path="/UserSearch" element={<UserSearch />} /> */}
         </Routes>

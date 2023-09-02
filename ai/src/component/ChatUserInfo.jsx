@@ -6,8 +6,9 @@ import {
   matchDataState,
   lolTeamMemberDataState,
   matchTimelineDataState,
-  timeState,
   promptDataState,
+  showUserDataState,
+  showTeamDataState,
 } from "../store/Recoil";
 import { useRecoilValue, useRecoilState } from "recoil";
 import TypingAnimation from "./TypingAnimation";
@@ -16,8 +17,8 @@ import axios from "axios";
 const ChatUserInfo = () => {
   const [nickNameInput, setNickNameInput] = useRecoilState(nickNameInputState);
   const [showUserDataStart, setShowUserDataStart] = useState();
-  const [showUserData, setShowUserData] = useState(false);
-  const [showTeamData, setShowTeamData] = useState(false);
+  const [showUserData, setShowUserData] = useRecoilState(showUserDataState);
+  const [showTeamData, setShowTeamData] = useRecoilState(showTeamDataState);
   const [showTime, setShowTime] = useState(false);
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
   const [selectedTeamIndex, setSelectedTeamIndex] = useState(null);
@@ -30,7 +31,6 @@ const ChatUserInfo = () => {
   );
   const [promptData, setPromptData] = useRecoilState(promptDataState);
 
-  // 첫 화면 들어와서 렌더링 되면 값 초기화
   useEffect(() => {
     setNickNameInput("");
   }, []);
@@ -42,7 +42,7 @@ const ChatUserInfo = () => {
       // 서버로 요청 보내는 부분
       const data = { name: nickNameInput };
       axios
-        .post("/api/summoner", data)
+        .post("http://localhost:8080/summoner", data)
         .then((response) => {
           if (Array.isArray(response.data) && response.data.length === 0) {
             setShowUserData(false);
@@ -74,6 +74,8 @@ const ChatUserInfo = () => {
     setPromptData((prevState) => ({
       ...prevState,
       myChamp: matchData.matchDetails[index].championNameKR,
+      myChampImg: matchData.matchDetails[index].championImageUrl,
+      myLane: matchData.matchDetails[index].mylane,
     }));
     setShowTeamData(true);
   };
@@ -89,6 +91,8 @@ const ChatUserInfo = () => {
     setPromptData((prevState) => ({
       ...prevState,
       yourChamp: lolTeamMemberData[index].championNameKR,
+      yourChampImg: lolTeamMemberData[index].championImageUrl,
+      yourLane: lolTeamMemberData[index].lane,
     }));
   };
 

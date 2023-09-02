@@ -11,7 +11,6 @@ import TypingAnimation from "./TypingAnimation";
 import axios from "axios";
 
 const EnterSituationTime = () => {
-  const API_KEY = process.env.REACT_APP_LOL_API_KEY;
   const [eventTime, setEventTimeState] = useRecoilState(timeState);
   const [matchTimelineData, setMatchTimelineData] = useRecoilState(
     matchTimelineDataState
@@ -46,13 +45,14 @@ const EnterSituationTime = () => {
 
   const postTimelineData = () => {
     axios
-      .post("/api/fetchMatchTimeline", matchTimelineData)
+      .post("http://localhost:8080/fetchMatchTimeline", matchTimelineData)
       .then((response) => {
         setPromptData((prevData) => ({
           ...prevData,
           myCurrentGold: response.data.myData.currentGold,
           myLevel: response.data.myData.level,
-          myHealth: response.data.myData.health,
+          myHealth: response.data.myData.healthMax,
+          myCurrentHealth: response.data.myData.health,
           myPosition: {
             x: response.data.myData.position.x,
             y: response.data.myData.position.y,
@@ -60,7 +60,8 @@ const EnterSituationTime = () => {
           // 아군 분쟁 상대 정보
           yourCurrentGold: response.data.teamData.currentGold,
           yourLevel: response.data.teamData.level,
-          yourHealth: response.data.teamData.health,
+          yourHealth: response.data.teamData.healthMax,
+          yourCurrentHealth: response.data.teamData.health,
           yourPosition: {
             x: response.data.teamData.position.x,
             y: response.data.teamData.position.y,
@@ -79,6 +80,8 @@ const EnterSituationTime = () => {
         console.log(error);
       });
   };
+
+  console.log()
 
   return (
     <>

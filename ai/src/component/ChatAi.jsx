@@ -17,7 +17,6 @@ const ChatAi = () => {
   const [currentQuestion, setCurrentQuestion] = useState(questionsData[1]);
   const [conversation, setConversation] = useState([]);
   const [inputValues, setInputValues] = useState([]);
-  const [showCheckAnswer, setShowCheckAnswer] = useState(false);
   const [showCheckAnswerRecoil, setShowCheckAnswerRecoil] =
     useRecoilState(showCheckAnswerState);
   const askStart = useRecoilValue(StartAskingNextState);
@@ -27,7 +26,6 @@ const ChatAi = () => {
 
   // 결과보기 버튼
   const handleButtonClick = () => {
-    setShowCheckAnswer(true);
     setShowCheckAnswerRecoil(true);
   };
 
@@ -75,7 +73,7 @@ const ChatAi = () => {
 
   useEffect(() => {
     handleScroll();
-  }, [inputValues, showCheckAnswer]);
+  }, [inputValues, showCheckAnswerRecoil]);
 
   return (
     <ChatWrapper>
@@ -105,7 +103,7 @@ const ChatAi = () => {
         </>
       )}
 
-      {showCheckAnswer && (
+      {showCheckAnswerRecoil && (
         <CheckAnswer>
           판결까지 최대 1분 소요 될 예정입니다. 잠시만 기다려주세요.
         </CheckAnswer>

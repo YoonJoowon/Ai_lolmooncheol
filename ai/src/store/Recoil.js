@@ -10,6 +10,16 @@ export const nickNameInputState = atom({
   default: "",
 });
 
+export const showUserDataState = atom({
+  key: "showUserDataState",
+  default: false,
+});
+
+export const showTeamDataState = atom({
+  key: "showTeamDataState",
+  default: false,
+});
+
 export const StartAskingNextState = atom({
   key: "StartAskingNextState",
   default: false,
@@ -64,16 +74,22 @@ export const promptDataState = atom({
   default: {
     // 내정보
     myChamp: "",
+    myLane: "",
     myCurrentGold: "",
     myLevel: "",
     myPosition: { x: "", y: "" },
     myHealth: "",
+    myCurrentHealth: "",
+    myChampImg: "",
     // 아군 분쟁 상대 정보
     yourChamp: "",
+    yourLane: "",
     yourCurrentGold: "",
     yourLevel: "",
     yourPosition: { x: "", y: "" },
     yourHealth: "",
+    yourCurrentHealth: "",
+    yourChampImg: "",
     // 내 팀 정보
     myTeamGold: "",
     myTeamLevel: "",
@@ -86,4 +102,41 @@ export const promptDataState = atom({
 export const chatUserAnswerState = atom({
   key: "chatUserAnswerState",
   default: "",
+});
+
+// 판결문 전체를 저장
+export const judgedContentState = atom({
+  key: "judgedContentState",
+  default: {
+    judgedMyChamp: "",
+    judgedMyChampImg: "",
+    judgedMyChampLane: "",
+    judgedMyChampCurrentHP: "",
+    judgedMyChampHP: "",
+    judgedMyChampGold: "",
+    judgedMyChampLevel: "",
+    judgedMyChampClicked: 0,
+
+    judgedYourChamp: "",
+    judgedYourChampImg: "",
+    judgedYourChampLane: "",
+    judgedYourChampCurrentHP: "",
+    judgedYourChampHP: "",
+    judgedYourChampGold: "",
+    judgedYourChampLevel: "",
+    judgedYourChampClicked: 0,
+
+    judgedTeamLevel: "",
+    judgedTeamGold: "",
+    judgedEnemyLevel: "",
+    judgedEnemyGold: "",
+
+    judgedUserOpinion: "",
+    judgedByAI: "",
+  },
+});
+
+export const votedChampState = atom({
+  key: "votedChampState",
+  default: { _id: "", votedMyChamp: 0, votedYourChamp: 0 },
 });
