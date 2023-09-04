@@ -10,6 +10,15 @@ const baseUrl2 = "https://asia.api.riotgames.com/lol";
 const MongoClient = require("mongodb").MongoClient;
 const MongoConnect = process.env.MONGO_DB_CONNECT;
 
+
+app.use(cors());
+app.use(bodyParser.json());
+
+app.listen(80, '0.0.0.0', () => {
+  console.log("소환사의 협곡에 오신 것을 환영합니다");
+});
+
+
 app.use(express.urlencoded({ extended: true }));
 
 
@@ -18,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
     const client = await MongoClient.connect(MongoConnect, {useUnifiedTopology: true});
     const db = client.db("aimoon");
 
-    app.post("/judgedContent", async (req, res) => {
+    app.post("/api/judgedContent", async (req, res) => {
       try {
         // insertOne 작업이 완료될 때까지 기다립니다.
 
@@ -31,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
       }
     });
 
-    app.get("/jurorContent", async (req, res) => {
+    app.get("/api/jurorContent", async (req, res) => {
       try {
         // 컬렉션에서 모든 데이터를 검색합니다.
         const result = await db.collection("testPost").find({}).toArray();
@@ -43,7 +52,7 @@ app.use(express.urlencoded({ extended: true }));
       }
     });
 
-    app.post("/votedChamp", async (req, res) => {
+    app.post("/api/votedChamp", async (req, res) => {
       try {
         const id = req.body._id;
         // console.log("id:" + id);
@@ -99,15 +108,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-app.use(cors());
-app.use(bodyParser.json());
-
-app.listen(8080, function () {
-  console.log("소환사의 협곡에 오신 것을 환영합니다");
-});
-
 // matchId 추출
-app.post("/summoner", async function (req, res) {
+app.post("/api/summoner", async function (req, res) {
   const summonerName = req.body.name;
 
   try {
@@ -539,7 +541,7 @@ async function getMatchTimeline(myPuuId, yourPuuId, matchId, specificTime) {
 
 // 입력 값을 받고 특정 시간에 대한 매치 타임라인 데이터를 가져오는 라우트를 정의합니다.
 
-app.post("/fetchMatchTimeline", async (req, res) => {
+app.post("/api/fetchMatchTimeline", async (req, res) => {
   const myPuuid = req.body.myPuuId;
   const yourPuuid = req.body.yourPuuId;
   const matchId = req.body.matchId;

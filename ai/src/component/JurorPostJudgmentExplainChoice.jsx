@@ -28,7 +28,7 @@ const JurorPostJudgmentExplainChoice = ({
       votedYourChamp: 0,
     };
     axios
-      .post("http://localhost:8080/votedChamp", updatedVoteChamp)
+      .post("/api/votedChamp", updatedVoteChamp)
       .catch((error) => console.log(error));
     setVoteChamp(updatedVoteChamp); // 상태 업데이트
   };
@@ -44,7 +44,7 @@ const JurorPostJudgmentExplainChoice = ({
       votedYourChamp: 1,
     };
     axios
-      .post("http://localhost:8080/votedChamp", updatedVoteChamp)
+      .post("/api/votedChamp", updatedVoteChamp)
       .catch((error) => console.log(error));
     setVoteChamp(updatedVoteChamp); // 상태 업데이트
   };

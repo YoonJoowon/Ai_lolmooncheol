@@ -179,7 +179,7 @@ function AiAnswer(props) {
   useEffect(() => {
     if (judgedContent.judgedByAI != "") {
       const data = judgedContent;
-      axios.post("http://localhost:8080/judgedContent", data).catch((error) => {
+      axios.post("/api/judgedContent", data).catch((error) => {
         console.error(error);
       });
     }
