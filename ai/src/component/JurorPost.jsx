@@ -26,11 +26,9 @@ const JurorPost = () => {
     }));
   };
 
-  const reversedJudgedPostContent = judgedPostContent.slice().reverse();
-
   return (
     <>
-      {reversedJudgedPostContent.map((post) => (
+      {judgedPostContent.reverse().map((post) => (
         <JurorPostStyle key={post._id}>
           <JurorPostOpinionBox>
             <JurorPostOpinion
