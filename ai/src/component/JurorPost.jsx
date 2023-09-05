@@ -10,7 +10,7 @@ const JurorPost = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/jurorContent")
+      .get("/api/jurorContent")
       .then((response) => {
         setJudgedPostContent(response.data);
       })
