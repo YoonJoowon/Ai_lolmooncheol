@@ -3,6 +3,7 @@ const API_KEY = process.env.LOL_API_KEY;
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const path = require('path');
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const baseUrl = "https://KR.api.riotgames.com/lol";
@@ -13,11 +14,24 @@ const MongoConnect = process.env.MONGO_DB_CONNECT;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "./build")));
 
 app.listen(80, '0.0.0.0', () => {
   console.log("소환사의 협곡에 오신 것을 환영합니다");
 });
 
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "./build", "index.html"));
+});
+
+app.get("/Chatting", (req, res) => {
+  res.sendFile(path.join(__dirname, "./build", "index.html"));
+});
+
+app.get("/Juror", (req, res) => {
+  res.sendFile(path.join(__dirname, "./build", "index.html"));
+});
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -33,7 +47,7 @@ app.use(express.urlencoded({ extended: true }));
 
         await db.collection("testPost").insertOne(req.body);
 
-        res.redirect(301, "/jurorContent");
+        res.redirect(301, "/api/jurorContent");
       } catch (error) {
         console.error(error);
         res.status(500).send("내부 서버 오류");
@@ -44,7 +58,7 @@ app.use(express.urlencoded({ extended: true }));
       try {
         // 컬렉션에서 모든 데이터를 검색합니다.
         const result = await db.collection("testPost").find({}).toArray();
-
+        console.log(result);
         res.json(result);
       } catch (error) {
         console.error(error);
@@ -186,7 +200,12 @@ async function getMatchDetails(matchId, puuid) {
     const kills = participant.kills;
     const deaths = participant.deaths;
     const assists = participant.assists;
-    const championName = participant.championName;
+    let championName = participant.championName;
+
+    if (championName === "FiddleSticks") {
+      championName = "Fiddlesticks";
+    }
+
     const win = participant.win;
     const lane = participant.lane;
     const mylane = lineTranslation[participant.lane];
@@ -233,6 +252,7 @@ async function getMatchDetails(matchId, puuid) {
       Evelynn: "이블린",
       Ezreal: "이즈리얼",
       Fiddlesticks: "피들스틱",
+      FiddleSticks: "피들스틱",
       Fiora: "피오라",
       Fizz: "피즈",
       Galio: "갈리오",
@@ -378,14 +398,20 @@ async function getMatchDetails(matchId, puuid) {
       )
 
       .map((teamMember) => {
+        let teamChampName = teamMember.championName;
+
+        if (teamChampName === "FiddleSticks") {
+          teamChampName = "Fiddlesticks"
+        }
+        
         const teamchampionNameKR =
           championNameTranslation[teamMember.championName] ||
           teamMember.championName;
 
         return {
           championNameKR: teamchampionNameKR,
-          championName: teamMember.championName,
-          championImageUrl: `http://ddragon.leagueoflegends.com/cdn/13.16.1/img/champion/${teamMember.championName}.png`,
+          championName: teamChampName,
+          championImageUrl: `http://ddragon.leagueoflegends.com/cdn/13.16.1/img/champion/${teamChampName}.png`,
           kills: teamMember.kills,
           deaths: teamMember.deaths,
           assists: teamMember.assists,
@@ -562,3 +588,4 @@ app.post("/api/fetchMatchTimeline", async (req, res) => {
       .json({ error: "매치 타임라인 데이터를 가져오는 중 오류 발생" });
   }
 });
+
