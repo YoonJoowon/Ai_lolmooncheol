@@ -10,7 +10,7 @@ const JurorPost = () => {
 
   useEffect(() => {
     axios
-      .get("/api/jurorContent")
+      .get("http://localhost:8080/jurorContent")
       .then((response) => {
         setJudgedPostContent(response.data);
       })
@@ -26,9 +26,11 @@ const JurorPost = () => {
     }));
   };
 
+  const reversedJudgedPostContent = judgedPostContent.slice().reverse();
+
   return (
     <>
-      {judgedPostContent.map((post) => (
+      {reversedJudgedPostContent.map((post) => (
         <JurorPostStyle key={post._id}>
           <JurorPostOpinionBox>
             <JurorPostOpinion
