@@ -14,7 +14,7 @@
 이 서비스는 MVP를 정의하고, 린 스타트업 방식을 채택하여 프로젝트를 진행했습니다. MVP를 개발한 후에는 다른 유저들과 해당 플레이어의 플레이를 분석하고 투표를 통해 갈등을 해결하려고 합니다. 이를 통해 게임 커뮤니티 내에서 조화와 협력을 증진시키는 데 도움이 되는 서비스를 제공합니다.
 </br>
 
-🔗 서비스 링크 : [https://4cus.vercel.app/](http://aimoon.o-r.kr/)
+🔗 서비스 링크 : http://aimoon.o-r.kr/
 
 ## 💁🏻‍♀️ 프로젝트 개요
 ![AI 롤문철_4](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/cca6b82b-4bbb-4b4c-bb6b-8bce94b93380)
