@@ -55,3 +55,9 @@
 
 </br>
 
+## 📚 Stack
+
+- **ReactJS**
+- **Node.js**
+- **Firebase**
+</br>
