@@ -31,6 +31,18 @@
 
 ![AI 롤문철_5](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/72e05d3b-8d4f-4750-995a-54508a7efef5)
 
+## 📊 진행 내용
+![AI 롤문철_8](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/10b48ba5-38b5-4387-b1d5-4a66a5dc04d9)
+![AI 롤문철_9](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/39c43b74-435d-4514-b13b-a6679178ef41)
+![AI 롤문철_10](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/1ef1e82d-8156-4ca4-ab00-9d4fca2911bf)
+![AI 롤문철_11](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/038dbfb5-d97f-45e2-b1e3-fa5fd680aea8)
+![AI 롤문철_12](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/e2ce77a3-3852-4872-bff6-7d2ace26014e)
+![AI 롤문철_13](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/4f1b4634-ba9b-4603-8dd7-b20d900172e5)
+![AI 롤문철_14](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/9d8731c2-38f9-4e58-9259-675291dc6457)
+![AI 롤문철_15](https://github.com/YoonJoowon/Ai_lolmooncheol/assets/118035287/28ff045b-ce1a-4e08-89cd-1d38b24ce9ef)
+
+
+
 </br>
 
 ## 📚 개선여지
