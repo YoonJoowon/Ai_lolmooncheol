@@ -59,5 +59,8 @@
 
 - **ReactJS**
 - **Node.js**
+- **JavaScript**
+- **Recoil**
+- **Styled-Components**
 - **Firebase**
 </br>
