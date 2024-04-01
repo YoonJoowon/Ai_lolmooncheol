@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { styled } from "styled-components";
+import back4 from "../imges/back4.jpg";
 import Header from "../component/Header";
 import ChatAi from "../component/ChatAi";
 import ChatInput from "../component/ChatInput";
@@ -7,7 +8,6 @@ import ChattingInfoGage from "../component/ChattingInfoGage";
 import SearchInput from "../component/SearchInput";
 
 const Chatting = () => {
-
   return (
     <Background>
       <Header />
@@ -35,7 +35,7 @@ export default Chatting;
 
 const Background = styled.div`
   background-color: black;
-  background-image: url("https://www.leagueoflegends.co.kr/upload/EditorImages/20180928113244_nhr4NI9U.jpg");
+  background-image: url(${back4});
   background-size: cover;
   background-position: center center;
   position: absolute;
