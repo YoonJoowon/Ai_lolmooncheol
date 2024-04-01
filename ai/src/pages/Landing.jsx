@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import landingImgBackImg from "../imges/landingBackground.jpg";
-import backImgRealUse from "../imges/backImgRealUse2.png";
+import backImgRealUse from "../imges/back2.jpg";
 
 const Landing = () => {
   return (
@@ -34,7 +34,7 @@ const Landing = () => {
           <LandingImage1 />
           <LandingImage2 />
           <LandingImageInfoTxt>
-            ※실제 서비스 사용 예시입니다.
+            {/* ※실제 서비스 사용 예시입니다. */}
           </LandingImageInfoTxt>
         </LandingImageBox>
       </BackgroundColor>
